@@ -12,6 +12,7 @@ $active_announcements = $pdo->query("SELECT COUNT(*) FROM announcements WHERE is
 $unread_messages = $pdo->query("SELECT COUNT(*) FROM contacts WHERE is_read = 0")->fetchColumn();
 $total_messages = $pdo->query("SELECT COUNT(*) FROM contacts")->fetchColumn();
 
+$total_users = $pdo->query("SELECT COUNT(*) FROM public_users")->fetchColumn();
 $total_enrollments = $pdo->query("SELECT COUNT(*) FROM enrollments")->fetchColumn();
 $active_enrollments = $pdo->query("SELECT COUNT(*) FROM enrollments WHERE status = 'active'")->fetchColumn();
 $pending_enrollments = $pdo->query("SELECT COUNT(*) FROM enrollments WHERE status = 'pending'")->fetchColumn();
@@ -80,6 +81,17 @@ $pending_enrollments = $pdo->query("SELECT COUNT(*) FROM enrollments WHERE statu
                 <div class="stat-info">
                     <h3><?= $pdo->query("SELECT COUNT(*) FROM partners")->fetchColumn() ?></h3>
                     <p>Partners</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="manage-users" class="text-decoration-none">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="bi bi-people"></i></div>
+                <div class="stat-info">
+                    <h3><?= $total_users ?></h3>
+                    <p>Registered Users</p>
                 </div>
             </div>
         </a>
