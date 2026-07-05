@@ -87,6 +87,6 @@ $page_title = $page_title ?? SITE_NAME . ' — ' . SITE_TAGLINE;
 $page_desc = $page_desc ?? 'Software & web development company in Kilimanjaro and Arusha, Tanzania. We build websites, mobile apps, POS systems, inventory software, and custom business solutions.';
 $page_keywords = $page_keywords ?? 'software company Tanzania, software company Kilimanjaro, website development Tanzania, web design Tanzania, IT company Tanzania, POS system Tanzania, mobile app development Tanzania';
 $page_heading = $page_heading ?? '';
-$og_image = $og_image ?? SITE_URL . '/assets/img/og-default.jpg';
+$og_image = $og_image ?? SITE_URL . '/assets/img/jj.png';
 
 date_default_timezone_set('Africa/Nairobi');
