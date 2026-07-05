@@ -65,11 +65,6 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <changefreq>weekly</changefreq>
     </url>
     <url>
-        <loc><?= SITE_URL ?>/digital_products</loc>
-        <priority>0.7</priority>
-        <changefreq>weekly</changefreq>
-    </url>
-    <url>
         <loc><?= SITE_URL ?>/login</loc>
         <priority>0.3</priority>
         <changefreq>monthly</changefreq>
