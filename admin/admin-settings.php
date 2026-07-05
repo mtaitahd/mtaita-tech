@@ -20,7 +20,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
             $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
             $stmt->execute([$key, $val]);
         }
-        $success_msg = 'Settings saved successfully.';
+
+        if (!empty($_FILES['about_image']['name'])) {
+            $targetDir = __DIR__ . '/../uploads/';
+            if (!is_dir($targetDir)) mkdir($targetDir, 0755, true);
+            $ext = strtolower(pathinfo($_FILES['about_image']['name'], PATHINFO_EXTENSION));
+            $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+            if (in_array($ext, $allowed)) {
+                $stmt = $pdo->query("SELECT setting_value FROM settings WHERE setting_key = 'about_image' LIMIT 1");
+                $oldImg = $stmt->fetchColumn();
+                if ($oldImg) {
+                    $oldFile = __DIR__ . '/../' . $oldImg;
+                    if (file_exists($oldFile)) unlink($oldFile);
+                }
+                $filename = 'about_' . time() . '.' . $ext;
+                move_uploaded_file($_FILES['about_image']['tmp_name'], $targetDir . $filename);
+                $imgPath = 'uploads/' . $filename;
+                $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES ('about_image', ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
+                $stmt->execute([$imgPath]);
+            } else {
+                $error_msg = 'Invalid image format. Allowed: jpg, jpeg, png, webp.';
+            }
+        }
+
+        if (isset($_POST['remove_about_image']) && $_POST['remove_about_image'] === '1') {
+            $stmt = $pdo->query("SELECT setting_value FROM settings WHERE setting_key = 'about_image' LIMIT 1");
+            $oldImg = $stmt->fetchColumn();
+            if ($oldImg) {
+                $oldFile = __DIR__ . '/../' . $oldImg;
+                if (file_exists($oldFile)) unlink($oldFile);
+            }
+            $pdo->prepare("DELETE FROM settings WHERE setting_key = 'about_image'")->execute();
+        }
+
+        if (!$error_msg) $success_msg = 'Settings saved successfully.';
     } catch (Exception $e) {
         $error_msg = 'Database error: ' . $e->getMessage();
     }
@@ -40,7 +73,7 @@ function s($key, $default = '') {
 <?php if ($error_msg): ?><div class="alert alert-danger"><?= htmlspecialchars($error_msg) ?></div><?php endif; ?>
 
 <div class="admin-card">
-    <form method="POST" action="">
+    <form method="POST" action="" enctype="multipart/form-data">
         <ul class="nav nav-tabs nav-cyan mb-4" id="settingsTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button">General</button>
@@ -75,6 +108,17 @@ function s($key, $default = '') {
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Admin Location</label>
                         <input type="text" name="admin_location" class="form-control" value="<?= htmlspecialchars(s('admin_location', 'Moshi, Kilimanjaro')) ?>">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">About Page Image</label>
+                        <input type="file" name="about_image" class="form-control" accept="image/*">
+                        <small class="text-muted">Recommended size: 800x600px. Max 2MB.</small>
+                        <?php if (s('about_image')): ?>
+                        <div class="mt-2">
+                            <img src="../<?= htmlspecialchars(s('about_image')) ?>" alt="About" style="max-height:100px;border-radius:6px;">
+                            <label class="ms-2 small text-muted"><input type="checkbox" name="remove_about_image" value="1"> Remove current image</label>
+                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
