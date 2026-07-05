@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify({ type: '<?= $type ?>', otp_method: '<?= $otp_method ?>' })
         }).then(function(r) { return r.json(); }).then(function(data) {
             if (data.success) {
-                Swal.fire({ icon: 'success', title: 'Code resent!', text: '<?= $otp_method !== 'sms' ? 'Check Spam folder if not in inbox.' : '' ?>', toast: true, position: 'top-end', showConfirmButton: false, timer: 4000 });
+                var toastOpts = { icon: 'success', title: 'Code resent!', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000 };<?php if ($otp_method !== 'sms'): ?> toastOpts.text = 'Check Spam folder if not in inbox.';<?php endif; ?> Swal.fire(toastOpts);
                 otpExpiresIn = <?= ($type === 'reset' ? 900 : 600) ?>;
                 expiryWrap.classList.remove('expired');
                 startExpiryCountdown();
