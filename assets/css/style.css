@@ -3663,9 +3663,6 @@ img, video, iframe, embed, object, table, pre, code {
     margin: 0 auto;
     text-align: center;
     padding: 40px 20px;
-    background: var(--white);
-    border-radius: 16px;
-    box-shadow: var(--shadow-sm);
 }
 
 .testimonial-stars {
