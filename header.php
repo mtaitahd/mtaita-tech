@@ -8,7 +8,7 @@ $page = str_replace('.php', '', $current_file);
 if ($page === 'index') $page = '';
 
 // Auto-noindex private/auth pages
-$noindex_pages = ['login','register','forgot-password','reset-password','otp-verify','resend-otp','checkout','payment-pending','check-payment-status','google-callback','download-product','logout','success','cancel','dashboard','lesson','lesson_progress_ajax'];
+$noindex_pages = ['register','forgot-password','reset-password','otp-verify','resend-otp','checkout','payment-pending','check-payment-status','google-callback','download-product','logout','success','cancel','dashboard','lesson','lesson_progress_ajax'];
 if (!isset($meta_robots) && in_array($page, $noindex_pages)) {
     $meta_robots = 'noindex, nofollow';
 }
