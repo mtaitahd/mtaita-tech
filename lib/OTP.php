@@ -31,19 +31,21 @@ class OTP {
         $typeLabels = ['verify' => 'email verification', 'login' => 'login', 'reset' => 'password reset'];
         $label = $typeLabels[$type] ?? 'verification';
         $expires = $type === 'reset' ? '15' : '10';
+        $safe = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
 
-        $body = "Dear $name,\n\n";
-        $body .= "Use the code below to complete your $label.\n\n";
-        $body .= str_repeat('-', 28) . "\n";
-        $body .= "    $otp\n";
-        $body .= str_repeat('-', 28) . "\n\n";
-        $body .= "This code expires in $expires minutes. Do NOT share this code with anyone.\n\n";
-        $body .= "If you did not request this code, please ignore this message.\n\n";
-        $body .= "Best regards,\nMtaita Tech\nhttps://mtaitatech.online";
+        $body = '<div style="font-family:Arial,sans-serif;color:#333;max-width:500px;">';
+        $body .= '<p style="margin:0 0 4px;">Dear <strong>' . $safe . '</strong>,</p>';
+        $body .= '<p style="margin:0 0 16px;">Use the code below to complete your ' . htmlspecialchars($label) . '.</p>';
+        $body .= '<div style="background:#f4f4f5;border-radius:8px;padding:16px;text-align:center;font-size:32px;font-weight:700;letter-spacing:8px;color:#dc2626;font-family:monospace;margin:0 0 16px;">' . htmlspecialchars($otp) . '</div>';
+        $body .= '<p style="margin:0 0 4px;font-size:13px;color:#666;">This code expires in <strong>' . $expires . ' minutes</strong>. Do NOT share this code with anyone.</p>';
+        $body .= '<p style="margin:0 0 16px;font-size:13px;color:#666;">If you did not request this code, please ignore this message.</p>';
+        $body .= '<hr style="border:none;border-top:1px solid #e2e8f0;margin:16px 0;">';
+        $body .= '<p style="margin:0;font-size:12px;color:#94a3b8;">Best regards,<br><strong>Mtaita Tech</strong><br><a href="https://mtaitatech.online" style="color:#dc2626;text-decoration:none;">https://mtaitatech.online</a></p>';
+        $body .= '</div>';
 
         require_once __DIR__ . '/../mailer.php';
         $mailer = new Mailer();
-        return $mailer->send($email, $subject, $body, false);
+        return $mailer->send($email, $subject, $body, true);
     }
 
     public function sendSms($phone, $otp, $type) {
