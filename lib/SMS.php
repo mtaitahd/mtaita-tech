@@ -12,7 +12,10 @@ class SMS {
 
         if (class_exists('Settings')) {
             $this->apiKey = Settings::get('meseji_api_key', $this->apiKey);
-            $this->senderId = Settings::get('meseji_sender_id', $this->senderId);
+            $dbSenderId = Settings::get('meseji_sender_id', '');
+            if ($dbSenderId !== '') {
+                $this->senderId = $dbSenderId;
+            }
         }
     }
 
