@@ -30,7 +30,7 @@ $nav_courses = $pdo->query("SELECT id, title, slug FROM courses WHERE status = '
     <meta name="googlebot" content="<?= htmlspecialchars($meta_robots ?? 'index, follow') ?>">
     <meta property="og:title" content="<?= htmlspecialchars($page_title ?? SITE_NAME) ?>">
     <meta property="og:description" content="<?= htmlspecialchars($page_desc ?? '') ?>">
-    <meta property="og:image" content="<?= htmlspecialchars($og_image ?? SITE_URL . '/assets/img/og-default.jpg') ?>">
+    <meta property="og:image" content="<?= htmlspecialchars($og_image ?? SITE_URL . '/assets/img/jj.png') ?>">
     <meta property="og:url" content="<?= SITE_URL . $_SERVER['REQUEST_URI'] ?>">
     <meta property="og:type" content="<?= htmlspecialchars($og_type ?? 'website') ?>">
     <?php if (!empty($article_published)): ?>
