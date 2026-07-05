@@ -67,6 +67,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    if (isset($_POST['delete_all_logs'])) {
+        try {
+            $pdo->exec("DELETE FROM sms_log");
+            $success_msg = 'All notification history deleted.';
+        } catch (Exception $e) {
+            $error_msg = 'Database error.';
+        }
+    }
+
     if (isset($_POST['send_sms'])) {
         $message = trim($_POST['message'] ?? '');
         $recipient_type = $_POST['recipient_type'] ?? 'all';
@@ -238,8 +247,11 @@ require_once 'admin_header.php';
         </div>
 
         <div class="admin-card mt-4">
-            <div class="card-header bg-white py-3">
-                <h6 class="mb-0 fw-bold"><i class="bi bi-clock-history me-2"></i>Recent Notifications</h6>
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold"><i class="bi bi-clock-history me-2"></i>Notification History</h6>
+                <form method="POST" onsubmit="return confirm('Delete ALL notification history? This cannot be undone.')">
+                    <button type="submit" name="delete_all_logs" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash me-1"></i>Delete All</button>
+                </form>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -247,6 +259,7 @@ require_once 'admin_header.php';
                         <thead class="table-light">
                             <tr>
                                 <th>Date</th>
+                                <th>Type</th>
                                 <th>Recipients</th>
                                 <th>Message</th>
                                 <th>Status</th>
@@ -255,7 +268,7 @@ require_once 'admin_header.php';
                         </thead>
                         <tbody>
                             <?php
-                            $logs = $pdo->query("SELECT * FROM sms_log WHERE type = 'manual' ORDER BY created_at DESC LIMIT 20")->fetchAll();
+                            $logs = $pdo->query("SELECT * FROM sms_log ORDER BY created_at DESC LIMIT 100")->fetchAll();
                             if ($logs): foreach ($logs as $log):
                                 $phones = array_map('trim', explode(',', $log['recipient'] ?? ''));
                                 $recipientInfo = [];
@@ -269,6 +282,7 @@ require_once 'admin_header.php';
                             ?>
                             <tr>
                                 <td class="text-nowrap small"><?= htmlspecialchars($log['created_at']) ?></td>
+                                <td><span class="badge bg-<?= $log['type'] === 'manual' ? 'primary' : 'warning' ?> text-dark"><?= htmlspecialchars($log['type']) ?></span></td>
                                 <td class="small"><?= implode('<br>', $recipientInfo) ?></td>
                                 <td class="small"><?= htmlspecialchars(mb_substr($log['message'], 0, 60)) ?><?= mb_strlen($log['message']) > 60 ? '...' : '' ?></td>
                                 <td><span class="badge bg-<?= $log['status'] === 'sent' ? 'success' : ($log['status'] === 'failed' ? 'danger' : 'secondary') ?>"><?= ucfirst($log['status']) ?></span></td>
@@ -280,7 +294,7 @@ require_once 'admin_header.php';
                                 </td>
                             </tr>
                             <?php endforeach; else: ?>
-                            <tr><td colspan="5" class="text-center text-muted py-3">No notifications sent yet.</td></tr>
+                            <tr><td colspan="6" class="text-center text-muted py-3">No notifications sent yet.</td></tr>
                             <?php endif; ?>
                         </tbody>
                     </table>
