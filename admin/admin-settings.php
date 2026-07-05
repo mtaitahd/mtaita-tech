@@ -20,32 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
         Settings::set($key, $val);
     }
 
-    // About image upload
-    if (!empty($_FILES['about_image']['name'])) {
-        $file = $_FILES['about_image'];
-        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-        if (!in_array($ext, $allowed)) {
-            $error_msg = 'Invalid image format. Allowed: jpg, jpeg, png, webp, gif.';
-        } elseif ($file['error'] !== UPLOAD_ERR_OK) {
-            $error_msg = 'Upload failed.';
-        } else {
-            $upload_dir = __DIR__ . '/../assets/img/uploads/';
-            if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
-            $filename = 'about_' . time() . '.' . $ext;
-            if (move_uploaded_file($file['tmp_name'], $upload_dir . $filename)) {
-                Settings::set('about_image', 'assets/img/uploads/' . $filename);
-            } else {
-                $error_msg = 'Failed to save uploaded file.';
-            }
-        }
-    }
-
     if (!$error_msg) $success_msg = 'Settings saved successfully.';
 }
 ?>
 <div class="admin-card">
-    <form method="POST" action="" enctype="multipart/form-data">
+    <form method="POST" action="">
         <ul class="nav nav-tabs nav-cyan mb-4" id="settingsTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button">General</button>
@@ -81,19 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Admin Location</label>
                         <input type="text" name="admin_location" class="form-control" value="<?= htmlspecialchars(Settings::get('admin_location', 'Moshi, Kilimanjaro')) ?>">
-                    </div>
-                    <div class="col-12 mb-3">
-                        <label class="form-label">About Page Image</label>
-                        <div class="d-flex align-items-center gap-3">
-                            <div style="width:120px;height:80px;border-radius:8px;overflow:hidden;background:#1e293b;flex-shrink:0;">
-                                <?php $about_img = Settings::get('about_image', 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80'); ?>
-                                <img src="<?= htmlspecialchars($about_img) ?>" alt="" style="width:100%;height:100%;object-fit:cover;">
-                            </div>
-                            <div>
-                                <input type="file" name="about_image" class="form-control" accept="image/*">
-                                <small class="text-muted">Recommended: 600x400px. Upload will replace the current image.</small>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
