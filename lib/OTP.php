@@ -30,19 +30,16 @@ class OTP {
         $subject = 'Your Mtaita Tech Verification Code';
         $typeLabels = ['verify' => 'email verification', 'login' => 'login', 'reset' => 'password reset'];
         $label = $typeLabels[$type] ?? 'verification';
+        $expires = $type === 'reset' ? '15' : '10';
 
-        require_once __DIR__ . '/../email_template.php';
-
-        $bodyHtml = '
-            <p style="margin:0 0 20px;font-size:15px;color:#475569;line-height:1.6;">Use this code to complete your <strong>' . $label . '</strong>.</p>
-            <div style="background:#F1F5F9;border-radius:10px;padding:20px;text-align:center;font-size:36px;font-weight:700;letter-spacing:10px;color:#DC2626;font-family:monospace;">' . $otp . '</div>
-            <p style="margin:20px 0 0;font-size:13px;color:#94a3b8;">This code expires in ' . ($type === 'reset' ? '15' : '10') . ' minutes. Do not share this code with anyone.</p>';
-
-        $message = buildEmailHtml('Verification Code', $bodyHtml);
+        $body = "Use this code to complete your $label.\n\n";
+        $body .= "$otp\n\n";
+        $body .= "This code expires in $expires minutes. Do not share this code with anyone.\n\n";
+        $body .= "— Mtaita Tech\nhttps://mtaitatech.online";
 
         require_once __DIR__ . '/../mailer.php';
         $mailer = new Mailer();
-        return $mailer->send($email, $subject, $message, true);
+        return $mailer->send($email, $subject, $body, false);
     }
 
     public function sendSms($phone, $otp, $type) {

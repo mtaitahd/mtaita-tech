@@ -96,8 +96,10 @@ class Mailer
         $r = $this->read($socket);
         if (!$r) { $log("data command failed"); fclose($socket); return false; }
 
+        $recipientList = implode(', ', $recipients);
         $contentType = $isHtml ? 'text/html' : 'text/plain';
         $headers = "From: {$this->fromName} <{$this->fromEmail}>\r\n";
+        $headers .= "To: $recipientList\r\n";
         $headers .= "Reply-To: {$this->fromEmail}\r\n";
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: $contentType; charset=UTF-8\r\n";
