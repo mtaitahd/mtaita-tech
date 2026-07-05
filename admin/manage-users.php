@@ -171,6 +171,7 @@ function openAdd() {
     document.getElementById('userPassword').value = '';
     document.getElementById('userPassword').required = false;
     document.getElementById('userOtpPref').value = 'email';
+    new bootstrap.Modal(document.getElementById('userModal')).show();
 }
 
 function openEdit(id, name, email, phone, otpPref) {
@@ -183,6 +184,7 @@ function openEdit(id, name, email, phone, otpPref) {
     document.getElementById('userPassword').value = '';
     document.getElementById('userPassword').required = false;
     document.getElementById('userOtpPref').value = otpPref;
+    new bootstrap.Modal(document.getElementById('userModal')).show();
 }
 </script>
 
