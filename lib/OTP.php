@@ -26,16 +26,20 @@ class OTP {
         return $otp;
     }
 
-    public function sendEmail($email, $otp, $type) {
+    public function sendEmail($email, $name, $otp, $type) {
         $subject = 'Your Mtaita Tech Verification Code';
         $typeLabels = ['verify' => 'email verification', 'login' => 'login', 'reset' => 'password reset'];
         $label = $typeLabels[$type] ?? 'verification';
         $expires = $type === 'reset' ? '15' : '10';
 
-        $body = "Use this code to complete your $label.\n\n";
-        $body .= "$otp\n\n";
-        $body .= "This code expires in $expires minutes. Do not share this code with anyone.\n\n";
-        $body .= "— Mtaita Tech\nhttps://mtaitatech.online";
+        $body = "Dear $name,\n\n";
+        $body .= "Use the code below to complete your $label.\n\n";
+        $body .= str_repeat('-', 28) . "\n";
+        $body .= "    $otp\n";
+        $body .= str_repeat('-', 28) . "\n\n";
+        $body .= "This code expires in $expires minutes. Do NOT share this code with anyone.\n\n";
+        $body .= "If you did not request this code, please ignore this message.\n\n";
+        $body .= "Best regards,\nMtaita Tech\nhttps://mtaitatech.online";
 
         require_once __DIR__ . '/../mailer.php';
         $mailer = new Mailer();
@@ -67,7 +71,7 @@ class OTP {
             return false;
         }
 
-        return $this->sendEmail($user['email'], $otp, $type);
+        return $this->sendEmail($user['email'], $user['name'], $otp, $type);
     }
 
     public function verify($userId, $inputOtp, $type) {
