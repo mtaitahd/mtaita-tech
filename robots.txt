@@ -23,9 +23,14 @@ Disallow: /db_connect.php
 Disallow: /mailer.php
 Disallow: /smtp.txt
 Disallow: /webhook.php
+Disallow: /webhooks/
 Disallow: /debug.php
+Disallow: /test_mail.php
+Disallow: /test_notifications.php
+Disallow: /webhook-test.php
+Disallow: /install.php
+Disallow: /logintemplate/
 Disallow: /success/
 Disallow: /cancel/
-Disallow: /payment-pending/
 
 Sitemap: https://mtaitatech.online/sitemap.xml

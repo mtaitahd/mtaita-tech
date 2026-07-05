@@ -7,6 +7,12 @@ $current_file = basename($_SERVER['SCRIPT_NAME']);
 $page = str_replace('.php', '', $current_file);
 if ($page === 'index') $page = '';
 
+// Auto-noindex private/auth pages
+$noindex_pages = ['login','register','forgot-password','reset-password','otp-verify','resend-otp','checkout','payment-pending','check-payment-status','google-callback','download-product','logout','success','cancel','dashboard','lesson','lesson_progress_ajax'];
+if (!isset($meta_robots) && in_array($page, $noindex_pages)) {
+    $meta_robots = 'noindex, nofollow';
+}
+
 $nav_courses = $pdo->query("SELECT id, title, slug FROM courses WHERE status = 'published' ORDER BY title ASC LIMIT 10")->fetchAll();
 ?>
 <!DOCTYPE html>
@@ -20,6 +26,8 @@ $nav_courses = $pdo->query("SELECT id, title, slug FROM courses WHERE status = '
     <meta name="description" content="<?= htmlspecialchars($page_desc ?? 'Mtaita Tech — IT & Graphic Design Agency') ?>">
     <meta name="keywords" content="<?= htmlspecialchars($page_keywords ?? 'IT services, graphic design, web development') ?>">
     <meta name="author" content="Mtaita Tech">
+    <meta name="robots" content="<?= htmlspecialchars($meta_robots ?? 'index, follow') ?>">
+    <meta name="googlebot" content="<?= htmlspecialchars($meta_robots ?? 'index, follow') ?>">
     <meta property="og:title" content="<?= htmlspecialchars($page_title ?? SITE_NAME) ?>">
     <meta property="og:description" content="<?= htmlspecialchars($page_desc ?? '') ?>">
     <meta property="og:image" content="<?= htmlspecialchars($og_image ?? SITE_URL . '/assets/img/og-default.jpg') ?>">
