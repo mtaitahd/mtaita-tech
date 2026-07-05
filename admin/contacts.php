@@ -47,6 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reply_contact'])) {
             require_once __DIR__ . '/../mailer.php';
             require_once __DIR__ . '/../email_template.php';
             $mailer = new Mailer();
+            $replyEmail = Settings::get('reply_email', 'info@mtaitatech.online');
+            $mailer->setFrom($replyEmail, 'Mtaita Tech');
             $subject = "Re: Your message to Mtaita Tech";
             $bodyHtml = '
             <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">Hi <strong>' . htmlspecialchars($contact['name']) . '</strong>,</p>
@@ -205,8 +207,18 @@ require_once 'admin_header.php';
                 <div class="modal-body">
                     <p class="small text-muted">Replying to: <span id="reply-email" class="text-cyan"></span></p>
                     <div class="mb-3">
+                        <label class="form-label">Quick Template</label>
+                        <select class="form-select" id="reply-template">
+                            <option value="">— Select a template —</option>
+                            <option value="Thank you for reaching out to Mtaita Tech. We appreciate your message and will get back to you as soon as possible. If you have any urgent concerns, please call us directly.">General Acknowledgment</option>
+                            <option value="Thank you for your interest in our services. We have received your request and will prepare a quotation for you. You can expect to hear from us within 24 hours during business days.">Quote Request Response</option>
+                            <option value="We have received your support request and it has been forwarded to our technical team. We will follow up with you shortly. For urgent assistance, please call us.">Support Request Response</option>
+                            <option value="Thank you for your inquiry. We have noted your details and requirements. Our team will review them and contact you with the relevant information and next steps.">General Inquiry Response</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label">Your Reply</label>
-                        <textarea name="reply_text" rows="6" class="form-control" placeholder="Type your reply here..." required></textarea>
+                        <textarea name="reply_text" rows="6" class="form-control" id="reply-text" placeholder="Type your reply here..." required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -250,6 +262,18 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('reply-id').value = btn.dataset.id;
             document.getElementById('reply-name').textContent = btn.dataset.name;
             document.getElementById('reply-email').textContent = btn.dataset.email;
+            document.getElementById('reply-text').value = '';
+            document.getElementById('reply-template').value = '';
+        });
+    }
+
+    var templateSelect = document.getElementById('reply-template');
+    if (templateSelect) {
+        templateSelect.addEventListener('change', function () {
+            var textarea = document.getElementById('reply-text');
+            if (this.value) {
+                textarea.value = this.value;
+            }
         });
     }
 });

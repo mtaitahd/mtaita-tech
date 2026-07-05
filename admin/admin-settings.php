@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
         'site_name', 'site_tagline',
         'admin_email', 'admin_phone', 'admin_location',
         'smtp_host', 'smtp_port', 'smtp_encryption', 'smtp_user', 'smtp_pass',
-        'from_email', 'from_name',
+        'from_email', 'from_name', 'reply_email',
         'meseji_api_key', 'meseji_sender_id'
     ];
     try {
@@ -112,6 +112,10 @@ function s($key, $default = '') {
                     <div class="col-md-6 mb-3">
                         <label class="form-label">From Name</label>
                         <input type="text" name="from_name" class="form-control" value="<?= htmlspecialchars(s('from_name', 'Mtaita Tech')) ?>">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Reply-To Email (for contact replies)</label>
+                        <input type="email" name="reply_email" class="form-control" value="<?= htmlspecialchars(s('reply_email', 'info@mtaitatech.online')) ?>">
                     </div>
                 </div>
             </div>

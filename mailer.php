@@ -34,6 +34,12 @@ class Mailer
         }
     }
 
+    public function setFrom($email, $name = '')
+    {
+        $this->fromEmail = $email;
+        if ($name) $this->fromName = $name;
+    }
+
     public function send($to, $subject, $body, $isHtml = false)
     {
         $ctx = stream_context_create([
