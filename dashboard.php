@@ -62,6 +62,7 @@ require_once 'header.php';
                     <nav class="d-flex flex-column gap-1">
                         <a href="dashboard" class="btn btn-primary btn-sm text-start"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
                         <a href="my-courses" class="btn btn-outline-light btn-sm text-start"><i class="fas fa-book me-2"></i>My Courses</a>
+                        <a href="profile" class="btn btn-outline-light btn-sm text-start"><i class="fas fa-user me-2"></i>My Profile</a>
                         <a href="digital_products" class="btn btn-outline-light btn-sm text-start"><i class="fas fa-box me-2"></i>Digital Products</a>
                         <a href="courses" class="btn btn-outline-light btn-sm text-start"><i class="fas fa-search me-2"></i>Browse Courses</a>
                         <a href="logout" class="btn btn-outline-danger btn-sm text-start mt-2"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
