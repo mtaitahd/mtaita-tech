@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_contact'])) {
                     <ul class="contact-info-list">
                         <li><i class="bi bi-envelope"></i> <?= htmlspecialchars($contact_admin_email) ?></li>
                         <li><i class="bi bi-phone"></i> <?= htmlspecialchars($contact_admin_phone) ?></li>
-                        <li><i class="bi bi-geo-alt"></i> Moshi, Kilimanjaro</li>
+                        <li><i class="bi bi-geo-alt"></i> <?= htmlspecialchars(Settings::get('admin_location', 'Moshi, Kilimanjaro')) ?></li>
                         <li><i class="bi bi-clock"></i> Mon - Sat: 8:00 AM - 6:00 PM</li>
                     </ul>
                     <div class="mt-4">
@@ -161,15 +161,14 @@ if (navigator.geolocation) {
             .openPopup();
         document.getElementById('mapStatus').textContent = 'Showing your current location.';
     }, function() {
-        // Fallback: show Moshi office
         L.marker([-3.3349, 37.3265]).addTo(map)
-            .bindPopup('Mtaita Tech — Moshi, Kilimanjaro')
+            .bindPopup('Mtaita Tech — <?= htmlspecialchars(Settings::get('admin_location', 'Moshi, Kilimanjaro')) ?>')
             .openPopup();
         document.getElementById('mapStatus').textContent = 'Could not detect location — showing our office.';
     });
 } else {
     L.marker([-3.3349, 37.3265]).addTo(map)
-        .bindPopup('Mtaita Tech — Moshi, Kilimanjaro')
+        .bindPopup('Mtaita Tech — <?= htmlspecialchars(Settings::get('admin_location', 'Moshi, Kilimanjaro')) ?>')
         .openPopup();
     document.getElementById('mapStatus').textContent = 'Geolocation not supported — showing our office.';
 }

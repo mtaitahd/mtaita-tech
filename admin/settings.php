@@ -10,7 +10,7 @@ $error_msg = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     $fields = [
         'site_name', 'site_tagline',
-        'admin_email', 'admin_phone',
+        'admin_email', 'admin_phone', 'admin_location',
         'smtp_host', 'smtp_port', 'smtp_encryption', 'smtp_user', 'smtp_pass',
         'from_email', 'from_name',
         'meseji_api_key', 'meseji_sender_id'
@@ -77,6 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Admin Phone Number</label>
                         <input type="text" name="admin_phone" class="form-control" value="<?= htmlspecialchars(Settings::get('admin_phone', '+255 616 591 639')) ?>">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Admin Location</label>
+                        <input type="text" name="admin_location" class="form-control" value="<?= htmlspecialchars(Settings::get('admin_location', 'Moshi, Kilimanjaro')) ?>">
                     </div>
                     <div class="col-12 mb-3">
                         <label class="form-label">About Page Image</label>
