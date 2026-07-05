@@ -20,6 +20,8 @@ if ($slug) {
 
     $page_title = htmlspecialchars($post['title']) . ' — Mtaita Tech Blog';
     $page_desc = htmlspecialchars(mb_strimwidth(strip_tags($post['content']), 0, 155, ''));
+    $article_published = $post['created_at'];
+    $og_image = $post['feature_image'] ? SITE_URL . '/' . $post['feature_image'] : (SITE_URL . '/assets/img/og-default.jpg');
     require_once 'header.php';
 ?>
 <section class="page-header">

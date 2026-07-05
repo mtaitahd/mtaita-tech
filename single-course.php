@@ -106,6 +106,23 @@ foreach ($allLessons as $lesson) {
 $active_lesson = $allLessons[$active_lesson_index] ?? null;
 $active_video_id = $active_lesson ? ($lesson_videos[$active_lesson['id']] ?? null) : null;
 
+// Course JSON-LD
+$course_schema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'Course',
+    'name' => $course['title'],
+    'description' => strip_tags($course['description']),
+    'provider' => [
+        '@type' => 'Organization',
+        'name' => 'Mtaita Tech',
+        'sameAs' => SITE_URL,
+    ],
+];
+if ($course['thumbnail']) {
+    $course_schema['image'] = SITE_URL . '/' . $course['thumbnail'];
+}
+echo '<script type="application/ld+json">' . json_encode($course_schema, JSON_UNESCAPED_SLASHES) . '</script>';
+
 require_once 'header.php';
 ?>
 
