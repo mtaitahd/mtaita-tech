@@ -109,6 +109,9 @@ require_once 'header.php';
 
             <h1 style="font-size:1.5rem;"><?= $otp_method === 'sms' ? 'Check Your Phone' : 'Check Your Email' ?></h1>
             <p class="auth-sub">We sent a 6-digit code <?= $otp_method === 'sms' ? 'via SMS to your registered phone number' : 'to <strong>' . htmlspecialchars($email) . '</strong>' ?></p>
+            <?php if ($otp_method !== 'sms'): ?>
+            <p class="auth-sub" style="margin-top:-14px;font-size:0.78rem;color:#e67e22;"><i class="fas fa-exclamation-triangle me-1"></i>If not in inbox, check your <strong>Spam</strong> folder.</p>
+            <?php endif; ?>
             <p class="auth-sub" style="margin-top:-14px;font-size:0.78rem;">Enter the code to complete <?= htmlspecialchars($label) ?>.</p>
 
             <form method="POST" action="otp-verify" id="otpForm">
@@ -301,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify({ type: '<?= $type ?>', otp_method: '<?= $otp_method ?>' })
         }).then(function(r) { return r.json(); }).then(function(data) {
             if (data.success) {
-                Swal.fire({ icon: 'success', title: 'Code resent!', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000 });
+                Swal.fire({ icon: 'success', title: 'Code resent!', text: '<?= $otp_method !== 'sms' ? 'Check Spam folder if not in inbox.' : '' ?>', toast: true, position: 'top-end', showConfirmButton: false, timer: 4000 });
                 otpExpiresIn = <?= ($type === 'reset' ? 900 : 600) ?>;
                 expiryWrap.classList.remove('expired');
                 startExpiryCountdown();
