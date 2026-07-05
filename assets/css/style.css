@@ -3452,6 +3452,20 @@ img, video, iframe, embed, object, table, pre, code {
     border: 1px solid var(--border-light);
     overflow: hidden;
     transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.live-system-body {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.live-system-body .btn {
+    margin-top: auto;
 }
 
 .live-system-card:hover {
@@ -3493,10 +3507,6 @@ img, video, iframe, embed, object, table, pre, code {
 @keyframes livePulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.6; }
-}
-
-.live-system-body {
-    padding: 16px;
 }
 
 .live-system-body h5 {
@@ -3769,5 +3779,118 @@ img, video, iframe, embed, object, table, pre, code {
     .live-scroll-item { width: 180px; }
     .live-system-body { padding: 10px; }
     .live-scroll-track { gap: 12px; }
+    .live-system-body h5 { font-size: 0.85rem; }
+    .live-system-desc { font-size: 0.72rem; }
+}
+
+/* ===== Mobile-First Responsive — All Pages ===== */
+
+/* Small devices (phones, <576px) */
+@media (max-width: 575.98px) {
+    .page-header { padding: 20px 0 !important; }
+    .page-header h1 { font-size: 1.2rem !important; }
+    .page-header p { font-size: 0.82rem !important; }
+    .section-padding { padding: 24px 0 !important; }
+
+    .service-detail-card { padding: 20px 16px !important; }
+    .service-detail-card .icon-wrap i { font-size: 1.8rem !important; }
+    .service-detail-card h3 { font-size: 1.1rem; }
+    .service-detail-card p { font-size: 0.85rem; }
+    .service-detail-card ul li { font-size: 0.82rem; }
+
+    .portfolio-card .portfolio-body { padding: 14px !important; }
+    .portfolio-card .portfolio-body h5 { font-size: 0.9rem; }
+    .portfolio-img { height: 180px !important; }
+    .portfolio-desc-preview { font-size: 0.78rem; }
+    .portfolio-overlay-btn { font-size: 0.75rem; padding: 4px 12px; }
+
+    .floating-card { padding: 16px 12px !important; }
+    .floating-card h5 { font-size: 0.9rem; }
+    .floating-card .text-muted.small { font-size: 0.75rem; }
+    .floating-card img { height: 150px !important; }
+
+    .blog-content { font-size: 0.9rem; line-height: 1.7; }
+    .blog-content h2 { font-size: 1.15rem; }
+    .blog-content h3 { font-size: 1rem; }
+    .blog-content p { margin-bottom: 12px; }
+    .card-body { padding: 14px !important; }
+    .card-body .card-title { font-size: 0.95rem; }
+    .card-img-top { height: 160px !important; }
+
+    .contact-card { padding: 18px 14px !important; }
+    .contact-info-list li { font-size: 0.82rem; gap: 10px; }
+    .contact-info-list li i { font-size: 1rem; width: 28px; }
+    .form-label { font-size: 0.85rem; }
+    .form-control, .form-select { font-size: 0.85rem; padding: 8px 12px; }
+
+    .choose-best h2 { font-size: 1.2rem; }
+    .choose-best p { font-size: 0.85rem; }
+    .choose-best .stat-box h3 { font-size: 1.2rem; }
+    .choose-best .stat-box p { font-size: 0.7rem; }
+    .choose-best .feature-list li { font-size: 0.85rem; }
+    .choose-best .feature-list li i { font-size: 1rem; }
+
+    .solution-card { padding: 20px 14px !important; }
+    .solution-card .solution-icon i { font-size: 2rem; }
+    .solution-card h4 { font-size: 1rem; }
+    .solution-card p { font-size: 0.82rem; }
+
+    .news-card-body { padding: 14px !important; }
+    .news-card h5 { font-size: 0.9rem; }
+    .news-card p { font-size: 0.8rem; }
+
+    .testimonial-content { font-size: 0.88rem; }
+    .testimonial-author strong { font-size: 0.85rem; }
+    .testimonial-avatar { width: 44px; height: 44px; }
+    .testimonial-arrow { width: 36px; height: 36px; font-size: 1rem; }
+
+    .btn-red, .btn-gradient, .btn-outline-red { font-size: 0.82rem; padding: 8px 18px; }
+    h2 { font-size: 1.3rem; }
+    h3 { font-size: 1.1rem; }
+}
+
+/* Medium devices (tablets, 576px-767px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .page-header { padding: 24px 0 !important; }
+    .page-header h1 { font-size: 1.4rem !important; }
+    .section-padding { padding: 32px 0 !important; }
+
+    .service-detail-card { padding: 28px 24px !important; }
+    .flush-card { padding: 28px 24px; }
+
+    .portfolio-img { height: 200px !important; }
+
+    .floating-card img { height: 180px !important; }
+
+    .card-img-top { height: 180px !important; }
+
+    .contact-card { padding: 24px 20px !important; }
+
+    .testimonial-content { font-size: 0.95rem; }
+}
+
+/* Large devices (small desktops, 768px-991px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .page-header { padding: 28px 0 !important; }
+    .page-header h1 { font-size: 1.6rem !important; }
+    .section-padding { padding: 40px 0 !important; }
+
+    .contact-card { padding: 28px 24px !important; }
+
+    .floating-card img { height: 200px !important; }
+}
+
+/* Extra small devices (<360px) */
+@media (max-width: 359.98px) {
+    .page-header h1 { font-size: 1rem !important; }
+    .page-header p { font-size: 0.75rem !important; }
+    .section-padding { padding: 16px 0 !important; }
+    .service-detail-card { padding: 14px 10px !important; }
+    .portfolio-card .portfolio-body { padding: 10px !important; }
+    .floating-card { padding: 12px 8px !important; }
+    .contact-card { padding: 14px 10px !important; }
+    .live-scroll-item { width: 150px; }
+    .btn-red, .btn-gradient, .btn-outline-red { font-size: 0.75rem; padding: 6px 14px; }
+    h2 { font-size: 1.1rem; }
 }
 
