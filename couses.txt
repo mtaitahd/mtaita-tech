@@ -1,0 +1,73 @@
+Help me implement a secure, scalable Course Management and Digital Products E-commerce module for my PHP website. The frontend must be clean and fully responsive using Bootstrap 5. 
+
+The system must support both free and premium items, securely manage video content, control access privileges, and process automated payments via the official Snippe PHP SDK (snippe/snippe-php).
+
+Please provide the architecture, MySQL database schemas, file structure, and step-by-step object-oriented PHP source code based on these specifications:
+
+1. DATABASE SCHEMA (MySQL / PDO-compatible)
+- 'courses': id, title, slug, description, type (enum: 'free', 'premium'), price (int, representing TZS), created_at.
+- 'lessons': id, course_id (FK), title, youtube_url, sort_order.
+- 'products': id, title, slug, description, type (enum: 'free', 'premium'), price (int, representing TZS), file_path, created_at.
+- 'enrollments': id, user_id (FK), item_type (enum: 'course', 'product'), item_id (int), payment_reference (varchar, nullable), status (enum: 'pending', 'active'), created_at.
+
+2. FRONTEND LAYOUT & SYSTEM CONTROLS (Bootstrap 5)
+- Course List Page: A modern grid system showing course cards. Premium courses must display their price in TZS along with a "Buy Now" button. Free courses should show an "Enroll Free" button.
+- Course Viewer Page: A dynamic screen split into a two-column layout. 
+  * The Left Column features a fully responsive embedded YouTube video player. Crucial logic: The player must strip the standard watch URL and format it safely into a privacy-enhanced embed link: 'https://www.youtube-nocookie.com/embed/[VIDEO_ID]'.
+  * The Right Column holds a Bootstrap 5 interactive list group showing all remaining lessons in the course. Clicking a lesson switches the primary video view.
+  * Access Control Layer: If the course type is 'premium', the system must query the 'enrollments' table for the logged-in user session. If no active enrollment exists, block the video render completely and display an elegant payment checkout modal instead.
+
+3. PAYMENT INTEGRATION ENGINE (Snippe PHP SDK)
+Implement a unified checkout routing file (`checkout.php`) that uses the official 'snippe/snippe-php' package to handle transactions in Tanzanian Shillings (TZS):
+
+- Mobile Money Checkout: For payments using mobile wallets (M-Pesa, Tigo Pesa, Airtel Money, Halopesa). It must trigger a clean USSD push notification using the exact SDK pattern:
+  ```php
+  use Snippe\Snippe;
+  $snippe = new Snippe('snp_your_live_or_test_key');
+  $payment = $snippe->mobileMoney($amount, $phone)
+      ->customer($customerName, $customerEmail)
+      ->webhook('[https://yourdomain.com/webhook.php](https://yourdomain.com/webhook.php)')
+      ->metadata(['user_id' => $userId, 'item_type' => $itemType, 'item_id' => $itemId])
+      ->send();
+  $reference = $payment->reference();
+
+
+
+Card Checkout: For processing Visa or Mastercard payments, returning a direct checkout URL mapping:
+
+PHP
+$payment = $snippe->card($amount)
+    ->phone($phone)
+    ->customer($customerName, $customerEmail)
+    ->redirectTo('[https://yourdomain.com/success.php](https://yourdomain.com/success.php)', '[https://yourdomain.com/cancel.php](https://yourdomain.com/cancel.php)')
+    ->webhook('[https://yourdomain.com/webhook.php](https://yourdomain.com/webhook.php)')
+    ->metadata(['user_id' => $userId, 'item_type' => $itemType, 'item_id' => $itemId])
+    ->send();
+header('Location: ' . $payment->paymentUrl());
+SECURE WEBHOOK RECEIVER (webhook.php)
+Create an asynchronous endpoint to receive and verify status callbacks sent from Snippe's platform to finalize fulfillment details securely:
+
+Capture incoming webhooks using the native SDK accessor: \Snippe\Webhook::capture();
+
+Check conditions strictly: If $event->isPaymentCompleted() evaluates to true, extract the transaction reference via $event->reference(); and fetch the payload metadata array.
+
+Run a secure PDO prepared statement query updating the matched entry in the enrollments table from 'pending' to 'active'.
+
+If the item purchased is a digital product, securely dispatch an email containing an expiring download hash link, or flip the frontend visibility flag to reveal a secure "Download File" button to prevent direct URL sniffing or unauthorized file sharing.
+
+Security Parameters:
+
+Ensure all custom forms apply cross-site request forgery protection using token validation checks.
+
+Handle all data outputs with explicit string sanitization measures to safeguard against script injection vulnerabilities.
+
+Explicitly separate standard SQL parameters from backend command string structures via clean PDO prepared statements.
+
+Provide a modular directory view showing where these files reside, along with clean, production-ready backend code blocks.
+
+
+***
+
+### 💡 Implementation Benchmarks:
+1. **Currency Multiplier:** Keep in mind that Snippe processes integer values for amounts. Because Tanzanian Shillings (TZS) do not use fractional cents, an input value of `5000` is evaluated directly as **5,000 TZS**. 
+2. **Local testing tool:** When writing the webhook code inside your OpenCode workspace, remember you can simulate incoming payloads using the integrated snippet: `\Snippe\Webhook::fromRaw($body, $headers);` to test payment tracking loops smoothly before deploying live to production servers!

@@ -1,0 +1,110 @@
+RewriteEngine On
+RewriteBase /
+
+# Custom 404
+ErrorDocument 404 /404.php
+
+# Redirect /admin/ to login page
+RewriteRule ^admin/?$ admin/login.php [L]
+
+# Route pages that share names with directories (services/, assets/, etc.)
+RewriteRule ^services/?$ services.php [L,QSA]
+RewriteRule ^about/?$ about.php [L,QSA]
+RewriteRule ^portfolio/?$ portfolio.php [L,QSA]
+RewriteRule ^projects/?$ portfolio.php [L,QSA]
+RewriteRule ^contact/?$ contact.php [L,QSA]
+RewriteRule ^courses/?$ courses.php [L,QSA]
+RewriteRule ^announcements/?$ announcements.php [L,QSA]
+RewriteRule ^checkout/?$ checkout.php [L,QSA]
+RewriteRule ^login/?$ login.php [L,QSA]
+RewriteRule ^register/?$ register.php [L,QSA]
+RewriteRule ^forgot-password/?$ forgot-password.php [L,QSA]
+RewriteRule ^reset-password/?$ reset-password.php [L,QSA]
+
+# Redirect /admin/index to login
+RewriteRule ^admin/index$ admin/login.php [L]
+
+# Service category page routes
+RewriteRule ^web-development/?$ web-development.php [L,QSA]
+RewriteRule ^graphic-design/?$ graphic-design.php [L,QSA]
+RewriteRule ^mobile-apps/?$ mobile-apps.php [L,QSA]
+RewriteRule ^seo-digital-marketing/?$ seo-digital-marketing.php [L,QSA]
+
+# Additional page routes (non-conflicting pages handled by fallback)
+RewriteRule ^dashboard/?$ dashboard.php [L,QSA]
+RewriteRule ^lesson/?$ lesson.php [L,QSA]
+RewriteRule ^single-course/?$ single-course.php [L,QSA]
+RewriteRule ^otp-verify/?$ otp-verify.php [L,QSA]
+RewriteRule ^resend-otp/?$ resend-otp.php [L,QSA]
+RewriteRule ^digital_products/?$ digital_products.php [L,QSA]
+RewriteRule ^product-detail/?$ product-detail.php [L,QSA]
+RewriteRule ^download-product/?$ download-product.php [L,QSA]
+RewriteRule ^logout/?$ logout.php [L,QSA]
+RewriteRule ^google-callback/?$ google-callback.php [L,QSA]
+RewriteRule ^check-payment-status/?$ check-payment-status.php [L,QSA]
+RewriteRule ^payment-pending/?$ payment-pending.php [L,QSA]
+RewriteRule ^success/?$ success.php [L,QSA]
+RewriteRule ^cancel/?$ cancel.php [L,QSA]
+RewriteRule ^privacy/?$ privacy.php [L,QSA]
+RewriteRule ^terms/?$ terms.php [L,QSA]
+RewriteRule ^404/?$ 404.php [L,QSA]
+RewriteRule ^products/?$ products.php [L,QSA]
+
+# Course & Blog detail routes
+RewriteRule ^course/(.+)$ single-course.php?slug=$1 [L,QSA]
+RewriteRule ^blog/?$ blog.php [L,QSA]
+RewriteRule ^blog/(.+)$ blog.php?slug=$1 [L,QSA]
+
+# Admin page routes
+RewriteRule ^admin/dashboard/?$ admin/dashboard.php [L,QSA]
+RewriteRule ^admin/manage-courses/?$ admin/manage-courses.php [L,QSA]
+RewriteRule ^admin/course-builder/?$ admin/course_builder.php [L,QSA]
+RewriteRule ^admin/manage-lessons/?$ admin/manage-lessons.php [L,QSA]
+RewriteRule ^admin/manage-enrollments/?$ admin/manage-enrollments.php [L,QSA]
+RewriteRule ^admin/manage-services/?$ admin/manage-services.php [L,QSA]
+RewriteRule ^admin/projects/?$ admin/projects.php [L,QSA]
+RewriteRule ^admin/add-project/?$ admin/add_project.php [L,QSA]
+RewriteRule ^admin/edit-project/?$ admin/edit_project.php [L,QSA]
+RewriteRule ^admin/delete-project/?$ admin/delete_project.php [L,QSA]
+RewriteRule ^admin/posters/?$ admin/posters.php [L,QSA]
+RewriteRule ^admin/add-poster/?$ admin/add_poster.php [L,QSA]
+RewriteRule ^admin/delete-poster/?$ admin/delete_poster.php [L,QSA]
+RewriteRule ^admin/toggle-poster/?$ admin/toggle_poster.php [L,QSA]
+RewriteRule ^admin/thumbnails/?$ admin/thumbnails.php [L,QSA]
+RewriteRule ^admin/add-thumbnail/?$ admin/add_thumbnail.php [L,QSA]
+RewriteRule ^admin/delete-thumbnail/?$ admin/delete_thumbnail.php [L,QSA]
+RewriteRule ^admin/products/?$ admin/products.php [L,QSA]
+RewriteRule ^admin/orders/?$ admin/orders.php [L,QSA]
+RewriteRule ^admin/payments/?$ admin/payments.php [L,QSA]
+RewriteRule ^admin/announcements/?$ admin/announcements.php [L,QSA]
+RewriteRule ^admin/add-announcement/?$ admin/add_announcement.php [L,QSA]
+RewriteRule ^admin/delete-announcement/?$ admin/delete_announcement.php [L,QSA]
+RewriteRule ^admin/toggle-announcement/?$ admin/toggle_announcement.php [L,QSA]
+RewriteRule ^admin/update-announcement/?$ admin/update_announcement.php [L,QSA]
+RewriteRule ^admin/update-announcement-color/?$ admin/update_announcement_color.php [L,QSA]
+RewriteRule ^admin/contacts/?$ admin/contacts.php [L,QSA]
+RewriteRule ^admin/send-notification/?$ admin/send-notification.php [L,QSA]
+RewriteRule ^admin/logout/?$ admin/logout.php [L,QSA]
+RewriteRule ^admin/ajax-unread/?$ admin/ajax_unread.php [L,QSA]
+
+# Protect sensitive files
+<FilesMatch "\.(env|env\.example)|smtp\.txt$">
+    Require all denied
+</FilesMatch>
+
+# Sitemap
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# Redirect .php URLs to clean URLs (301) — skip POST requests
+RewriteCond %{THE_REQUEST} \.php[/?\s]
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{REQUEST_URI} !lang_switch\.php
+RewriteCond %{REQUEST_URI} !admin/index\.php
+RewriteCond %{REQUEST_URI} !admin/login\.php
+RewriteRule ^(.+)\.php$ $1 [R=301,L]
+
+# Remove .php extension from URLs (internal rewrite — after all other rules)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L]

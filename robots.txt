@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+
+# Block private/system areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /login/
+Disallow: /register/
+Disallow: /otp-verify/
+Disallow: /resend-otp/
+Disallow: /forgot-password/
+Disallow: /reset-password/
+Disallow: /logout/
+Disallow: /checkout/
+Disallow: /payment-pending/
+Disallow: /check-payment-status/
+Disallow: /google-callback/
+Disallow: /download-product/
+Disallow: /lesson/
+Disallow: /.env
+Disallow: /config.php
+Disallow: /db_connect.php
+Disallow: /mailer.php
+Disallow: /smtp.txt
+Disallow: /webhook.php
+Disallow: /debug.php
+Disallow: /success/
+Disallow: /cancel/
+Disallow: /payment-pending/
+
+Sitemap: https://mtaitatech.online/sitemap.xml

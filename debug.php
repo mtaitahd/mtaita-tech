@@ -1,0 +1,5 @@
+<?php
+echo 'PHP_SELF: ' . ($_SERVER['PHP_SELF'] ?? 'NOT SET') . PHP_EOL;
+echo 'SCRIPT_NAME: ' . ($_SERVER['SCRIPT_NAME'] ?? 'NOT SET') . PHP_EOL;
+echo 'REQUEST_URI: ' . ($_SERVER['REQUEST_URI'] ?? 'NOT SET') . PHP_EOL;
+echo 'SCRIPT_FILENAME: ' . ($_SERVER['SCRIPT_FILENAME'] ?? 'NOT SET') . PHP_EOL;

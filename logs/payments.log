@@ -1,0 +1,10 @@
+2026-05-30 16:43:38 | STK push to +255745193172 ref: PAYFAB75DE553A239D9 result: sent
+2026-05-30 16:44:47 | STK push to  ref: PAY3BC8F3A1A6EA4BB5 result: sent
+2026-07-04 22:22:46 | Payment completed | {"payment_id":2,"snippe_status":"completed","new_status":"completed"}
+2026-07-04 22:22:46 | Product payment completed | {"payment_id":2,"product_id":1}
+2026-07-04 22:22:50 | Payment pending | {"payment_id":2,"snippe_status":"pending","new_status":"pending"}
+2026-07-04 22:42:40 | Payment completed | {"payment_id":4,"snippe_status":"manual","new_status":"completed"}
+2026-07-04 22:42:40 | Product payment completed | {"payment_id":4,"product_id":1}
+2026-07-04 22:42:47 | Payment pending | {"payment_id":4,"snippe_status":"pending","new_status":"pending"}
+2026-07-04 22:47:33 | Payment completed | {"payment_id":4,"snippe_status":"manual","new_status":"completed"}
+2026-07-04 22:47:33 | Product payment completed | {"payment_id":4,"product_id":1}

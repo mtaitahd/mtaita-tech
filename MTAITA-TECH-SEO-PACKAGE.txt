@@ -1,0 +1,642 @@
+================================================================================
+  MTAITA TECH — COMPLETE SEO PACKAGE
+  Copy everything below into your AI or CMS
+================================================================================
+
+================================================================================
+  1. PRIMARY SEO CONFIGURATION (config.php)
+================================================================================
+
+// --- Replace these values in config.php ---
+
+define('SITE_NAME', 'Mtaita Tech');
+define('SITE_TAGLINE', 'Software Development Company in Kilimanjaro & Arusha');
+define('SITE_URL', 'https://mtaitatech.com');  // UPDATE TO YOUR PRODUCTION URL
+
+// --- Default SEO meta (lines 84-88) ---
+$page_title = SITE_NAME . ' — ' . SITE_TAGLINE;
+$page_desc = 'Mtaita Tech is a leading software development company in Kilimanjaro and Arusha, Tanzania. We build websites, mobile apps, POS systems, inventory software, business management systems, eCommerce platforms, and custom digital solutions for businesses of all sizes.';
+$page_keywords = 'software company Tanzania, software company Kilimanjaro, website development Tanzania, web design Tanzania, IT company Tanzania';
+$og_image = SITE_URL . '/assets/img/og-default.jpg';
+
+
+================================================================================
+  2. PER-PAGE SEO METADATA (Copy into each page PHP file)
+================================================================================
+
+--- HOMEPAGE (/) ---
+$page_title = 'Mtaita Tech | Software Company in Kilimanjaro & Arusha | Tanzania';
+$page_desc = 'Mtaita Tech is a leading software development company in Kilimanjaro and Arusha, Tanzania. We build websites, mobile apps, POS systems, inventory & business management software.';
+$page_keywords = 'software company Kilimanjaro, software company Arusha, website development Tanzania, IT company Tanzania, web design Tanzania, custom software development, POS system Tanzania';
+$page_heading = 'Software Development Company in Kilimanjaro & Arusha';
+$og_type = 'website';
+
+--- ABOUT (/about) ---
+$page_title = 'About Mtaita Tech | Software Development Company in Tanzania';
+$page_desc = 'Learn about Mtaita Tech — a trusted software development company in Kilimanjaro and Arusha, Tanzania. We deliver custom websites, mobile apps, business systems & digital solutions.';
+$page_keywords = 'about Mtaita Tech, software company Tanzania, IT company Kilimanjaro, web development agency Arusha, custom software developer Tanzania';
+$page_heading = 'About Mtaita Tech';
+
+--- SERVICES (/services) ---
+$page_title = 'Our Services | Software, Web & Mobile Development Tanzania';
+$page_desc = 'Explore Mtaita Tech services: website development, mobile apps, POS systems, inventory management, CRM, ERP, eCommerce, SEO, hosting & ICT consultancy in Tanzania.';
+$page_keywords = 'software services Tanzania, web development services, mobile app development, POS system, inventory system, CRM development, ERP development, ICT consultancy Tanzania';
+$page_heading = 'Our Digital Services';
+
+--- WEB DEVELOPMENT (/web-development) ---
+$page_title = 'Website Development Kilimanjaro | Web Design Tanzania | Mtaita Tech';
+$page_desc = 'Professional website development in Kilimanjaro and Arusha, Tanzania. Custom websites, eCommerce platforms, and web applications by Mtaita Tech. Affordable & responsive.';
+$page_keywords = 'website development Kilimanjaro, web design Tanzania, web developer Arusha, website designer Moshi, eCommerce website Tanzania, professional website Tanzania';
+$page_heading = 'Website Development Services';
+
+--- MOBILE APPS (/mobile-apps) ---
+$page_title = 'Mobile App Development Arusha | Android & iOS Apps Tanzania';
+$page_desc = 'Professional mobile app development in Arusha and Kilimanjaro, Tanzania. Custom Android and iOS applications built with modern technology by Mtaita Tech.';
+$page_keywords = 'mobile app development Arusha, Android app development Tanzania, iOS app developer Tanzania, mobile app developer Kilimanjaro, cross-platform apps';
+$page_heading = 'Mobile App Development';
+
+--- GRAPHIC DESIGN (/graphic-design) ---
+$page_title = 'Graphic Design Services Tanzania | Logo & Brand Design Kilimanjaro';
+$page_desc = 'Professional graphic design in Kilimanjaro and Tanzania. Logo design, branding, social media graphics, and print materials by Mtaita Tech.';
+$page_keywords = 'graphic design Tanzania, logo design Kilimanjaro, branding services Arusha, graphic designer Moshi, social media graphics, print design Tanzania';
+$page_heading = 'Graphic Design & Branding';
+
+--- SEO & DIGITAL MARKETING (/seo-digital-marketing) ---
+$page_title = 'SEO Company Kilimanjaro | Digital Marketing Services Tanzania';
+$page_desc = 'Professional SEO and digital marketing services in Kilimanjaro and Tanzania. Grow your online presence, rank higher on Google, and attract more customers with Mtaita Tech.';
+$page_keywords = 'SEO company Kilimanjaro, digital marketing Tanzania, SEO services Arusha, search engine optimization Tanzania, social media marketing, online marketing Tanzania';
+$page_heading = 'SEO & Digital Marketing';
+
+--- PORTFOLIO / ABOUT ME (/portfolio) ---
+$page_title = 'Portfolio | Mtaita Tech Projects & Web Development Work Tanzania';
+$page_desc = 'View the portfolio of Mtaita Tech. Showcasing website development, mobile app, and business system projects delivered for clients across Kilimanjaro, Arusha & Tanzania.';
+$page_keywords = 'Mtaita Tech portfolio, web development projects Tanzania, website portfolio Kilimanjaro, software projects Arusha, business systems Tanzania';
+$page_heading = 'Our Portfolio';
+
+--- ALL PROJECTS (/all-projects) ---
+$page_title = 'Live Projects & Systems | Web Development Portfolio Tanzania';
+$page_desc = 'Browse all live systems, websites, and software projects built by Mtaita Tech for businesses across Kilimanjaro, Arusha and Tanzania.';
+$page_keywords = 'live projects Tanzania, web development portfolio, software systems Kilimanjaro, business management systems Arusha, Mtaita Tech projects';
+$page_heading = 'All Projects & Live Systems';
+
+--- CONTACT (/contact) ---
+$page_title = 'Contact Mtaita Tech | IT Company Moshi | Software Developer Tanzania';
+$page_desc = 'Contact Mtaita Tech in Kilimanjaro, Tanzania. Get a free quote for website development, mobile apps, POS systems, inventory software or custom business solutions.';
+$page_keywords = 'contact Mtaita Tech, IT company Moshi, software developer Kilimanjaro, web designer Arusha, business system Tanzania, website quote Tanzania';
+$page_heading = 'Contact Us';
+
+--- COURSES (/courses) ---
+$page_title = 'Free & Premium Courses | Web Development, Programming & Design Tanzania';
+$page_desc = 'Learn web development, graphic design, programming and IT skills with free and premium online courses from Mtaita Tech. Start learning today.';
+$page_keywords = 'online courses Tanzania, web development course, programming course Tanzania, free courses, premium courses, learn coding, graphic design course';
+$page_heading = 'Our Courses';
+
+--- DIGITAL PRODUCTS (/digital_products) ---
+$page_title = 'Digital Products | Code, Templates & Resources Tanzania | Mtaita Tech';
+$page_desc = 'Browse and download digital products including source code, website templates, and design resources from Mtaita Tech.';
+$page_keywords = 'digital products Tanzania, source code download, website templates, PHP scripts, Bootstrap templates, web development resources';
+$page_heading = 'Digital Products';
+
+--- ANNOUNCEMENTS (/announcements) ---
+$page_title = 'Announcements | Mtaita Tech News & Updates';
+$page_desc = 'Stay updated with the latest announcements, news, and updates from Mtaita Tech — your trusted software development company in Kilimanjaro.';
+$page_keywords = 'Mtaita Tech announcements, company news Tanzania, software company updates Kilimanjaro';
+$page_heading = 'Announcements';
+
+--- BLOG (if implemented) ---
+$page_title = 'Blog | Mtaita Tech — Software Development Tips & Insights Tanzania';
+$page_desc = 'Read expert articles on website development, business software, POS systems, digital transformation, and technology trends from Mtaita Tech in Tanzania.';
+$page_keywords = 'blog Tanzania, software development blog, web design tips, business automation, POS systems Tanzania, digital transformation, SEO guide Tanzania';
+$page_heading = 'Our Blog';
+
+--- 404 PAGE (/404) ---
+$page_title = 'Page Not Found | Mtaita Tech — Software Company Tanzania';
+$page_desc = 'The page you are looking for does not exist. Return to Mtaita Tech homepage to explore our software development services in Kilimanjaro and Tanzania.';
+$page_keywords = '404 page not found, Mtaita Tech, software company Tanzania';
+
+
+================================================================================
+  3. COMPLETE XML SITEMAP (Copy to sitemap.php)
+================================================================================
+
+<?php
+require_once __DIR__ . '/db_connect.php';
+
+// Fetch dynamic content
+$blogs = $pdo->query("SELECT slug, created_at FROM blogs ORDER BY created_at DESC")->fetchAll();
+$courses = $pdo->query("SELECT slug, created_at FROM courses WHERE status = 'published' ORDER BY created_at DESC")->fetchAll();
+
+header('Content-Type: application/xml; charset=utf-8');
+echo '<?xml version="1.0" encoding="UTF-8"?>';
+?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- HOMEPAGE - Highest priority -->
+    <url>
+        <loc><?= SITE_URL ?>/</loc>
+        <priority>1.0</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+
+    <!-- CORE PAGES - Priority 0.9 -->
+    <url>
+        <loc><?= SITE_URL ?>/about</loc>
+        <priority>0.9</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc><?= SITE_URL ?>/services</loc>
+        <priority>0.9</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc><?= SITE_URL ?>/contact</loc>
+        <priority>0.9</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+
+    <!-- SERVICE PAGES - Priority 0.8 -->
+    <url>
+        <loc><?= SITE_URL ?>/web-development</loc>
+        <priority>0.8</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc><?= SITE_URL ?>/mobile-apps</loc>
+        <priority>0.8</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc><?= SITE_URL ?>/graphic-design</loc>
+        <priority>0.8</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc><?= SITE_URL ?>/seo-digital-marketing</loc>
+        <priority>0.8</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+
+    <!-- PORTFOLIO & PROJECTS - Priority 0.8 -->
+    <url>
+        <loc><?= SITE_URL ?>/portfolio</loc>
+        <priority>0.8</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc><?= SITE_URL ?>/all-projects</loc>
+        <priority>0.8</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+
+    <!-- EDUCATIONAL CONTENT - Priority 0.7 -->
+    <url>
+        <loc><?= SITE_URL ?>/courses</loc>
+        <priority>0.7</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc><?= SITE_URL ?>/digital_products</loc>
+        <priority>0.7</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc><?= SITE_URL ?>/announcements</loc>
+        <priority>0.5</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+
+    <!-- COURSE PAGES (dynamic) -->
+    <?php foreach ($courses as $c): ?>
+    <url>
+        <loc><?= SITE_URL ?>/course/<?= htmlspecialchars($c['slug']) ?></loc>
+        <priority>0.6</priority>
+        <changefreq>monthly</changefreq>
+        <lastmod><?= date('Y-m-d', strtotime($c['created_at'])) ?></lastmod>
+    </url>
+    <?php endforeach; ?>
+
+    <!-- BLOG POSTS (dynamic) -->
+    <?php foreach ($blogs as $b): ?>
+    <url>
+        <loc><?= SITE_URL ?>/blog/<?= htmlspecialchars($b['slug']) ?></loc>
+        <priority>0.6</priority>
+        <changefreq>monthly</changefreq>
+        <lastmod><?= date('Y-m-d', strtotime($b['created_at'])) ?></lastmod>
+    </url>
+    <?php endforeach; ?>
+</urlset>
+
+
+================================================================================
+  4. ROBOTS.TXT (Copy to robots.txt)
+================================================================================
+
+User-agent: *
+Allow: /
+
+# Block private/system areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /login/
+Disallow: /register/
+Disallow: /otp-verify/
+Disallow: /resend-otp/
+Disallow: /forgot-password/
+Disallow: /reset-password/
+Disallow: /logout/
+Disallow: /checkout/
+Disallow: /payment-pending/
+Disallow: /check-payment-status/
+Disallow: /google-callback/
+Disallow: /download-product/
+Disallow: /lesson/
+Disallow: /.env
+Disallow: /config.php
+Disallow: /db_connect.php
+Disallow: /mailer.php
+Disallow: /smtp.txt
+Disallow: /webhook.php
+Disallow: /debug.php
+
+# Sitemap
+Sitemap: https://mtaitatech.com/sitemap.xml
+
+
+================================================================================
+  5. GLOBAL SCHEMA.ORG JSON-LD (Add to header.php inside <head>)
+================================================================================
+
+<!-- Organization Schema -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Mtaita Tech",
+    "url": "<?= SITE_URL ?>",
+    "logo": "<?= SITE_URL ?>/assets/img/jj.png",
+    "description": "Software development company in Kilimanjaro and Arusha, Tanzania. We build websites, mobile apps, POS systems, inventory software, and custom business solutions.",
+    "foundingDate": "2023",
+    "email": "mtaitajohnson7@gmail.com",
+    "telephone": "+255-XXX-XXX-XXX",
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kilimanjaro",
+        "addressRegion": "Kilimanjaro",
+        "addressCountry": "TZ"
+    },
+    "sameAs": [
+        "https://www.facebook.com/mtaitatech",
+        "https://www.instagram.com/mtaita_tech",
+        "https://www.linkedin.com/company/mtaitatech",
+        "https://twitter.com/mtaitatech",
+        "https://www.youtube.com/@mtaita_tech"
+    ],
+    "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+255-XXX-XXX-XXX",
+        "contactType": "sales",
+        "availableLanguage": ["English", "Swahili"]
+    }
+}
+</script>
+
+<!-- LocalBusiness Schema -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Mtaita Tech",
+    "image": "<?= SITE_URL ?>/assets/img/jj.png",
+    "url": "<?= SITE_URL ?>",
+    "telephone": "+255-XXX-XXX-XXX",
+    "email": "mtaitajohnson7@gmail.com",
+    "description": "Mtaita Tech is a leading software development company in Kilimanjaro and Arusha, Tanzania, specializing in web development, mobile apps, POS systems, inventory management, and custom business software.",
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kilimanjaro",
+        "addressRegion": "Kilimanjaro",
+        "addressCountry": "TZ"
+    },
+    "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "-3.3725",
+        "longitude": "37.3433"
+    },
+    "openingHoursSpecification": [
+        {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "08:00",
+            "closes": "17:00"
+        },
+        {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "09:00",
+            "closes": "13:00"
+        }
+    ],
+    "areaServed": [
+        {"@type": "City", "name": "Kilimanjaro"},
+        {"@type": "City", "name": "Arusha"},
+        {"@type": "City", "name": "Moshi"},
+        {"@type": "Country", "name": "Tanzania"}
+    ]
+}
+</script>
+
+<!-- Website Schema -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Mtaita Tech",
+    "url": "<?= SITE_URL ?>",
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "<?= SITE_URL ?>/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    }
+}
+</script>
+
+<!-- SoftwareCompany Schema (for homepage) -->
+<?php if ($current_file === 'index.php'): ?>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Mtaita Tech Software Development Services",
+    "operatingSystem": "Web, Android, iOS",
+    "applicationCategory": "BusinessApplication",
+    "description": "Custom software development services including business management systems, POS, inventory, ERP, CRM, and web/mobile applications.",
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "TZS"
+    }
+}
+</script>
+<?php endif; ?>
+
+<!-- BreadcrumbList Schema (for all pages) -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "<?= SITE_URL ?>/"},
+        {"@type": "ListItem", "position": 2, "name": "<?= htmlspecialchars($page_heading ?? $page_title) ?>", "item": "<?= SITE_URL . $_SERVER['REQUEST_URI'] ?>"}
+    ]
+}
+</script>
+
+<!-- FAQ Schema (for homepage or FAQ sections) -->
+<?php if ($current_file === 'index.php'): ?>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How much does website development cost in Tanzania?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Website development costs in Tanzania vary based on complexity. A basic business website starts from TZS 500,000, while custom web applications and eCommerce platforms range from TZS 1,500,000 to TZS 5,000,000. Contact Mtaita Tech for a free quote."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What software systems do you develop?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "We develop POS systems, inventory management software, school management systems, hospital management systems, hotel management systems, payroll systems, CRM, ERP, booking systems, and custom business software."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Do you develop mobile applications?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, we develop custom Android and iOS mobile applications using modern frameworks like React Native and Flutter for businesses across Kilimanjaro, Arusha, and Tanzania."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can businesses outside Kilimanjaro work with Mtaita Tech?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Absolutely. We serve clients across Tanzania including Arusha, Dar es Salaam, Dodoma, Mwanza, Mbeya, Morogoro, Tanga, Zanzibar, and the rest of the country. We work remotely and deliver projects online."
+            }
+        }
+    ]
+}
+</script>
+<?php endif; ?>
+
+
+================================================================================
+  6. CLEAN URL STRUCTURE
+================================================================================
+
+Current clean URLs (already working via .htaccess):
+
+/                           Homepage
+/about                      About Us
+/services                   All Services
+/web-development            Web Development
+/mobile-apps                Mobile Apps
+/graphic-design             Graphic Design
+/seo-digital-marketing      SEO & Digital Marketing
+/portfolio                  Portfolio (About Me page)
+/all-projects               All Projects/Live Systems
+/contact                    Contact Us
+/courses                    Online Courses
+/course/{slug}              Individual Course
+/digital_products           Digital Products
+/product-detail             Product Detail
+/announcements              Announcements
+/privacy                    Privacy Policy
+/terms                      Terms of Service
+/sitemap.xml                XML Sitemap
+/robots.txt                 Robots.txt
+
+Recommended new location-specific URLs to create:
+/software-company-kilimanjaro
+/software-company-arusha
+/web-design-moshi
+/website-development-tanzania
+/pos-system-tanzania
+/inventory-management-tanzania
+/mobile-app-development-tanzania
+
+
+================================================================================
+  7. COMPLETE KEYWORD LIST (Organized by Intent)
+================================================================================
+
+PRIMARY KEYWORDS:
+Software Company Tanzania
+Software Company Kilimanjaro
+Software Company Arusha
+IT Company Tanzania
+IT Company Kilimanjaro
+Website Development Tanzania
+Website Development Kilimanjaro
+Website Development Arusha
+Web Design Tanzania
+Web Design Kilimanjaro
+Web Design Arusha
+Custom Software Development
+Business System Development
+POS System Tanzania
+Inventory Management System Tanzania
+School Management System Tanzania
+Hospital Management System Tanzania
+Hotel Management System Tanzania
+Payroll System Tanzania
+CRM Software Tanzania
+ERP Software Tanzania
+Business Automation Tanzania
+Mobile App Development Tanzania
+Android App Development Tanzania
+Ecommerce Website Tanzania
+SEO Services Tanzania
+Digital Marketing Tanzania
+ICT Consultancy Tanzania
+
+SECONDARY KEYWORDS:
+Website Designer Moshi
+Website Designer Arusha
+Website Designer Kilimanjaro
+Web Developer Moshi
+Software Developer Moshi
+Software Developer Tanzania
+Business Software Tanzania
+Professional Website Tanzania
+Affordable Website Tanzania
+Business Website Tanzania
+Corporate Website Tanzania
+Website Maintenance Tanzania
+Website Hosting Tanzania
+Cloud Solutions Tanzania
+Database Development Tanzania
+API Development Tanzania
+System Integration Tanzania
+Online Booking System Tanzania
+School ERP Tanzania
+Restaurant POS Tanzania
+Retail POS Tanzania
+Inventory Software Africa
+Digital Transformation Tanzania
+Enterprise Software Tanzania
+
+LONG-TAIL KEYWORDS:
+software company in Kilimanjaro
+website developer in Moshi
+website design in Arusha
+best POS system Tanzania
+inventory software Tanzania
+custom software developer Tanzania
+website company Arusha
+mobile app developer Tanzania
+hotel management system Tanzania
+ERP software Tanzania
+SEO company Kilimanjaro
+business automation Tanzania
+software development cost Tanzania
+affordable web design Tanzania
+
+GEO KEYWORDS:
+Kilimanjaro, Moshi, Arusha, Dar es Salaam, Dodoma, Mwanza, Mbeya, Morogoro, Tanga, Zanzibar, Tanzania
+
+
+================================================================================
+  8. IMAGE ALT TEXT TEMPLATES
+================================================================================
+
+Homepage hero:       "Mtaita Tech Software Development Company Kilimanjaro Tanzania"
+About page:          "Mtaita Tech team building digital solutions for Tanzanian businesses"
+Web page:            "Professional website development services Kilimanjarno Tanzania"
+Mobile page:         "Mobile app development Arusha Tanzania Android iOS apps"
+Design page:         "Graphic design and branding services Tanzania"
+SEO page:            "SEO and digital marketing services Kilimanjaro Tanzania"
+Portfolio item:      "Project: {project_title} by Mtaita Tech — Web Development Tanzania"
+Contact map:         "Mtaita Tech location Kilimanjaro Tanzania"
+Logo:               "Mtaita Tech Logo — Software Company Tanzania"
+
+
+================================================================================
+  9. GOOGLE BUSINESS DESCRIPTION
+================================================================================
+
+Mtaita Tech is a software development company located in Kilimanjaro, Tanzania, providing innovative digital solutions for businesses across Tanzania. We develop professional websites, mobile applications, POS systems, inventory management software, ERP systems, CRM solutions, school management systems, hospital systems, hotel management systems, and custom business software. Our experienced team focuses on quality, security, scalability, and customer satisfaction while helping businesses automate operations and grow digitally.
+
+
+================================================================================
+  10. SEO ISSUES FOUND + FIXES
+================================================================================
+
+ISSUE 1: Sitemap URL points to localhost
+FIX: Update SITE_URL in .env and config.php to https://mtaitatech.com
+     Update robots.txt Sitemap to https://mtaitatech.com/sitemap.xml
+
+ISSUE 2: Sitemap is missing 20+ public pages
+FIX: Replace sitemap.php with the comprehensive version above
+
+ISSUE 3: Missing blog page — /blog route referenced but not implemented
+FIX: Create blog.php or remove /blog from sitemap until ready
+
+ISSUE 4: All internal links hardcoded with /mtaita-tech/ prefix
+FIX: Replace all hardcoded /mtaita-tech/ links with SITE_URL constant
+
+ISSUE 5: Page titles are too short and lack location keywords
+FIX: Use updated per-page SEO metadata provided above
+
+ISSUE 6: Missing global Schema.org structured data
+FIX: Add Organization, LocalBusiness, WebSite, BreadcrumbList schemas to header.php
+
+ISSUE 7: No FAQ schema on homepage
+FIX: Add FAQPage schema to index.php conditionally in header.php
+
+ISSUE 8: No location-specific service pages
+FIX: Create pages like /software-company-kilimanjaro, /web-design-moshi, etc.
+
+ISSUE 9: /portfolio page is actually an "About Me" page — confusing for SEO
+FIX: Rename /portfolio to /about-developer or split: move personal bio to /about and portfolio projects to /portfolio
+
+ISSUE 10: No H1 defined in page variables — using page-header section text instead
+FIX: Standardize $page_heading variable and use it consistently in <h1>
+
+ISSUE 11: Footer links and nav links use hardcoded path /mtaita-tech/
+FIX: Use SITE_URL + '/path' everywhere for portability
+
+ISSUE 12: OG image default may not exist
+FIX: Create og-default.jpg (1200x630px) in assets/img/
+
+
+================================================================================
+  11. BLOG TOPIC IDEAS (For Content Marketing)
+================================================================================
+
+1. How Much Does Website Development Cost in Tanzania?
+2. Best POS System for Businesses in Tanzania
+3. Benefits of Custom Software Development for SMEs
+4. How Inventory Management Systems Reduce Business Losses
+5. Why Every Business Needs a Professional Website in 2026
+6. Cloud Computing Guide for Small Businesses in Tanzania
+7. SEO Guide for Tanzanian Businesses — Rank #1 on Google
+8. Digital Transformation for SMEs in Tanzania
+9. How Mobile Apps Increase Sales for Tanzanian Businesses
+10. Choosing the Right ERP System for Your Company
+11. How CRM Software Improves Customer Relationships
+12. Website Security Best Practices for Tanzanian Businesses
+13. School Management System: Digitize Your School Operations
+14. Hotel Management Software: Streamline Your Hospitality Business
+15. Website vs Facebook Page: Which is Better for Business?
+
+
+================================================================================
+  END OF MTAITA TECH SEO PACKAGE
+================================================================================
