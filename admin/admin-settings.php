@@ -9,7 +9,7 @@ $error_msg = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     $fields = [
         'site_name', 'site_tagline',
-        'admin_email', 'admin_phone', 'admin_location',
+        'admin_email', 'admin_phone', 'admin_location', 'notify_admin_sms',
         'smtp_host', 'smtp_port', 'smtp_encryption', 'smtp_user', 'smtp_pass',
         'from_email', 'from_name', 'reply_email',
         'meseji_api_key', 'meseji_sender_id'
@@ -108,6 +108,12 @@ function s($key, $default = '') {
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Admin Location</label>
                         <input type="text" name="admin_location" class="form-control" value="<?= htmlspecialchars(s('admin_location', 'Moshi, Kilimanjaro')) ?>">
+                    </div>
+                    <div class="col-md-6 mb-3 d-flex align-items-center pt-4">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="notify_admin_sms" id="notify_admin_sms" value="1" <?= s('notify_admin_sms', '1') === '1' ? 'checked' : '' ?>>
+                            <label class="form-check-label" for="notify_admin_sms">Send SMS notification to admin when contact form is submitted</label>
+                        </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">About Page Image</label>

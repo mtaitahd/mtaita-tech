@@ -47,12 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_contact'])) {
                 error_log("Contact form: email notification failed for $name ($email)");
             }
 
-            require_once __DIR__ . '/lib/SMS.php';
-            $sms = new SMS();
-            $smsMsg = "New inquiry: $name, $email, $phone, $service: $message";
-            $smsResult = $sms->send($admin_phone, $smsMsg);
-            if (!$smsResult) {
-                error_log("Contact form: SMS notification failed for $name ($email) - HTTP " . $sms->getLastHttpCode() . ': ' . $sms->getLastResponse());
+            if (Settings::get('notify_admin_sms', '1') === '1') {
+                require_once __DIR__ . '/lib/SMS.php';
+                $sms = new SMS();
+                $smsMsg = "New inquiry: $name, $email, $phone, $service: $message";
+                $smsResult = $sms->send($admin_phone, $smsMsg);
+                if (!$smsResult) {
+                    error_log("Contact form: SMS notification failed for $name ($email) - HTTP " . $sms->getLastHttpCode() . ': ' . $sms->getLastResponse());
+                }
             }
         }
     } else {
