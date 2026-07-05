@@ -70,180 +70,149 @@ require_once 'header.php';
                 </div>
             </div>
             <div class="col-md-9">
-        <div class="mt-dash-hero text-white mb-4" data-aos="fade-up">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3">
-                <div>
-                    <p class="text-secondary small text-uppercase mb-1 fw-semibold">Learner workspace</p>
-                    <h1 class="fw-bold mb-2" style="font-size:1.75rem;">Welcome, <?= htmlspecialchars($user['name']) ?>!</h1>
-                    <p class="text-secondary mb-0">Track courses, resume lessons, and manage digital purchases.</p>
-                </div>
-                <div class="mt-quick-actions d-flex flex-wrap gap-2">
-                    <a href="courses" class="btn btn-primary mt-btn-glow"><i class="fas fa-graduation-cap me-2"></i>Browse courses</a>
-                    <a href="digital_products" class="btn btn-outline-light"><i class="fas fa-box me-2"></i>Digital products</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="row g-3 mb-5">
-            <div class="col-md-4" data-aos="fade-up">
-                <a href="courses" class="text-decoration-none">
-                    <div class="mt-stat-card">
-                        <div class="icon-wrap"><i class="fas fa-book-open"></i></div>
-                        <h3 class="h4 text-white mb-1"><?= count($myCourses) ?></h3>
-                        <p class="text-secondary small mb-0">My courses</p>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="text-white fw-bold mb-1">Dashboard</h4>
+                        <p class="text-secondary mb-0 small">Welcome back, <?= htmlspecialchars($user['name']) ?></p>
                     </div>
-                </a>
-            </div>
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="60">
-                <div class="mt-stat-card">
-                    <div class="icon-wrap"><i class="fas fa-shopping-bag"></i></div>
-                    <h3 class="h4 text-white mb-1"><?= count($purchases) ?></h3>
-                    <p class="text-secondary small mb-0">Product purchases</p>
+                    <div>
+                        <a href="courses" class="btn btn-primary btn-sm"><i class="fas fa-graduation-cap me-1"></i>Browse Courses</a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="120">
-                <div class="mt-stat-card">
-                    <div class="icon-wrap"><i class="fas fa-bell"></i></div>
-                    <h3 class="h4 text-white mb-1">Updates</h3>
-                    <p class="text-secondary small mb-0">New modules appear here as your instructors publish them.</p>
-                </div>
-            </div>
-        </div>
 
-        <div class="row mb-4">
-            <div class="col-lg-8" data-aos="fade-right">
-                <div class="mt-glass p-4 rounded-4 mb-4">
-                    <h6 class="text-white fw-bold mb-3"><i class="fas fa-chart-line me-2 text-primary"></i>Learning analytics</h6>
-                    <div class="row g-3">
-                        <div class="col-6 col-md-3 text-center">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3 col-6">
+                        <div class="mt-glass p-3 rounded-4 text-center">
                             <div class="text-primary h3 fw-bold mb-0"><?= $totalEnrolled ?></div>
-                            <small class="text-secondary">Courses enrolled</small>
-                        </div>
-                        <div class="col-6 col-md-3 text-center">
-                            <div class="text-primary h3 fw-bold mb-0"><?= $totalCompletedLessons ?></div>
-                            <small class="text-secondary">Lessons done</small>
-                        </div>
-                        <div class="col-6 col-md-3 text-center">
-                            <div class="text-primary h3 fw-bold mb-0"><?= $totalLessonsAvailable ?></div>
-                            <small class="text-secondary">Total lessons</small>
-                        </div>
-                        <div class="col-6 col-md-3 text-center">
-                            <div class="text-primary h3 fw-bold mb-0"><?= $overallProgress ?>%</div>
-                            <small class="text-secondary">Overall progress</small>
+                            <small class="text-secondary">Enrolled</small>
                         </div>
                     </div>
-                    <div class="progress mt-3" style="height:10px;">
+                    <div class="col-md-3 col-6">
+                        <div class="mt-glass p-3 rounded-4 text-center">
+                            <div class="text-primary h3 fw-bold mb-0"><?= $totalCompletedLessons ?></div>
+                            <small class="text-secondary">Completed</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="mt-glass p-3 rounded-4 text-center">
+                            <div class="text-primary h3 fw-bold mb-0"><?= $totalLessonsAvailable ?></div>
+                            <small class="text-secondary">Lessons</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="mt-glass p-3 rounded-4 text-center">
+                            <div class="text-primary h3 fw-bold mb-0"><?= $overallProgress ?>%</div>
+                            <small class="text-secondary">Progress</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-glass p-3 rounded-4 mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="text-white fw-bold mb-0"><i class="fas fa-chart-line me-2 text-primary"></i>Overall Progress</h6>
+                        <span class="text-primary fw-bold small"><?= $overallProgress ?>%</span>
+                    </div>
+                    <div class="progress" style="height:10px;">
                         <div class="progress-bar bg-primary" style="width:<?= $overallProgress ?>%"></div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4" data-aos="fade-left">
-                <div class="mt-glass p-4 rounded-4 h-100">
-                    <h6 class="text-white fw-bold mb-3"><i class="fas fa-bolt me-2 text-primary"></i>Quick actions</h6>
-                    <div class="d-grid gap-2 mt-quick-actions">
-                        <a href="courses" class="btn btn-outline-primary btn-sm">Find a new course</a>
-                        <a href="courses" class="btn btn-outline-light btn-sm">My enrolled courses</a>
-                        <a href="contact" class="btn btn-outline-secondary btn-sm">Contact support</a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <h3 class="mb-3 text-white" data-aos="fade-up"><i class="fas fa-graduation-cap me-2 text-primary"></i>My courses</h3>
-        <div class="row mb-5">
-            <?php if (empty($myCourses)): ?>
-                <div class="col-12">
-                    <div class="card border-0 text-white mt-glass">
-                        <div class="card-body text-center py-5">
-                            <p class="text-secondary mb-3">You are not enrolled in any course yet.</p>
-                            <a href="courses" class="btn btn-primary mt-btn-glow px-4">Browse courses</a>
-                        </div>
+                <div class="mt-glass rounded-4 mb-4">
+                    <div class="d-flex justify-content-between align-items-center p-3 border-bottom border-secondary">
+                        <h6 class="text-white fw-bold mb-0"><i class="fas fa-book me-2 text-primary"></i>My Courses</h6>
+                        <a href="my-courses" class="btn btn-outline-primary btn-sm">View All</a>
                     </div>
+                    <?php if (empty($myCourses)): ?>
+                        <div class="text-center py-4">
+                            <p class="text-secondary mb-3">Not enrolled in any course yet.</p>
+                            <a href="courses" class="btn btn-primary btn-sm">Browse courses</a>
+                        </div>
+                    <?php else: ?>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-borderless mb-0">
+                                <thead><tr><th>Course</th><th>Progress</th><th></th></tr></thead>
+                                <tbody>
+                                    <?php foreach ($myCourses as $mc): ?>
+                                    <?php
+                                    $c = $courseModel->getById((int)$mc['course_id']);
+                                    $ids = $c ? $courseModel->getLessonIdsOrdered((int)$mc['course_id']) : [];
+                                    $resume = !empty($ids) ? 'lesson.php?id=' . (int)$ids[0] : 'single-course.php?slug=' . urlencode($mc['slug']);
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <?php if (!empty($mc['thumbnail'])): ?>
+                                                    <img src="<?= htmlspecialchars($mc['thumbnail']) ?>" style="width:40px;height:40px;object-fit:cover;border-radius:6px;" alt="">
+                                                <?php else: ?>
+                                                    <div style="width:40px;height:40px;background:#1e293b;border-radius:6px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-book text-secondary"></i></div>
+                                                <?php endif; ?>
+                                                <span class="text-white fw-semibold small"><?= htmlspecialchars($mc['title']) ?></span>
+                                            </div>
+                                        </td>
+                                        <td style="width:200px;">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="progress flex-grow-1" style="height:6px;">
+                                                    <div class="progress-bar bg-primary" style="width:<?= min(100, (float)$mc['progress']) ?>%"></div>
+                                                </div>
+                                                <small class="text-secondary"><?= number_format((float)$mc['progress'], 0) ?>%</small>
+                                            </div>
+                                        </td>
+                                        <td class="text-end">
+                                            <a href="<?= $resume ?>" class="btn btn-sm btn-primary">Resume</a>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
                 </div>
-            <?php else: ?>
-                <?php foreach ($myCourses as $mc): ?>
-                    <div class="col-md-4 mb-4" data-aos="fade-up">
-                        <div class="card border-0 text-white h-100 mt-glass mt-card-hover">
-                            <?php if (!empty($mc['thumbnail'])): ?>
-                                <img src="<?= htmlspecialchars($mc['thumbnail']) ?>" class="card-img-top" style="height:140px;object-fit:cover;" alt="" loading="lazy">
-                            <?php else: ?>
-                                <div class="card-img-top bg-dark d-flex align-items-center justify-content-center" style="height:140px;">
-                                    <i class="fas fa-book fa-3x text-secondary"></i>
-                                </div>
-                            <?php endif; ?>
-                            <div class="card-body">
-                                <h5><?= htmlspecialchars($mc['title']) ?></h5>
-                                <div class="progress mb-2" style="height:8px;">
-                                    <div class="progress-bar bg-primary" style="width:<?= min(100, (float)$mc['progress']) ?>%"></div>
-                                </div>
-                                <small class="text-secondary"><?= number_format((float)$mc['progress'], 0) ?>% enrolled</small>
-                                <?php
-                                $c = $courseModel->getById((int)$mc['course_id']);
-                                $ids = $c ? $courseModel->getLessonIdsOrdered((int)$mc['course_id']) : [];
-                                $resume = !empty($ids) ? 'lesson.php?id=' . (int)$ids[0] : 'single-course.php?slug=' . urlencode($mc['slug']);
-                                ?>
-                                <div class="mt-3">
-                                    <a href="<?= $resume ?>" class="btn btn-sm btn-primary">Resume</a>
-                                    <a href="single-course?slug=<?= urlencode($mc['slug']) ?>" class="btn btn-sm btn-outline-light">Outline</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
 
-        <h3 class="mb-3 text-white" data-aos="fade-up"><i class="fas fa-shopping-bag me-2 text-primary"></i>Digital product purchases</h3>
-        <div class="row mb-4">
-            <div class="col-12">
-                <?php if (empty($purchases)): ?>
-                    <div class="text-center py-4 mt-glass rounded-4">
-                        <p class="text-secondary mb-3">No product purchases yet</p>
-                        <a href="digital_products" class="btn btn-outline-primary mt-btn-glow">Browse digital products</a>
+                <div class="mt-glass rounded-4">
+                    <div class="d-flex justify-content-between align-items-center p-3 border-bottom border-secondary">
+                        <h6 class="text-white fw-bold mb-0"><i class="fas fa-shopping-bag me-2 text-primary"></i>Purchases</h6>
+                        <a href="digital_products" class="btn btn-outline-primary btn-sm">Browse Products</a>
                     </div>
-                <?php else: ?>
-                    <div class="row">
-                        <?php foreach ($purchases as $p): ?>
-                            <div class="col-md-4 mb-4" data-aos="fade-up">
-                                <div class="card border-0 text-white h-100 mt-glass mt-card-hover">
-                                    <?php if ($p['thumbnail']): ?>
-                                        <img src="<?= htmlspecialchars($p['thumbnail']) ?>" class="card-img-top" style="height:200px;object-fit:cover;" alt="">
-                                    <?php else: ?>
-                                        <div class="card-img-top d-flex align-items-center justify-content-center bg-dark" style="height:200px;">
-                                            <i class="fas fa-box fa-4x text-secondary"></i>
-                                        </div>
-                                    <?php endif; ?>
-                                    <div class="card-body">
-                                        <h5><?= htmlspecialchars($p['product_title']) ?></h5>
-                                        <p class="small text-secondary">
-                                            <i class="fas fa-tag me-2"></i><?= htmlspecialchars($p['type'] ?? 'digital') ?>
-                                        </p>
-                                        <p class="small text-secondary">
-                                            Purchased: <?= date('M d, Y', strtotime($p['created_at'])) ?>
-                                        </p>
-                                        <div class="mt-3">
+                    <?php if (empty($purchases)): ?>
+                        <div class="text-center py-4">
+                            <p class="text-secondary mb-0">No purchases yet.</p>
+                        </div>
+                    <?php else: ?>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-borderless mb-0">
+                                <thead><tr><th>Product</th><th>Date</th><th></th></tr></thead>
+                                <tbody>
+                                    <?php foreach ($purchases as $p): ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <?php if ($p['thumbnail']): ?>
+                                                    <img src="<?= htmlspecialchars($p['thumbnail']) ?>" style="width:40px;height:40px;object-fit:cover;border-radius:6px;" alt="">
+                                                <?php else: ?>
+                                                    <div style="width:40px;height:40px;background:#1e293b;border-radius:6px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-box text-secondary"></i></div>
+                                                <?php endif; ?>
+                                                <span class="text-white fw-semibold small"><?= htmlspecialchars($p['product_title']) ?></span>
+                                            </div>
+                                        </td>
+                                        <td><small class="text-secondary"><?= date('M d, Y', strtotime($p['created_at'])) ?></small></td>
+                                        <td class="text-end">
                                             <?php if ($p['youtube_url']): ?>
-                                                <a href="product-detail?id=<?= $p['product_id'] ?>" class="btn btn-sm btn-info me-2">
-                                                    <i class="fas fa-play me-2"></i>Watch Video
-                                                </a>
+                                                <a href="product-detail?id=<?= $p['product_id'] ?>" class="btn btn-sm btn-outline-info me-1"><i class="fas fa-play"></i></a>
                                             <?php endif; ?>
                                             <?php if ($p['zip_file']): ?>
-                                                <a href="download-product?id=<?= $p['product_id'] ?>" class="btn btn-sm btn-success">
-                                                    <i class="fas fa-download me-2"></i>Download
-                                                </a>
+                                                <a href="download-product?id=<?= $p['product_id'] ?>" class="btn btn-sm btn-outline-success"><i class="fas fa-download"></i></a>
                                             <?php endif; ?>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
-        </div>
     </div>
-</div>
 </section>
 
 <?php require_once 'footer.php'; ?>
