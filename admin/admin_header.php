@@ -191,7 +191,7 @@ $get_error = $_GET['error'] ?? '';
         <hr class="sidebar-divider">
 
         <li class="nav-item<?= $active_page === 'settings' ? ' active' : '' ?>">
-            <a class="nav-link" href="settings">
+            <a class="nav-link" href="site-settings">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Settings</span>
             </a>
