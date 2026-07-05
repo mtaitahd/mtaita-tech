@@ -1,0 +1,43 @@
+RewriteEngine On
+RewriteBase /admin/
+
+# Route clean URLs to .php files
+RewriteRule ^settings/?$ settings.php [L,QSA]
+RewriteRule ^dashboard/?$ dashboard.php [L,QSA]
+RewriteRule ^manage-courses/?$ manage-courses.php [L,QSA]
+RewriteRule ^course-builder/?$ course_builder.php [L,QSA]
+RewriteRule ^manage-lessons/?$ manage-lessons.php [L,QSA]
+RewriteRule ^manage-enrollments/?$ manage-enrollments.php [L,QSA]
+RewriteRule ^manage-services/?$ manage-services.php [L,QSA]
+RewriteRule ^projects/?$ projects.php [L,QSA]
+RewriteRule ^add-project/?$ add_project.php [L,QSA]
+RewriteRule ^edit-project/?$ edit_project.php [L,QSA]
+RewriteRule ^delete-project/?$ delete_project.php [L,QSA]
+RewriteRule ^posters/?$ posters.php [L,QSA]
+RewriteRule ^add-poster/?$ add_poster.php [L,QSA]
+RewriteRule ^delete-poster/?$ delete_poster.php [L,QSA]
+RewriteRule ^toggle-poster/?$ toggle_poster.php [L,QSA]
+RewriteRule ^thumbnails/?$ thumbnails.php [L,QSA]
+RewriteRule ^add-thumbnail/?$ add_thumbnail.php [L,QSA]
+RewriteRule ^delete-thumbnail/?$ delete_thumbnail.php [L,QSA]
+RewriteRule ^products/?$ products.php [L,QSA]
+RewriteRule ^orders/?$ orders.php [L,QSA]
+RewriteRule ^payments/?$ payments.php [L,QSA]
+RewriteRule ^announcements/?$ announcements.php [L,QSA]
+RewriteRule ^add-announcement/?$ add_announcement.php [L,QSA]
+RewriteRule ^delete-announcement/?$ delete_announcement.php [L,QSA]
+RewriteRule ^toggle-announcement/?$ toggle_announcement.php [L,QSA]
+RewriteRule ^update-announcement/?$ update_announcement.php [L,QSA]
+RewriteRule ^update-announcement-color/?$ update_announcement_color.php [L,QSA]
+RewriteRule ^contacts/?$ contacts.php [L,QSA]
+RewriteRule ^send-notification/?$ send-notification.php [L,QSA]
+RewriteRule ^logout/?$ logout.php [L,QSA]
+RewriteRule ^ajax-unread/?$ ajax_unread.php [L,QSA]
+RewriteRule ^manage-users/?$ manage-users.php [L,QSA]
+RewriteRule ^test-mail/?$ test-mail.php [L,QSA]
+
+# Fallback: if file exists as .php, rewrite
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L]
