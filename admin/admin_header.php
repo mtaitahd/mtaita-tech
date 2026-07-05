@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION['admin_logged_in'])) {
-    header('Location: login');
+    header('Location: /admin/login');
     exit;
 }
 if (!isset($pdo)) {
