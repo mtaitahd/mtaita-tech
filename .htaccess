@@ -1,8 +1,8 @@
 RewriteEngine On
 RewriteBase /
 
-# Force HTTPS
-RewriteCond %{HTTPS} off
+# Force HTTPS (works behind Cloudflare SSL termination)
+RewriteCond %{HTTP:CF-Visitor} '"scheme":"http"'
 RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
 # Redirect www to non-www
