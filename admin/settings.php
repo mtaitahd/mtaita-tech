@@ -1,4 +1,5 @@
 <?php
+header('X-Debug-Path: ' . __FILE__);
 $page_title = 'Settings';
 $active_page = 'settings';
 require_once 'admin_header.php';
