@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && empty($_SESSION[$successFlag]) && em
     $_SESSION[$successFlag] = true;
     $success_msg = $otp_method === 'sms'
         ? 'Verification code sent via SMS to your phone.'
-        : 'Verification code sent to your email.';
+        : 'Verification code sent to your email. Check Spam if not in inbox.';
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
