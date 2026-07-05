@@ -86,6 +86,7 @@ RewriteRule ^admin/contacts/?$ admin/contacts.php [L,QSA]
 RewriteRule ^admin/send-notification/?$ admin/send-notification.php [L,QSA]
 RewriteRule ^admin/logout/?$ admin/logout.php [L,QSA]
 RewriteRule ^admin/ajax-unread/?$ admin/ajax_unread.php [L,QSA]
+RewriteRule ^admin/manage-users/?$ admin/manage-users.php [L,QSA]
 
 # Protect sensitive files
 <FilesMatch "\.(env|env\.example)|smtp\.txt$">

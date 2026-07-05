@@ -51,6 +51,15 @@ $get_error = $_GET['error'] ?? '';
 
         <hr class="sidebar-divider">
 
+        <li class="nav-item<?= $active_page === 'users' ? ' active' : '' ?>">
+            <a class="nav-link" href="manage-users">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Users</span>
+            </a>
+        </li>
+
+        <hr class="sidebar-divider">
+
         <div class="sidebar-heading">Content</div>
 
         <li class="nav-item">
