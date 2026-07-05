@@ -31,6 +31,7 @@ define('DB_PASS', env('DB_PASS', ''));
 // SMTP
 define('SMTP_HOST', env('SMTP_HOST', 'smtp.gmail.com'));
 define('SMTP_PORT', (int)env('SMTP_PORT', 587));
+define('SMTP_ENCRYPTION', env('SMTP_ENCRYPTION', 'ssl'));
 define('SMTP_USER', env('SMTP_USER', ''));
 define('SMTP_PASS', env('SMTP_PASS', ''));
 define('FROM_EMAIL', env('FROM_EMAIL', SMTP_USER));

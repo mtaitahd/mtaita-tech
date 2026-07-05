@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     $fields = [
         'site_name', 'site_tagline',
         'admin_email', 'admin_phone',
-        'smtp_host', 'smtp_port', 'smtp_user', 'smtp_pass',
+        'smtp_host', 'smtp_port', 'smtp_encryption', 'smtp_user', 'smtp_pass',
         'from_email', 'from_name',
         'meseji_api_key', 'meseji_sender_id'
     ];
@@ -69,6 +69,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                     <div class="col-md-6 mb-3">
                         <label class="form-label">SMTP Port</label>
                         <input type="text" name="smtp_port" class="form-control" value="<?= htmlspecialchars(Settings::get('smtp_port', '465')) ?>">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">SMTP Encryption</label>
+                        <select name="smtp_encryption" class="form-select">
+                            <option value="ssl" <?= Settings::get('smtp_encryption', 'ssl') === 'ssl' ? 'selected' : '' ?>>SSL (port 465)</option>
+                            <option value="tls" <?= Settings::get('smtp_encryption', 'ssl') === 'tls' ? 'selected' : '' ?>>TLS (port 587)</option>
+                            <option value="none" <?= Settings::get('smtp_encryption', 'ssl') === 'none' ? 'selected' : '' ?>>None (port 25)</option>
+                        </select>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">SMTP Username</label>

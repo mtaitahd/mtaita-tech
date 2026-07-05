@@ -7,6 +7,7 @@ class Mailer
 {
     private $host;
     private $port;
+    private $encryption;
     private $username;
     private $password;
     private $fromEmail;
@@ -16,6 +17,7 @@ class Mailer
     {
         $this->host = defined('SMTP_HOST') ? SMTP_HOST : 'smtp.gmail.com';
         $this->port = defined('SMTP_PORT') ? SMTP_PORT : 465;
+        $this->encryption = defined('SMTP_ENCRYPTION') ? SMTP_ENCRYPTION : 'ssl';
         $this->username = defined('SMTP_USER') ? SMTP_USER : '';
         $this->password = defined('SMTP_PASS') ? SMTP_PASS : '';
         $this->fromEmail = defined('FROM_EMAIL') ? FROM_EMAIL : '';
@@ -24,6 +26,7 @@ class Mailer
         if (class_exists('Settings')) {
             $this->host = Settings::get('smtp_host', $this->host);
             $this->port = (int)Settings::get('smtp_port', $this->port);
+            $this->encryption = Settings::get('smtp_encryption', $this->encryption);
             $this->username = Settings::get('smtp_user', $this->username);
             $this->password = Settings::get('smtp_pass', $this->password);
             $this->fromEmail = Settings::get('from_email', $this->fromEmail);
@@ -40,8 +43,8 @@ class Mailer
             ],
         ]);
 
-        $transport = $this->port == 465 ? 'ssl' : 'tcp';
-        $remote = $transport . '://' . $this->host . ':' . $this->port;
+        $scheme = $this->encryption === 'ssl' ? 'ssl' : 'tcp';
+        $remote = $scheme . '://' . $this->host . ':' . $this->port;
 
         $socket = @stream_socket_client($remote, $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $ctx);
         if (!$socket) {
