@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 if (index === inputs.length - 1) {
                     updateHidden();
-                    document.getElementById('otpForm').requestSubmit();
+                    setTimeout(function() { document.getElementById('otpForm').submit(); }, 50);
                     return;
                 }
             } else {
@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             updateHidden();
             if (digits.length >= inputs.length) {
-                document.getElementById('otpForm').requestSubmit();
+                setTimeout(function() { document.getElementById('otpForm').submit(); }, 50);
             }
         });
     });
