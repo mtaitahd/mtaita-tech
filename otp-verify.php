@@ -98,7 +98,7 @@ setTimeout(function(){ window.location.href='<?= $redirectUrl ?>'; }, 1500);
 </script>
 </body>
 </html>
-<?php exit; endif; ?>
+<?php exit; endif;
 
 $typeLabels = ['verify' => 'email verification', 'login' => 'login', 'reset' => 'password reset'];
 $label = $typeLabels[$type] ?? 'verification';
