@@ -41,7 +41,8 @@ require_once 'db_connect.php';
                 </div>
             </div>
             <div class="col-lg-6 text-center">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80" alt="About Mtaita Tech" class="img-fluid rounded-4 shadow">
+                <?php require_once __DIR__ . '/lib/Settings.php'; $about_img = Settings::get('about_image', 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80'); ?>
+                <img src="<?= htmlspecialchars($about_img) ?>" alt="About Mtaita Tech" class="img-fluid rounded-4 shadow">
             </div>
         </div>
     </div>
