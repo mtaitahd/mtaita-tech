@@ -3654,7 +3654,7 @@ img, video, iframe, embed, object, table, pre, code {
 
 /* ===== Testimonial Section ===== */
 .testimonial-section {
-    background: var(--white);
+    background: var(--light-gray);
     position: relative;
 }
 
@@ -3663,6 +3663,9 @@ img, video, iframe, embed, object, table, pre, code {
     margin: 0 auto;
     text-align: center;
     padding: 40px 20px;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
 }
 
 .testimonial-stars {
