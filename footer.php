@@ -58,10 +58,12 @@
 </footer>
 <?php endif; ?>
 
+<?php if ($page === ''): ?>
 <a href="https://wa.me/255616591639" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
     <i class="fab fa-whatsapp"></i>
     <span class="whatsapp-notif"><?= __('whatsapp_help') ?></span>
 </a>
+<?php endif; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
