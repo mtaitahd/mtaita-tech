@@ -43,6 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && empty($_SESSION[$successFlag]) && em
         : 'Verification code sent to your email. Check Spam if not in inbox.';
 }
 
+$verified = false;
+$redirectUrl = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $otpCode = trim($_POST['otp'] ?? '');
     $otpCode = preg_replace('/[^0-9]/', '', $otpCode);
@@ -55,32 +58,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($type === 'reset') {
                 $_SESSION['reset_verified'] = $email;
                 unset($_SESSION['pending_user_id'], $_SESSION['pending_email'], $_SESSION['pending_type']);
-                header('Location: reset-password');
-                exit;
-            }
+                $verified = true;
+                $redirectUrl = 'reset-password';
+            } else {
+                $stmt = $pdo->prepare("SELECT id, name, email FROM public_users WHERE id = ?");
+                $stmt->execute([$userId]);
+                $user = $stmt->fetch();
 
-            $stmt = $pdo->prepare("SELECT id, name, email FROM public_users WHERE id = ?");
-            $stmt->execute([$userId]);
-            $user = $stmt->fetch();
+                if ($user) {
+                    $_SESSION['public_user_id'] = $user['id'];
+                    unset($_SESSION['pending_user_id'], $_SESSION['pending_email'], $_SESSION['pending_type']);
 
-            if ($user) {
-                $_SESSION['public_user_id'] = $user['id'];
-                unset($_SESSION['pending_user_id'], $_SESSION['pending_email'], $_SESSION['pending_type']);
-
-                if ($type === 'verify') {
-                    header('Location: dashboard.php?msg=' . urlencode('Welcome! Your email has been verified.'));
-                } else {
-                    $redirect = $_SESSION['redirect_after_login'] ?? 'dashboard.php';
-                    unset($_SESSION['redirect_after_login']);
-                    header('Location: ' . $redirect);
+                    if ($type === 'verify') {
+                        $redirectUrl = 'dashboard.php?msg=' . urlencode('Welcome! Your email has been verified.');
+                    } else {
+                        $redirectUrl = $_SESSION['redirect_after_login'] ?? 'dashboard.php';
+                        unset($_SESSION['redirect_after_login']);
+                    }
+                    $verified = true;
                 }
-                exit;
             }
         } else {
             $error_msg = 'Invalid or expired code. Please try again.';
         }
     }
 }
+
+if ($verified): ?>
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="robots" content="noindex,nofollow"><title>Verified!</title>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body style="background:#0b0c1a;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;">
+<script>
+Swal.fire({ icon:'success', title:'Verified!', text:'Redirecting...', timer:1500, showConfirmButton:false });
+setTimeout(function(){ window.location.href='<?= $redirectUrl ?>'; }, 1500);
+</script>
+</body>
+</html>
+<?php exit; endif; ?>
 
 $typeLabels = ['verify' => 'email verification', 'login' => 'login', 'reset' => 'password reset'];
 $label = $typeLabels[$type] ?? 'verification';

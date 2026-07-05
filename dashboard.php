@@ -38,14 +38,37 @@ if ($totalEnrolled > 0) {
 }
 $overallProgress = $totalLessonsAvailable > 0 ? round(($totalCompletedLessons / $totalLessonsAvailable) * 100) : 0;
 
+$get_msg = $_GET['msg'] ?? '';
+
 $page_title = 'Dashboard — Mtaita Tech';
 $page_desc = 'Your learning dashboard on Mtaita Tech.';
 $page_keywords = 'dashboard, my courses, Mtaita Tech';
+$hide_navbar = true;
 require_once 'header.php';
 ?>
+<?php if ($get_msg): ?><div class="d-none swal-msg" data-type="success"><?= htmlspecialchars($get_msg) ?></div><?php endif; ?>
 
 <section class="dashboard-section section-padding">
     <div class="container">
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="mt-glass p-3 rounded-4">
+                    <div class="text-center mb-3">
+                        <div style="width:60px;height:60px;border-radius:50%;background:#dc2626;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:24px;font-weight:700;color:#fff;"><?= strtoupper(substr($user['name'], 0, 1)) ?></div>
+                        <h6 class="text-white mt-2 mb-0"><?= htmlspecialchars($user['name']) ?></h6>
+                        <small class="text-secondary"><?= htmlspecialchars($user['email']) ?></small>
+                    </div>
+                    <hr class="border-secondary">
+                    <nav class="d-flex flex-column gap-1">
+                        <a href="dashboard" class="btn btn-primary btn-sm text-start"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
+                        <a href="my-courses" class="btn btn-outline-light btn-sm text-start"><i class="fas fa-book me-2"></i>My Courses</a>
+                        <a href="digital_products" class="btn btn-outline-light btn-sm text-start"><i class="fas fa-box me-2"></i>Digital Products</a>
+                        <a href="courses" class="btn btn-outline-light btn-sm text-start"><i class="fas fa-search me-2"></i>Browse Courses</a>
+                        <a href="logout" class="btn btn-outline-danger btn-sm text-start mt-2"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-md-9">
         <div class="mt-dash-hero text-white mb-4" data-aos="fade-up">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3">
                 <div>
@@ -217,7 +240,9 @@ require_once 'header.php';
                 <?php endif; ?>
             </div>
         </div>
+        </div>
     </div>
+</div>
 </section>
 
-<?php $hide_navbar = true; require_once 'footer.php'; ?>
+<?php require_once 'footer.php'; ?>

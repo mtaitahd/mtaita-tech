@@ -49,6 +49,7 @@ RewriteRule ^privacy/?$ privacy.php [L,QSA]
 RewriteRule ^terms/?$ terms.php [L,QSA]
 RewriteRule ^404/?$ 404.php [L,QSA]
 RewriteRule ^products/?$ products.php [L,QSA]
+RewriteRule ^my-courses/?$ my-courses.php [L,QSA]
 
 # Course & Blog detail routes
 RewriteRule ^course/(.+)$ single-course.php?slug=$1 [L,QSA]
