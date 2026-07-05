@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reply_contact'])) {
             require_once __DIR__ . '/../email_template.php';
             $mailer = new Mailer();
             $replyEmail = Settings::get('reply_email', 'info@mtaitatech.online');
+            $fromEmail = Settings::get('from_email', '');
             $mailer->setReplyTo($replyEmail);
             $subject = "Re: Your message to Mtaita Tech";
             $bodyHtml = '
@@ -60,9 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reply_contact'])) {
 
             if ($sent) {
                 $pdo->prepare("UPDATE contacts SET is_read = 1, replied_at = NOW() WHERE id = ?")->execute([$cid]);
-                $success_msg = 'Reply sent to ' . htmlspecialchars($contact['email']) . '.';
+                $success_msg = 'Reply sent to ' . htmlspecialchars($contact['email']) . ' (From: ' . htmlspecialchars($fromEmail) . ', Reply-To: ' . htmlspecialchars($replyEmail) . ')';
             } else {
-                $error_msg = 'Failed to send reply email. Check SMTP settings.';
+                $error_msg = 'Failed to send reply email. Check SMTP settings. (From: ' . htmlspecialchars($fromEmail) . ')';
             }
         } else {
             $error_msg = 'Contact not found.';

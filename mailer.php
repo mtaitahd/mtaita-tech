@@ -127,9 +127,11 @@ class Mailer
         $this->write($socket, "QUIT");
         fclose($socket);
 
-        $success = strpos($response, '250') !== false || strpos($response, '354') !== false;
+        $code = substr(trim($response), 0, 3);
+        $success = $code === '250' || $code === '354';
         if (!$success) {
-            $log("data response: $response");
+            $log("SMTP DATA response: $response (code: $code)");
+            $log("Send to: " . implode(', ', $recipients) . " from: $this->fromEmail subject: $subject");
         }
         return $success;
     }
