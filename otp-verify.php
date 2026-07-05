@@ -217,7 +217,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 if (index === inputs.length - 1) {
                     updateHidden();
-                    setTimeout(function() { document.getElementById('otpForm').submit(); }, 50);
                     return;
                 }
             } else {
@@ -255,9 +254,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 inputs[nextIndex].focus();
             }
             updateHidden();
-            if (digits.length >= inputs.length) {
-                setTimeout(function() { document.getElementById('otpForm').submit(); }, 50);
-            }
         });
     });
 
