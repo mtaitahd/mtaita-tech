@@ -90,6 +90,7 @@ RewriteRule ^admin/logout/?$ admin/logout.php [L,QSA]
 RewriteRule ^admin/ajax-unread/?$ admin/ajax_unread.php [L,QSA]
 RewriteRule ^admin/manage-users/?$ admin/manage-users.php [L,QSA]
 RewriteRule ^admin/test-mail/?$ admin/test-mail.php [L,QSA]
+RewriteRule ^admin/settings/?$ admin/settings.php [L,QSA]
 
 # Protect sensitive files
 <FilesMatch "\.(env|env\.example)|smtp\.txt$">
