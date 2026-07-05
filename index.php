@@ -148,7 +148,7 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
 
 <!-- Live Systems / Recent Work - Horizontal Scroll -->
 <?php if (!empty($live_systems)): ?>
-<section class="section-padding live-systems-section bg-light-section">
+<section class="section-padding live-systems-section">
     <div class="container">
         <div class="text-center mb-5">
             <h2><?= __('live_systems_heading') ?></h2>
@@ -192,7 +192,7 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
 
 <!-- Our Proudly Partners -->
 <?php if (!empty($partners)): ?>
-<section class="section-padding partners-section bg-light-section">
+<section class="section-padding partners-section">
     <div class="container">
         <div class="text-center mb-5">
             <h2><?= __('partners_heading') ?></h2>
@@ -269,7 +269,7 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
 <?php endif; ?>
 
 <!-- Contact CTA Section -->
-<section class="section-padding bg-light-section">
+<section class="section-padding cta-section">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">

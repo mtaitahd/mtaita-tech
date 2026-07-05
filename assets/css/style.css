@@ -583,7 +583,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
 
 /* The Best IT Service Company Section */
 .choose-best {
-    background: var(--light-gray);
+    background: #FFFFFF;
     padding: 80px 0;
     position: relative;
     overflow: hidden;
@@ -3327,7 +3327,7 @@ img, video, iframe, embed, object, table, pre, code {
 
 /* ===== Solutions Section ===== */
 .solutions-section {
-    background: var(--white);
+    background: #EEF2FF;
 }
 
 .solution-card {
@@ -3414,7 +3414,7 @@ img, video, iframe, embed, object, table, pre, code {
 
 /* ===== Live Systems Section - Horizontal Scroll ===== */
 .live-systems-section {
-    background: var(--light-gray);
+    background: #F8F9FA;
 }
 
 .live-scroll-wrap {
@@ -3591,6 +3591,7 @@ img, video, iframe, embed, object, table, pre, code {
 
 /* ===== Partners Section ===== */
 .partners-section {
+    background: #FAFAFA;
     overflow: hidden;
 }
 
@@ -3654,7 +3655,7 @@ img, video, iframe, embed, object, table, pre, code {
 
 /* ===== Testimonial Section ===== */
 .testimonial-section {
-    background: var(--light-gray);
+    background: #F0FDF4;
     position: relative;
 }
 
@@ -3737,6 +3738,11 @@ img, video, iframe, embed, object, table, pre, code {
 .testimonial-arrow:hover {
     background: var(--red);
     transform: scale(1.1);
+}
+
+/* ===== CTA Section ===== */
+.cta-section {
+    background: #FEF2F2;
 }
 
 /* ===== bg-light-section fallback ===== */
