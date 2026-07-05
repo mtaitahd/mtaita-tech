@@ -12,6 +12,7 @@ class Mailer
     private $password;
     private $fromEmail;
     private $fromName;
+    private $replyTo;
 
     public function __construct()
     {
@@ -38,6 +39,11 @@ class Mailer
     {
         $this->fromEmail = $email;
         if ($name) $this->fromName = $name;
+    }
+
+    public function setReplyTo($email)
+    {
+        $this->replyTo = $email;
     }
 
     public function send($to, $subject, $body, $isHtml = false)
@@ -106,7 +112,7 @@ class Mailer
         $contentType = $isHtml ? 'text/html' : 'text/plain';
         $headers = "From: {$this->fromName} <{$this->fromEmail}>\r\n";
         $headers .= "To: $recipientList\r\n";
-        $headers .= "Reply-To: {$this->fromEmail}\r\n";
+        $headers .= "Reply-To: " . ($this->replyTo ?: $this->fromEmail) . "\r\n";
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: $contentType; charset=UTF-8\r\n";
         $headers .= "Message-ID: <" . time() . '.' . uniqid() . '@' . $this->host . ">\r\n";

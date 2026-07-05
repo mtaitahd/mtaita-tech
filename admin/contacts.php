@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reply_contact'])) {
             require_once __DIR__ . '/../email_template.php';
             $mailer = new Mailer();
             $replyEmail = Settings::get('reply_email', 'info@mtaitatech.online');
-            $mailer->setFrom($replyEmail, 'Mtaita Tech');
+            $mailer->setReplyTo($replyEmail);
             $subject = "Re: Your message to Mtaita Tech";
             $bodyHtml = '
             <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">Hi <strong>' . htmlspecialchars($contact['name']) . '</strong>,</p>
