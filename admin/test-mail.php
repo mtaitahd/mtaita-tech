@@ -1,31 +1,45 @@
 <?php
-session_start();
-if (!isset($_SESSION['admin_logged_in'])) {
-    header('Location: login');
-    exit;
-}
+try {
+    session_start();
+    if (!isset($_SESSION['admin_logged_in'])) {
+        header('Location: login');
+        exit;
+    }
 
-$result = '';
-$error = '';
+    $result = '';
+    $error = '';
+    $mailer = null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $to = trim($_POST['to'] ?? '');
-    $subject = trim($_POST['subject'] ?? 'Test from Mtaita Tech');
-    $message = trim($_POST['message'] ?? 'This is a test email.');
-
-    if (!$to) {
-        $error = 'Email address is required.';
-    } else {
+    try {
         require_once __DIR__ . '/../config.php';
         require_once __DIR__ . '/../mailer.php';
         $mailer = new Mailer();
-        $sent = $mailer->send($to, $subject, $message);
-        if ($sent) {
-            $result = 'Email sent successfully to ' . htmlspecialchars($to);
+    } catch (Throwable $e) {
+        $error = 'Mailer initialization failed: ' . $e->getMessage();
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $mailer) {
+        $to = trim($_POST['to'] ?? '');
+        $subject = trim($_POST['subject'] ?? 'Test from Mtaita Tech');
+        $message = trim($_POST['message'] ?? 'This is a test email.');
+
+        if (!$to) {
+            $error = 'Email address is required.';
         } else {
-            $error = 'Failed to send email. Check server error log for details.';
+            try {
+                $sent = $mailer->send($to, $subject, $message);
+                if ($sent) {
+                    $result = 'Email sent successfully to ' . htmlspecialchars($to);
+                } else {
+                    $error = 'Failed to send email. Check server error log for details.';
+                }
+            } catch (Throwable $e) {
+                $error = 'Send error: ' . $e->getMessage();
+            }
         }
     }
+} catch (Throwable $e) {
+    $error = 'Fatal error: ' . $e->getMessage();
 }
 ?>
 <!DOCTYPE html>
