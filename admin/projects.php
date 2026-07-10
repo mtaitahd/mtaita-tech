@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_project'])) {
     if (empty($errors) && $hasFile) {
         if ($_FILES['project_screenshot']['error'] !== UPLOAD_ERR_OK) {
             $uploadErrors = [
-                UPLOAD_ERR_INI_SIZE => 'File exceeds server size limit (check upload_max_filesize in php.ini).',
+                UPLOAD_ERR_INI_SIZE => 'File exceeds server limit (' . ini_get('upload_max_filesize') . '). Increase upload_max_filesize in php.ini.',
                 UPLOAD_ERR_FORM_SIZE => 'File exceeds form size limit.',
                 UPLOAD_ERR_PARTIAL => 'File was only partially uploaded.',
                 UPLOAD_ERR_NO_TMP_DIR => 'Server missing temporary folder.',
