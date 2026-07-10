@@ -5,13 +5,16 @@ $page_keywords = 'mobile app development Arusha, Android app development Tanzani
 $service_category = 'Mobile Apps';
 require_once 'header.php';
 require_once 'db_connect.php';
+require_once 'lib/Settings.php';
+
+$hero_bg = Settings::get('hero_bg_mobile_apps', '');
 
 $stmt = $pdo->prepare("SELECT id, project_title, project_desc, project_link, project_screenshot FROM portfolio WHERE category = ? ORDER BY created_at DESC LIMIT 12");
 $stmt->execute([$service_category]);
 $projects = $stmt->fetchAll();
 ?>
 
-<section class="page-header">
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
     <div class="container">
         <h1><?= __('mobile_apps') ?></h1>
         <p>Innovative mobile applications for iOS & Android built with cutting-edge technology</p>

@@ -5,13 +5,16 @@ $page_keywords = 'graphic design Tanzania, logo design Kilimanjaro, branding ser
 $service_category = 'Graphic Design';
 require_once 'header.php';
 require_once 'db_connect.php';
+require_once 'lib/Settings.php';
+
+$hero_bg = Settings::get('hero_bg_graphic_design', '');
 
 $stmt = $pdo->prepare("SELECT id, project_title, project_desc, project_link, project_screenshot FROM portfolio WHERE category = ? ORDER BY created_at DESC LIMIT 12");
 $stmt->execute([$service_category]);
 $projects = $stmt->fetchAll();
 ?>
 
-<section class="page-header">
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
     <div class="container">
         <h1><?= __('graphic_design') ?></h1>
         <p>Stunning visuals & brand identities that make your business stand out</p>

@@ -20,6 +20,10 @@ $pages = [
     'digital_products' => ['label' => 'Digital Products', 'key' => 'hero_bg_digital_products'],
     'blog'          => ['label' => 'Blog',           'key' => 'hero_bg_blog'],
     'contact'       => ['label' => 'Contact Us',     'key' => 'hero_bg_contact'],
+    'web_development' => ['label' => 'Web Development', 'key' => 'hero_bg_web_development'],
+    'graphic_design'  => ['label' => 'Graphic Design',  'key' => 'hero_bg_graphic_design'],
+    'mobile_apps'     => ['label' => 'Mobile Apps',     'key' => 'hero_bg_mobile_apps'],
+    'seo_digital_marketing' => ['label' => 'SEO & Digital Marketing', 'key' => 'hero_bg_seo_digital_marketing'],
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_hero'])) {

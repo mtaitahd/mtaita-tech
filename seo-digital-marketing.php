@@ -5,13 +5,16 @@ $page_keywords = 'SEO company Kilimanjaro, digital marketing Tanzania, SEO servi
 $service_category = 'SEO & Digital Marketing';
 require_once 'header.php';
 require_once 'db_connect.php';
+require_once 'lib/Settings.php';
+
+$hero_bg = Settings::get('hero_bg_seo_digital_marketing', '');
 
 $stmt = $pdo->prepare("SELECT id, project_title, project_desc, project_link, project_screenshot FROM portfolio WHERE category = ? ORDER BY created_at DESC LIMIT 12");
 $stmt->execute([$service_category]);
 $projects = $stmt->fetchAll();
 ?>
 
-<section class="page-header">
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
     <div class="container">
         <h1><?= __('seo_digital_marketing') ?></h1>
         <p>Data-driven SEO & digital marketing strategies to grow your online presence</p>
