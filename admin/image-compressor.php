@@ -24,8 +24,6 @@ function scanImages($dir, $root) {
         if ($item->isDir()) continue;
         $ext = strtolower($item->getExtension());
         if (!in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) continue;
-        $skipFiles = ['jj.png', 'jj.webp'];
-        if (in_array(basename($item->getPathname()), $skipFiles)) continue;
         $rel = str_replace($root, '', str_replace('\\', '/', $item->getPathname()));
         if ($rel[0] === '/') $rel = substr($rel, 1);
         $webpPath = preg_replace('/\.(jpe?g|png|gif)$/i', '.webp', $item->getPathname());
@@ -65,6 +63,7 @@ foreach ($allImages as $img) {
 }
 
 $savings = $totalOriginal > 0 && $totalWebp > 0 ? round((1 - $totalWebp / $totalOriginal) * 100) : 0;
+$skipFiles = ['jj.png', 'jj.webp'];
 ?>
 
 <div class="page-header">
@@ -140,10 +139,12 @@ $savings = $totalOriginal > 0 && $totalWebp > 0 ? round((1 - $totalWebp / $total
                 <?php if (empty($allImages)): ?>
                     <tr><td colspan="8" class="text-muted text-center py-4">No images found.</td></tr>
                 <?php else: ?>
-                    <?php foreach ($allImages as $img): ?>
+                    <?php foreach ($allImages as $img):
+                        $isLogo = in_array(basename($img['path']), $skipFiles);
+                    ?>
                     <tr data-path="<?= htmlspecialchars($img['path']) ?>" class="<?= $img['ext'] === 'webp' || $img['has_webp'] ? 'row-compressed' : '' ?>">
                         <td>
-                            <?php if ($img['ext'] !== 'webp'): ?>
+                            <?php if ($img['ext'] !== 'webp' && !$isLogo): ?>
                             <input type="checkbox" class="form-check-input img-checkbox" value="<?= htmlspecialchars($img['path']) ?>" <?= $img['has_webp'] ? 'disabled' : '' ?>>
                             <?php endif; ?>
                         </td>
@@ -175,7 +176,9 @@ $savings = $totalOriginal > 0 && $totalWebp > 0 ? round((1 - $totalWebp / $total
                             <?php endif; ?>
                         </td>
                         <td>
-                            <?php if ($img['has_webp']): ?>
+                            <?php if ($isLogo): ?>
+                            <span class="text-muted small" title="Site logo - cannot compress"><i class="bi bi-lock"></i></span>
+                            <?php elseif ($img['has_webp']): ?>
                             <button class="btn btn-sm btn-outline-warning revert-btn" onclick="revertOne(this, '<?= htmlspecialchars(addslashes($img['path'])) ?>')" title="Revert to original">
                                 <i class="bi bi-arrow-counterclockwise"></i>
                             </button>
