@@ -30,6 +30,11 @@ if (!file_exists($fullPath)) {
 }
 
 $ext = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
+$skipFiles = ['jj.png', 'jj.webp'];
+if (in_array(basename($fullPath), $skipFiles)) {
+    echo json_encode(['success' => false, 'error' => 'Site logo cannot be compressed.']);
+    exit;
+}
 if (!in_array($ext, ['jpg', 'jpeg', 'png', 'gif'])) {
     echo json_encode(['success' => false, 'error' => 'Unsupported format: ' . $ext]);
     exit;

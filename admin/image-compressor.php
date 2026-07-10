@@ -24,6 +24,8 @@ function scanImages($dir, $root) {
         if ($item->isDir()) continue;
         $ext = strtolower($item->getExtension());
         if (!in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) continue;
+        $skipFiles = ['jj.png', 'jj.webp'];
+        if (in_array(basename($item->getPathname()), $skipFiles)) continue;
         $rel = str_replace($root, '', str_replace('\\', '/', $item->getPathname()));
         if ($rel[0] === '/') $rel = substr($rel, 1);
         $webpPath = preg_replace('/\.(jpe?g|png|gif)$/i', '.webp', $item->getPathname());
