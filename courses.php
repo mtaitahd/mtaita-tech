@@ -5,7 +5,7 @@ $page_keywords = 'online courses Tanzania, web development course, programming c
 require_once 'header.php';
 
 require_once 'lib/Settings.php';
-$hero_bg = Settings::get('hero_bg_courses', '');
+$hero_bg = Settings::get('hero_bg_services', '');
 
 $courses = $pdo->query("SELECT id, title, slug, description, type, price, thumbnail, featured, created_at FROM courses WHERE status = 'published' ORDER BY featured DESC, created_at DESC")->fetchAll();
 ?>

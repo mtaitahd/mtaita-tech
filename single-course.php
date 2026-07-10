@@ -5,6 +5,7 @@ require_once __DIR__ . '/lib/Module.php';
 require_once __DIR__ . '/lib/Lesson.php';
 require_once __DIR__ . '/lib/LessonProgress.php';
 require_once __DIR__ . '/lib/Enrollment.php';
+require_once __DIR__ . '/lib/Settings.php';
 
 $slug = $_GET['slug'] ?? '';
 if (empty($slug)) {
@@ -124,9 +125,11 @@ if ($course['thumbnail']) {
 echo '<script type="application/ld+json">' . json_encode($course_schema, JSON_UNESCAPED_SLASHES) . '</script>';
 
 require_once 'header.php';
+
+$hero_bg_services = Settings::get('hero_bg_services', '');
 ?>
 
-<section class="page-header<?= $course['thumbnail'] ? ' page-header-with-bg' : '' ?>"<?php if ($course['thumbnail']): ?> style="background-image:url('/<?= htmlspecialchars($course['thumbnail']) ?>')"<?php endif; ?>>
+<section class="page-header<?= $hero_bg_services ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg_services): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg_services) ?>')"<?php endif; ?>>
     <div class="container">
         <h1><?= htmlspecialchars($course['title']) ?></h1>
         <p>

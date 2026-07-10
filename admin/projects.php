@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_project'])) {
     }
 }
 
-$projects = $pdo->query("SELECT id, project_title, project_desc, project_link, project_screenshot, created_at FROM portfolio ORDER BY created_at DESC")->fetchAll();
+$projects = $pdo->query("SELECT id, project_title, project_desc, project_link, category, tech_stack, completion_year, is_live, project_screenshot, created_at FROM portfolio ORDER BY created_at DESC")->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_project'])) {
     $eid = (int)($_POST['id'] ?? 0);
