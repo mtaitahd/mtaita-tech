@@ -105,6 +105,13 @@ $get_error = $_GET['error'] ?? '';
             </div>
         </li>
 
+        <li class="nav-item<?= $active_page === 'blog' ? ' active' : '' ?>">
+            <a class="nav-link" href="blog">
+                <i class="fas fa-fw fa-pen-nib"></i>
+                <span>Blog</span>
+            </a>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMedia" aria-expanded="true" aria-controls="collapseMedia">
                 <i class="fas fa-fw fa-images"></i>

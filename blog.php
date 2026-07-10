@@ -4,7 +4,7 @@ require_once __DIR__ . '/db_connect.php';
 $slug = $_GET['slug'] ?? '';
 
 if ($slug) {
-    $stmt = $pdo->prepare("SELECT * FROM blogs WHERE slug = ?");
+    $stmt = $pdo->prepare("SELECT * FROM blogs WHERE slug = ? AND is_published = 1");
     $stmt->execute([$slug]);
     $post = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -50,7 +50,7 @@ if ($slug) {
     require_once __DIR__ . '/lib/Settings.php';
     $hero_bg = Settings::get('hero_bg_blog', '');
 
-    $posts = $pdo->query("SELECT id, title, slug, feature_image, created_at FROM blogs ORDER BY created_at DESC")->fetchAll();
+    $posts = $pdo->query("SELECT id, title, slug, description, feature_image, created_at FROM blogs WHERE is_published = 1 ORDER BY created_at DESC")->fetchAll();
     $page_title = 'Blog — Mtaita Tech';
     $page_desc = 'Read the latest blog posts from Mtaita Tech about software development, web design, digital marketing, and tech insights for Tanzanian businesses.';
     require_once 'header.php';
@@ -80,6 +80,9 @@ if ($slug) {
                     <div class="card-body d-flex flex-column">
                         <small class="text-muted"><?= date('F j, Y', strtotime($p['created_at'])) ?></small>
                         <h5 class="card-title mt-1"><?= htmlspecialchars($p['title']) ?></h5>
+                        <?php if (!empty($p['description'])): ?>
+                        <p class="text-muted small flex-grow-1"><?= htmlspecialchars(mb_strimwidth($p['description'], 0, 120, '...')) ?></p>
+                        <?php endif; ?>
                         <a href="/blog/<?= htmlspecialchars($p['slug']) ?>" class="btn btn-outline-red mt-auto align-self-start">Read More <i class="bi bi-arrow-right ms-1"></i></a>
                     </div>
                 </div>
