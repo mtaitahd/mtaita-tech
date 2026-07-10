@@ -3,9 +3,12 @@ $page_title = 'Portfolio | Mtaita Tech Projects & Work Tanzania';
 $page_desc = 'View Mtaita Tech\'s portfolio. Showcasing website development, mobile app, and business system projects delivered for clients across Tanzania.';
 $page_keywords = 'Mtaita Tech portfolio, web development projects Tanzania, website portfolio Kilimanjaro, software projects Arusha, business systems Tanzania';
 require_once 'header.php';
+require_once 'lib/Settings.php';
+
+$hero_bg = Settings::get('hero_bg_portfolio', '');
 ?>
 
-<section class="page-header">
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
     <div class="container">
         <h1>About Me</h1>
         <p>Full-Stack Developer &amp; IT Professional</p>

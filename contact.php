@@ -4,6 +4,9 @@ $page_desc = 'Contact Mtaita Tech in Kilimanjaro. Get a free quote for website d
 $page_keywords = 'contact Mtaita Tech, IT company Moshi, software developer Kilimanjaro, web designer Arusha, business system Tanzania, website quote Tanzania';
 require_once 'header.php';
 
+require_once __DIR__ . '/lib/Settings.php';
+$hero_bg = Settings::get('hero_bg_contact', '');
+
 $success = '';
 $error = '';
 
@@ -63,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_contact'])) {
 }
 ?>
 
-<section class="page-header">
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
     <div class="container">
         <h1><?= __('contact_title') ?></h1>
         <p><?= __('contact_subtitle') ?></p>

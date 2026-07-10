@@ -4,11 +4,13 @@ $page_desc = 'Explore Mtaita Tech services: web development, mobile apps, POS sy
 $page_keywords = 'software services Tanzania, web development services, mobile app development, POS system, inventory system, CRM development, ERP development, ICT consultancy Tanzania';
 require_once 'header.php';
 require_once 'db_connect.php';
+require_once 'lib/Settings.php';
 
+$hero_bg = Settings::get('hero_bg_services', '');
 $services = $pdo->query("SELECT * FROM services WHERE is_active = 1 ORDER BY sort_order ASC")->fetchAll();
 ?>
 
-<section class="page-header">
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
     <div class="container">
         <h1><?= __('services_title') ?></h1>
         <p><?= __('services_subtitle') ?></p>

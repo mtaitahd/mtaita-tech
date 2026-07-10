@@ -4,6 +4,9 @@ $page_desc = 'Learn web development, graphic design, programming and IT skills w
 $page_keywords = 'online courses Tanzania, web development course, programming course Tanzania, free courses Tanzania, premium courses Tanzania, learn coding Tanzania';
 require_once 'header.php';
 
+require_once 'lib/Settings.php';
+$hero_bg = Settings::get('hero_bg_courses', '');
+
 $courses = $pdo->query("SELECT id, title, slug, description, type, price, thumbnail, featured, created_at FROM courses WHERE status = 'published' ORDER BY featured DESC, created_at DESC")->fetchAll();
 ?>
 
@@ -18,7 +21,7 @@ $courses = $pdo->query("SELECT id, title, slug, description, type, price, thumbn
 }
 </script>
 
-<section class="page-header">
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
     <div class="container">
         <h1>Courses</h1>
         <p>Learn new skills with our free and premium online courses</p>

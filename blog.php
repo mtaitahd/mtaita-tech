@@ -47,12 +47,15 @@ if ($slug) {
 </section>
 <?php
 } else {
+    require_once __DIR__ . '/lib/Settings.php';
+    $hero_bg = Settings::get('hero_bg_blog', '');
+
     $posts = $pdo->query("SELECT id, title, slug, feature_image, created_at FROM blogs ORDER BY created_at DESC")->fetchAll();
     $page_title = 'Blog — Mtaita Tech';
     $page_desc = 'Read the latest blog posts from Mtaita Tech about software development, web design, digital marketing, and tech insights for Tanzanian businesses.';
     require_once 'header.php';
 ?>
-<section class="page-header">
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
     <div class="container">
         <h1>Blog</h1>
         <p>Insights, tutorials, and updates from Mtaita Tech</p>

@@ -27,7 +27,7 @@ $solutionObj = new Solution();
 $solutions = $solutionObj->getActive();
 
 // Fetch all portfolio items for live systems scrolling section
-$live_systems = $pdo->query("SELECT id, project_title, project_desc, project_link, project_screenshot, category, tech_stack FROM portfolio ORDER BY created_at DESC LIMIT 12")->fetchAll();
+$live_systems = $pdo->query("SELECT id, project_title, project_desc, project_link, project_screenshot, category, tech_stack FROM portfolio WHERE category != 'Graphic Design' ORDER BY created_at DESC LIMIT 12")->fetchAll();
 
 
 ?>

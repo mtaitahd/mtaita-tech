@@ -5,9 +5,12 @@ $page_keywords = 'about Mtaita Tech, software company Tanzania, IT company Kilim
 $page_heading = 'About Mtaita Tech';
 require_once 'header.php';
 require_once 'db_connect.php';
+require_once 'lib/Settings.php';
+
+$hero_bg = Settings::get('hero_bg_about', '');
 ?>
 
-<section class="page-header">
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
     <div class="container">
         <h1><?= __('about_title') ?></h1>
         <p><?= __('about_subtitle') ?></p>

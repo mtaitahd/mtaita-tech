@@ -185,7 +185,7 @@ document.addEventListener('submit', function() {
                     </ul>
                 </li>
 
-                <li class="nav-item"><a class="nav-link <?= $page === 'portfolio' ? 'active' : '' ?>" href="/portfolio"><i class="bi bi-briefcase me-1"></i><?= __('portfolio') ?></a></li>
+                <li class="nav-item"><a class="nav-link" href="https://mtaitatech.online/web-development" target="_blank"><i class="bi bi-briefcase me-1"></i><?= __('portfolio') ?></a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle <?= $page === 'courses' ? 'active' : '' ?>" href="/courses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-book me-1"></i><?= __('courses_nav') ?>

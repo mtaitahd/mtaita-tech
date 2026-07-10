@@ -2,6 +2,9 @@
 require_once __DIR__ . '/auth_helper.php';
 require_once __DIR__ . '/db_connect.php';
 require_once __DIR__ . '/lib/Product.php';
+require_once __DIR__ . '/lib/Settings.php';
+
+$hero_bg = Settings::get('hero_bg_digital_products', '');
 
 $productModel = new Product();
 $products = $productModel->getVisible();
@@ -12,7 +15,7 @@ $page_keywords = 'digital products, downloads, Mtaita Tech';
 require_once 'header.php';
 ?>
 
-<section class="page-header">
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
     <div class="container">
         <h1>Digital Products</h1>
         <p>Source code, video tutorials, and project files</p>

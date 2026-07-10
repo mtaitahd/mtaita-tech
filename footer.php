@@ -14,7 +14,7 @@
                     <li><a href="/"><?= __('home') ?></a></li>
                     <li><a href="/about"><?= __('about_us') ?></a></li>
                     <li><a href="/services"><?= __('services') ?></a></li>
-                    <li><a href="/portfolio"><?= __('portfolio') ?></a></li>
+                    <li><a href="https://mtaitatech.online/web-development" target="_blank"><?= __('portfolio') ?></a></li>
                     <li><a href="/contact"><?= __('contact_us') ?></a></li>
                 </ul>
             </div>
