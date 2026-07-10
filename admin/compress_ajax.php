@@ -10,7 +10,7 @@ header('Content-Type: application/json');
 
 $action = $_POST['action'] ?? '';
 
-if ($action !== 'compress') {
+if (!in_array($action, ['compress', 'revert'])) {
     echo json_encode(['success' => false, 'error' => 'Invalid action']);
     exit;
 }
@@ -23,6 +23,20 @@ if (empty($path)) {
 
 $root = dirname(__DIR__) . '/';
 $fullPath = $root . $path;
+
+if ($action === 'revert') {
+    $webpPath = preg_replace('/\.(jpe?g|png|gif)$/i', '.webp', $fullPath);
+    if (file_exists($webpPath)) {
+        if (@unlink($webpPath)) {
+            echo json_encode(['success' => true, 'message' => 'WebP file deleted. Original PNG/JPG restored.']);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Failed to delete WebP file. Check permissions.']);
+        }
+    } else {
+        echo json_encode(['success' => false, 'error' => 'No WebP file found to revert.']);
+    }
+    exit;
+}
 
 if (!file_exists($fullPath)) {
     echo json_encode(['success' => false, 'error' => 'File not found: ' . $path]);

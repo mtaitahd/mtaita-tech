@@ -175,7 +175,11 @@ $savings = $totalOriginal > 0 && $totalWebp > 0 ? round((1 - $totalWebp / $total
                             <?php endif; ?>
                         </td>
                         <td>
-                            <?php if ($img['ext'] !== 'webp'): ?>
+                            <?php if ($img['has_webp']): ?>
+                            <button class="btn btn-sm btn-outline-warning revert-btn" onclick="revertOne(this, '<?= htmlspecialchars(addslashes($img['path'])) ?>')" title="Revert to original">
+                                <i class="bi bi-arrow-counterclockwise"></i>
+                            </button>
+                            <?php elseif ($img['ext'] !== 'webp'): ?>
                             <button class="btn btn-sm btn-outline-cyan compress-btn" onclick="compressOne(this, '<?= htmlspecialchars(addslashes($img['path'])) ?>')">
                                 <i class="bi bi-lightning-charge"></i>
                             </button>
@@ -264,7 +268,7 @@ function compressOne(btn, path) {
             row.querySelector('.img-checkbox').disabled = true;
             row.querySelector('.img-checkbox').checked = false;
             row.classList.add('row-compressed');
-            btn.outerHTML = '<span class="text-success small"><i class="bi bi-check-circle"></i></span>';
+            btn.outerHTML = '<button class="btn btn-sm btn-outline-warning revert-btn" onclick="revertOne(this, \'' + path + '\')" title="Revert to original"><i class="bi bi-arrow-counterclockwise"></i></button>';
             updateSelectedCount();
             showProgress('Done!', data.original + ' → ' + data.webp_size, 100);
             setTimeout(function() { document.getElementById('compressProgress').classList.add('d-none'); }, 2000);
@@ -277,6 +281,39 @@ function compressOne(btn, path) {
     .catch(function(e) {
         btn.disabled = false;
         btn.innerHTML = '<i class="bi bi-lightning-charge"></i>';
+        showProgress('Error', e.message, 0);
+    });
+}
+
+function revertOne(btn, path) {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+    showProgress('Reverting...', path, 50);
+
+    fetch('compress_ajax.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'action=revert&path=' + encodeURIComponent(path)
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+        if (data.success) {
+            var row = btn.closest('tr');
+            row.querySelector('.webp-size').innerHTML = '<span class="text-muted">—</span>';
+            row.querySelector('.status-col').innerHTML = '<span class="badge" style="background:#F59E0B;color:#000;">Pending</span>';
+            row.classList.remove('row-compressed');
+            btn.outerHTML = '<button class="btn btn-sm btn-outline-cyan compress-btn" onclick="compressOne(this, \'' + path + '\')"><i class="bi bi-lightning-charge"></i></button>';
+            showProgress('Reverted!', 'WebP deleted. Original restored.', 100);
+            setTimeout(function() { document.getElementById('compressProgress').classList.add('d-none'); }, 2000);
+        } else {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-arrow-counterclockwise"></i>';
+            showProgress('Failed', data.error || 'Unknown error', 0);
+        }
+    })
+    .catch(function(e) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-arrow-counterclockwise"></i>';
         showProgress('Error', e.message, 0);
     });
 }
