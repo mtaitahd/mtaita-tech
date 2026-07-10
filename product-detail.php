@@ -83,7 +83,7 @@ require_once 'header.php';
                     <iframe src="<?= htmlspecialchars($embedUrl) ?>" allowfullscreen></iframe>
                 </div>
                 <?php elseif ($prod['thumbnail']): ?>
-                <img src="<?= htmlspecialchars($prod['thumbnail']) ?>" alt="" class="w-100 rounded-3 mb-4" style="max-height:400px;object-fit:cover;">
+                <img src="<?= htmlspecialchars(webp_url($prod['thumbnail'])) ?>" alt="" class="w-100 rounded-3 mb-4" style="max-height:400px;object-fit:cover;">
                 <?php endif; ?>
 
                 <div class="floating-card mb-4">

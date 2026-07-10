@@ -129,7 +129,7 @@ require_once 'header.php';
 $hero_bg_services = Settings::get('hero_bg_services', '');
 ?>
 
-<section class="page-header<?= $hero_bg_services ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg_services): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg_services) ?>')"<?php endif; ?>>
+<section class="page-header<?= $hero_bg_services ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg_services): ?> style="background-image:url('/<?= htmlspecialchars(webp_url($hero_bg_services)) ?>')"<?php endif; ?>>
     <div class="container">
         <h1><?= htmlspecialchars($course['title']) ?></h1>
         <p>
@@ -268,7 +268,7 @@ $hero_bg_services = Settings::get('hero_bg_services', '');
                                             <i class="bi bi-check-circle-fill" style="color:#10B981;font-size:0.9rem;margin-top:2px;"></i>
                                         <?php elseif (!empty($lesson['thumbnail'])): ?>
                                             <div class="flex-shrink-0" style="width:60px;height:34px;overflow:hidden;border-radius:3px;background:#000;position:relative;">
-                                                <img src="<?= htmlspecialchars($lesson['thumbnail']) ?>" alt="" style="width:100%;height:100%;object-fit:cover;">
+                                                <img src="<?= htmlspecialchars(webp_url($lesson['thumbnail'])) ?>" alt="" style="width:100%;height:100%;object-fit:cover;">
                                                 <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:0.85rem;opacity:0.8;">
                                                     <i class="bi bi-play-circle-fill"></i>
                                                 </div>
@@ -317,7 +317,7 @@ $hero_bg_services = Settings::get('hero_bg_services', '');
                                         <i class="bi bi-check-circle-fill" style="color:#10B981;font-size:0.9rem;margin-top:2px;"></i>
                                     <?php elseif (!empty($lesson['thumbnail'])): ?>
                                         <div class="flex-shrink-0" style="width:60px;height:34px;overflow:hidden;border-radius:3px;background:#000;position:relative;">
-                                            <img src="<?= htmlspecialchars($lesson['thumbnail']) ?>" alt="" style="width:100%;height:100%;object-fit:cover;">
+                                            <img src="<?= htmlspecialchars(webp_url($lesson['thumbnail'])) ?>" alt="" style="width:100%;height:100%;object-fit:cover;">
                                             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:0.85rem;opacity:0.8;">
                                                 <i class="bi bi-play-circle-fill"></i>
                                             </div>

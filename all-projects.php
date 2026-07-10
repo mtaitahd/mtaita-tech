@@ -28,7 +28,7 @@ $projects = $pdo->query("SELECT id, project_title, project_desc, project_link, p
             <div class="col-md-6 col-lg-4">
                 <div class="portfolio-card">
                     <div class="portfolio-img-wrap">
-                        <img src="<?= htmlspecialchars($p['project_screenshot']) ?>" alt="<?= htmlspecialchars($p['project_title']) ?>" class="portfolio-img" loading="lazy" onerror="this.src='https://via.placeholder.com/600x400/0F172A/DC2626?text=Mtaita+Tech'">
+                        <img src="<?= htmlspecialchars(webp_url($p['project_screenshot'])) ?>" alt="<?= htmlspecialchars($p['project_title']) ?>" class="portfolio-img" loading="lazy" onerror="this.src='https://via.placeholder.com/600x400/0F172A/DC2626?text=Mtaita+Tech'">
                         <?php if ($p['is_live']): ?>
                         <span style="position:absolute;top:12px;right:12px;background:#10B981;color:#fff;font-size:0.65rem;font-weight:700;letter-spacing:1px;padding:4px 10px;animation:livePulse 2s ease-in-out infinite;">LIVE</span>
                         <?php endif; ?>

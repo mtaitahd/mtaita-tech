@@ -90,3 +90,15 @@ $page_heading = $page_heading ?? '';
 $og_image = $og_image ?? SITE_URL . '/assets/img/jj.png';
 
 date_default_timezone_set('Africa/Nairobi');
+
+function webp_url($path) {
+    if (empty($path)) return $path;
+    $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+    if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif'])) {
+        $webp = preg_replace('/\.(jpe?g|png|gif)$/i', '.webp', $path);
+        $check = $path[0] === '/' ? dirname(__DIR__) . $webp : dirname(__DIR__) . '/' . $path;
+        $webpFile = preg_replace('/\.(jpe?g|png|gif)$/i', '.webp', $check);
+        if (file_exists($webpFile)) return $webp;
+    }
+    return $path;
+}

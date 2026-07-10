@@ -35,7 +35,7 @@ if ($slug) {
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <?php if ($post['feature_image']): ?>
-                <img src="/<?= htmlspecialchars($post['feature_image']) ?>" alt="<?= htmlspecialchars($post['title']) ?>" class="img-fluid rounded mb-4">
+                <img src="/<?= htmlspecialchars(webp_url($post['feature_image'])) ?>" alt="<?= htmlspecialchars($post['title']) ?>" class="img-fluid rounded mb-4">
                 <?php endif; ?>
                 <div class="blog-content"><?= $post['content'] ?></div>
                 <div class="mt-4">
@@ -55,7 +55,7 @@ if ($slug) {
     $page_desc = 'Read the latest blog posts from Mtaita Tech about software development, web design, digital marketing, and tech insights for Tanzanian businesses.';
     require_once 'header.php';
 ?>
-<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars(webp_url($hero_bg)) ?>')"<?php endif; ?>>
     <div class="container">
         <h1>Blog</h1>
         <p>Insights, tutorials, and updates from Mtaita Tech</p>
@@ -75,7 +75,7 @@ if ($slug) {
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 border-0 shadow-sm">
                     <?php if ($p['feature_image']): ?>
-                    <img src="/<?= htmlspecialchars($p['feature_image']) ?>" class="card-img-top" alt="<?= htmlspecialchars($p['title']) ?>" style="height:200px;object-fit:cover;">
+                    <img src="/<?= htmlspecialchars(webp_url($p['feature_image'])) ?>" class="card-img-top" alt="<?= htmlspecialchars($p['title']) ?>" style="height:200px;object-fit:cover;">
                     <?php endif; ?>
                     <div class="card-body d-flex flex-column">
                         <small class="text-muted"><?= date('F j, Y', strtotime($p['created_at'])) ?></small>

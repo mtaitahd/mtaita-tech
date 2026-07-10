@@ -116,6 +116,7 @@ $get_error = $_GET['error'] ?? '';
                     <a class="collapse-item" href="posters">Posters</a>
                     <a class="collapse-item" href="thumbnails">Thumbnails</a>
                     <a class="collapse-item" href="page-heroes">Page Heroes</a>
+                    <a class="collapse-item" href="image-compressor">Image Compressor</a>
                 </div>
             </div>
         </li>

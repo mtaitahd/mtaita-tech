@@ -10,7 +10,7 @@ require_once 'lib/Settings.php';
 $hero_bg = Settings::get('hero_bg_about', '');
 ?>
 
-<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars(webp_url($hero_bg)) ?>')"<?php endif; ?>>
     <div class="container">
         <h1><?= __('about_title') ?></h1>
         <p><?= __('about_subtitle') ?></p>
@@ -45,7 +45,7 @@ $hero_bg = Settings::get('hero_bg_about', '');
             </div>
             <div class="col-lg-6 text-center">
                 <?php require_once __DIR__ . '/lib/Settings.php'; $about_img = Settings::get('about_image', 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80'); ?>
-                <img src="<?= htmlspecialchars($about_img) ?>" alt="About Mtaita Tech" class="img-fluid rounded-4 shadow">
+                <img src="<?= htmlspecialchars(webp_url($about_img)) ?>" alt="About Mtaita Tech" class="img-fluid rounded-4 shadow">
             </div>
         </div>
     </div>

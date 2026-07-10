@@ -14,7 +14,7 @@ $stmt->execute([$service_category]);
 $projects = $stmt->fetchAll();
 ?>
 
-<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars(webp_url($hero_bg)) ?>')"<?php endif; ?>>
     <div class="container">
         <h1><?= __('mobile_apps') ?></h1>
         <p>Innovative mobile applications for iOS & Android built with cutting-edge technology</p>
@@ -46,7 +46,7 @@ $projects = $stmt->fetchAll();
                         <div class="col-md-6 col-lg-4">
                             <div class="portfolio-card">
                                 <div class="portfolio-img-wrap">
-                                    <img src="<?= htmlspecialchars($project['project_screenshot']) ?>" alt="<?= htmlspecialchars($project['project_title']) ?>" class="portfolio-img" loading="lazy" onerror="this.src='https://via.placeholder.com/600x400/0F172A/DC2626?text=Mtaita+Tech'">
+                                    <img src="<?= htmlspecialchars(webp_url($project['project_screenshot'])) ?>" alt="<?= htmlspecialchars($project['project_title']) ?>" class="portfolio-img" loading="lazy" onerror="this.src='https://via.placeholder.com/600x400/0F172A/DC2626?text=Mtaita+Tech'">
                                 </div>
                                 <div class="portfolio-body">
                                     <h5><?= htmlspecialchars($project['project_title']) ?></h5>

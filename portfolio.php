@@ -8,7 +8,7 @@ require_once 'lib/Settings.php';
 $hero_bg = Settings::get('hero_bg_portfolio', '');
 ?>
 
-<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars(webp_url($hero_bg)) ?>')"<?php endif; ?>>
     <div class="container">
         <h1>About Me</h1>
         <p>Full-Stack Developer &amp; IT Professional</p>
@@ -19,7 +19,7 @@ $hero_bg = Settings::get('hero_bg_portfolio', '');
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-4 text-center">
-                <img src="/assets/img/212869619.jpg" alt="Jahnson Paulo Mtaita" class="about-img">
+                <img src="<?= webp_url('/assets/img/212869619.jpg') ?>" alt="Jahnson Paulo Mtaita" class="about-img">
                 <div class="mt-3">
                     <a href="#" class="btn btn-red btn-sm" onclick="alert('CV will be available soon'); return false;">
                         <i class="bi bi-file-earmark-text me-1"></i> Download CV

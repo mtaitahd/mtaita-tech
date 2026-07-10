@@ -21,7 +21,7 @@ $courses = $pdo->query("SELECT id, title, slug, description, type, price, thumbn
 }
 </script>
 
-<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars(webp_url($hero_bg)) ?>')"<?php endif; ?>>
     <div class="container">
         <h1>Courses</h1>
         <p>Learn new skills with our free and premium online courses</p>
@@ -41,12 +41,13 @@ $courses = $pdo->query("SELECT id, title, slug, description, type, price, thumbn
                     $excerpt = mb_strimwidth(strip_tags($course['description']), 0, 120, '...');
                     $is_free = $course['type'] === 'free';
                     $thumb = $course['thumbnail'] ? '/' . $course['thumbnail'] : null;
+                    $thumbWebp = $thumb ? webp_url($thumb) : null;
                 ?>
                 <div class="col-md-4 col-lg-3">
                     <div class="portfolio-card h-100 d-flex flex-column">
                         <?php if ($thumb): ?>
                         <a href="single-course?slug=<?= htmlspecialchars($course['slug']) ?>" class="d-block" style="overflow:hidden;border-radius:12px 12px 0 0;">
-                            <img src="<?= htmlspecialchars($thumb) ?>" alt="<?= htmlspecialchars($course['title']) ?>" style="width:100%;height:160px;object-fit:cover;">
+                            <img src="<?= htmlspecialchars($thumbWebp ?? $thumb) ?>" alt="<?= htmlspecialchars($course['title']) ?>" style="width:100%;height:160px;object-fit:cover;">
                         </a>
                         <?php endif; ?>
                         <div class="p-4 pb-0 d-flex gap-2 flex-wrap">

@@ -36,7 +36,7 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
     <?php if (!empty($posters)): ?>
     <div class="hero-posters-wrap">
         <?php foreach ($posters as $i => $po): ?>
-        <div class="hero-poster-bg <?= $i === 0 ? 'active' : '' ?>" style="background-image:url('/<?= htmlspecialchars($po['poster_image_path']) ?>');"></div>
+        <div class="hero-poster-bg <?= $i === 0 ? 'active' : '' ?>" style="background-image:url('/<?= htmlspecialchars(webp_url($po['poster_image_path'])) ?>');"></div>
         <?php endforeach; ?>
         <div class="hero-poster-overlay"></div>
     </div>
@@ -161,7 +161,7 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
                 <div class="live-scroll-item">
                     <div class="live-system-card">
                         <div class="live-system-img-wrap">
-                            <img src="<?= htmlspecialchars($ls['project_screenshot']) ?>" alt="<?= htmlspecialchars($ls['project_title']) ?>" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300/0F172A/00E5FF?text=System'">
+                            <img src="<?= htmlspecialchars(webp_url($ls['project_screenshot'])) ?>" alt="<?= htmlspecialchars($ls['project_title']) ?>" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300/0F172A/00E5FF?text=System'">
                             <div class="live-system-badge"><?= __('live_badge') ?></div>
                         </div>
                         <div class="live-system-body">
@@ -205,7 +205,7 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
                 <div class="partner-item">
                     <?php if ($partner['website_url']): ?><a href="<?= htmlspecialchars($partner['website_url']) ?>" target="_blank" rel="noopener"><?php endif; ?>
                     <?php if ($partner['logo']): ?>
-                    <img src="<?= htmlspecialchars($partner['logo']) ?>" alt="<?= htmlspecialchars($partner['name']) ?>" class="partner-logo" loading="lazy" onerror="this.src='https://via.placeholder.com/150x60/0F172A/00E5FF?text=<?= urlencode($partner['name']) ?>'">
+                    <img src="<?= htmlspecialchars(webp_url($partner['logo'])) ?>" alt="<?= htmlspecialchars($partner['name']) ?>" class="partner-logo" loading="lazy" onerror="this.src='https://via.placeholder.com/150x60/0F172A/00E5FF?text=<?= urlencode($partner['name']) ?>'">
                     <?php else: ?>
                     <span class="partner-name-only"><?= htmlspecialchars($partner['name']) ?></span>
                     <?php endif; ?>
@@ -240,7 +240,7 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
                         <p class="testimonial-content">"<?= htmlspecialchars($t['content']) ?>"</p>
                         <div class="testimonial-author">
                             <?php if ($t['avatar']): ?>
-                            <img src="<?= htmlspecialchars($t['avatar']) ?>" alt="<?= htmlspecialchars($t['name']) ?>" class="testimonial-avatar" onerror="this.style.display='none'">
+                            <img src="<?= htmlspecialchars(webp_url($t['avatar'])) ?>" alt="<?= htmlspecialchars($t['name']) ?>" class="testimonial-avatar" onerror="this.style.display='none'">
                             <?php endif; ?>
                             <div>
                                 <strong><?= htmlspecialchars($t['name']) ?></strong>

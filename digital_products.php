@@ -15,7 +15,7 @@ $page_keywords = 'digital products, downloads, Mtaita Tech';
 require_once 'header.php';
 ?>
 
-<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars($hero_bg) ?>')"<?php endif; ?>>
+<section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars(webp_url($hero_bg)) ?>')"<?php endif; ?>>
     <div class="container">
         <h1>Digital Products</h1>
         <p>Source code, video tutorials, and project files</p>
@@ -36,7 +36,7 @@ require_once 'header.php';
                 <div class="col-md-4">
                     <div class="floating-card h-100">
                         <?php if ($prod['thumbnail']): ?>
-                            <img src="<?= htmlspecialchars($prod['thumbnail']) ?>" alt="" style="width:100%;height:200px;object-fit:cover;border-radius:12px 12px 0 0;">
+                            <img src="<?= htmlspecialchars(webp_url($prod['thumbnail'])) ?>" alt="" style="width:100%;height:200px;object-fit:cover;border-radius:12px 12px 0 0;">
                         <?php else: ?>
                             <div style="height:200px;background:var(--light-gray);border-radius:12px 12px 0 0;display:flex;align-items:center;justify-content:center;">
                                 <i class="bi bi-box" style="font-size:4rem;color:#CBD5E1;"></i>
