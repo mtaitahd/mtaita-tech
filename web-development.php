@@ -7,7 +7,7 @@ require_once 'header.php';
 require_once 'db_connect.php';
 require_once 'lib/Settings.php';
 
-$hero_bg = Settings::get('hero_bg_web_development', '');
+$hero_bg = Settings::get('hero_bg_services', '');
 
 $stmt = $pdo->prepare("SELECT id, project_title, project_desc, project_link, project_screenshot FROM portfolio WHERE category = ? ORDER BY created_at DESC LIMIT 12");
 $stmt->execute([$service_category]);
