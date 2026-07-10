@@ -249,10 +249,6 @@ require_once 'admin_header.php';
                             <label class="form-label">Completion Year</label>
                             <input type="text" name="completion_year" class="form-control" placeholder="2025" maxlength="4">
                         </div>
-                        <div class="col-12">
-                            <label class="form-label">Description</label>
-                            <textarea name="project_desc" rows="3" class="form-control" required></textarea>
-                        </div>
                         <div class="col-md-6">
                             <label class="form-label">Screenshot</label>
                             <input type="file" name="project_screenshot" class="form-control" accept="image/png,image/jpeg,image/webp,image/gif" required>
