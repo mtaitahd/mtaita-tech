@@ -12,6 +12,9 @@ if (!isset($_SESSION['admin_logged_in'])) {
 require_once __DIR__ . '/../db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_project'])) {
+    if (empty($_POST)) {
+        $error_msg = 'Form data too large. Server limit: ' . ini_get('post_max_size') . '. Try a smaller image or increase post_max_size in php.ini.';
+    } else {
     $title = trim($_POST['project_title'] ?? '');
     $desc = trim($_POST['project_desc'] ?? '');
     $link = trim($_POST['project_link'] ?? '');
@@ -21,45 +24,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_project'])) {
     if ($desc === '') $errors[] = 'Project description is required.';
     if ($link === '' || !filter_var($link, FILTER_VALIDATE_URL)) $errors[] = 'A valid project URL is required.';
 
-    if (empty($errors) && isset($_FILES['project_screenshot']) && $_FILES['project_screenshot']['error'] === UPLOAD_ERR_OK) {
-        $allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        $file = $_FILES['project_screenshot'];
+    $hasFile = isset($_FILES['project_screenshot']) && $_FILES['project_screenshot']['error'] !== UPLOAD_ERR_NO_FILE;
 
-        if (function_exists('finfo_open')) {
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $mime = finfo_file($finfo, $file['tmp_name']);
-            finfo_close($finfo);
+    if (empty($errors) && $hasFile) {
+        if ($_FILES['project_screenshot']['error'] !== UPLOAD_ERR_OK) {
+            $uploadErrors = [
+                UPLOAD_ERR_INI_SIZE => 'File exceeds server size limit (check upload_max_filesize in php.ini).',
+                UPLOAD_ERR_FORM_SIZE => 'File exceeds form size limit.',
+                UPLOAD_ERR_PARTIAL => 'File was only partially uploaded.',
+                UPLOAD_ERR_NO_TMP_DIR => 'Server missing temporary folder.',
+                UPLOAD_ERR_CANT_WRITE => 'Server failed to write file to disk.',
+                UPLOAD_ERR_EXTENSION => 'Upload stopped by a PHP extension.',
+            ];
+            $errors[] = $uploadErrors[$_FILES['project_screenshot']['error']] ?? 'Upload error #' . $_FILES['project_screenshot']['error'];
         } else {
-            $mime = $file['type'];
-        }
+            $allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            $file = $_FILES['project_screenshot'];
 
-        if (!in_array($mime, $allowed)) {
-            $errors[] = 'Invalid file type. Only PNG, JPG, WEBP, and GIF are allowed.';
-        } elseif ($file['size'] > 5 * 1024 * 1024) {
-            $errors[] = 'File is too large. Maximum size is 5MB.';
-        } else {
-            $upload_dir = __DIR__ . '/../assets/img/uploads/';
-            if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
-
-            $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-            $filename = uniqid('proj_', true) . '.' . $ext;
-            $dest = $upload_dir . $filename;
-
-            if (move_uploaded_file($file['tmp_name'], $dest)) {
-                try {
-                    $category = trim($_POST['category'] ?? 'Websites');
-                    $techStack = trim($_POST['tech_stack'] ?? '');
-                    $completionYear = trim($_POST['completion_year'] ?? '');
-                    $isLive = isset($_POST['is_live']) ? 1 : 0;
-                    $stmt = $pdo->prepare("INSERT INTO portfolio (project_title, project_desc, project_link, category, tech_stack, completion_year, is_live, project_screenshot) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-                    $stmt->execute([$title, $desc, $link, $category, $techStack, $completionYear, $isLive, 'assets/img/uploads/' . $filename]);
-                    $success_msg = 'Project uploaded successfully.';
-                } catch (Exception $e) {
-                    error_log('add_project DB error: ' . $e->getMessage());
-                    $errors[] = 'Database error. Please try again.';
-                }
+            if (function_exists('finfo_open')) {
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mime = finfo_file($finfo, $file['tmp_name']);
+                finfo_close($finfo);
             } else {
-                $errors[] = 'Failed to move uploaded file. Please check directory permissions.';
+                $mime = $file['type'];
+            }
+
+            if (!in_array($mime, $allowed)) {
+                $errors[] = 'Invalid file type. Only PNG, JPG, WEBP, and GIF are allowed.';
+            } elseif ($file['size'] > 5 * 1024 * 1024) {
+                $errors[] = 'File is too large. Maximum size is 5MB.';
+            } else {
+                $upload_dir = __DIR__ . '/../assets/img/uploads/';
+                if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
+
+                $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+                $filename = uniqid('proj_', true) . '.' . $ext;
+                $dest = $upload_dir . $filename;
+
+                if (move_uploaded_file($file['tmp_name'], $dest)) {
+                    try {
+                        $category = trim($_POST['category'] ?? 'Websites');
+                        $techStack = trim($_POST['tech_stack'] ?? '');
+                        $completionYear = trim($_POST['completion_year'] ?? '');
+                        $isLive = isset($_POST['is_live']) ? 1 : 0;
+                        $stmt = $pdo->prepare("INSERT INTO portfolio (project_title, project_desc, project_link, category, tech_stack, completion_year, is_live, project_screenshot) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                        $stmt->execute([$title, $desc, $link, $category, $techStack, $completionYear, $isLive, 'assets/img/uploads/' . $filename]);
+                        $success_msg = 'Project uploaded successfully.';
+                    } catch (Exception $e) {
+                        error_log('add_project DB error: ' . $e->getMessage());
+                        $errors[] = 'Database error. Please try again.';
+                    }
+                } else {
+                    $errors[] = 'Failed to move uploaded file. Please check directory permissions.';
+                }
             }
         }
     } elseif (empty($errors)) {
@@ -69,83 +86,99 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_project'])) {
     if (!$success_msg && !empty($errors)) {
         $error_msg = implode(' ', $errors);
     }
+    }
 }
 
 $projects = $pdo->query("SELECT id, project_title, project_desc, project_link, category, tech_stack, completion_year, is_live, project_screenshot, created_at FROM portfolio ORDER BY created_at DESC")->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_project'])) {
-    $eid = (int)($_POST['id'] ?? 0);
-    $title = trim($_POST['project_title'] ?? '');
-    $desc = trim($_POST['project_desc'] ?? '');
-    $link = trim($_POST['project_link'] ?? '');
+    if (empty($_POST)) {
+        $error_msg = 'Form data too large. Server limit: ' . ini_get('post_max_size') . '. Try a smaller image.';
+    } else {
+        $eid = (int)($_POST['id'] ?? 0);
+        $title = trim($_POST['project_title'] ?? '');
+        $desc = trim($_POST['project_desc'] ?? '');
+        $link = trim($_POST['project_link'] ?? '');
 
-    $errors = [];
-    if ($eid < 1) $errors[] = 'Invalid project ID.';
-    if ($title === '') $errors[] = 'Title is required.';
-    if ($desc === '') $errors[] = 'Description is required.';
-    if ($link === '' || !filter_var($link, FILTER_VALIDATE_URL)) $errors[] = 'A valid URL is required.';
+        $errors = [];
+        if ($eid < 1) $errors[] = 'Invalid project ID.';
+        if ($title === '') $errors[] = 'Title is required.';
+        if ($desc === '') $errors[] = 'Description is required.';
+        if ($link === '' || !filter_var($link, FILTER_VALIDATE_URL)) $errors[] = 'A valid URL is required.';
 
-    $stmt = $pdo->prepare("SELECT * FROM portfolio WHERE id = ? LIMIT 1");
-    $stmt->execute([$eid]);
-    $proj = $stmt->fetch();
+        $stmt = $pdo->prepare("SELECT * FROM portfolio WHERE id = ? LIMIT 1");
+        $stmt->execute([$eid]);
+        $proj = $stmt->fetch();
 
-    if (!$proj) $errors[] = 'Project not found.';
+        if (!$proj) $errors[] = 'Project not found.';
 
-    $screenshot_path = $proj['project_screenshot'] ?? '';
+        $screenshot_path = $proj['project_screenshot'] ?? '';
 
-    if (empty($errors) && isset($_FILES['project_screenshot_edit']) && $_FILES['project_screenshot_edit']['error'] === UPLOAD_ERR_OK) {
-        $allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        $file = $_FILES['project_screenshot_edit'];
-
-        if (function_exists('finfo_open')) {
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $mime = finfo_file($finfo, $file['tmp_name']);
-            finfo_close($finfo);
-        } else {
-            $mime = $file['type'];
-        }
-
-        if (!in_array($mime, $allowed)) {
-            $errors[] = 'Invalid file type.';
-        } elseif ($file['size'] > 5 * 1024 * 1024) {
-            $errors[] = 'File is too large (max 5MB).';
-        } else {
-            $old_path = __DIR__ . '/../' . $screenshot_path;
-            if (file_exists($old_path) && is_file($old_path)) @unlink($old_path);
-
-            $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-            $filename = uniqid('proj_', true) . '.' . $ext;
-            $dest = __DIR__ . '/../assets/img/uploads/' . $filename;
-
-            if (move_uploaded_file($file['tmp_name'], $dest)) {
-                $screenshot_path = 'assets/img/uploads/' . $filename;
+        if (empty($errors) && isset($_FILES['project_screenshot_edit']) && $_FILES['project_screenshot_edit']['error'] !== UPLOAD_ERR_NO_FILE) {
+            if ($_FILES['project_screenshot_edit']['error'] !== UPLOAD_ERR_OK) {
+                $uploadErrors = [
+                    UPLOAD_ERR_INI_SIZE => 'File exceeds server size limit.',
+                    UPLOAD_ERR_FORM_SIZE => 'File exceeds form size limit.',
+                    UPLOAD_ERR_PARTIAL => 'File was only partially uploaded.',
+                    UPLOAD_ERR_NO_TMP_DIR => 'Server missing temporary folder.',
+                    UPLOAD_ERR_CANT_WRITE => 'Server failed to write file to disk.',
+                    UPLOAD_ERR_EXTENSION => 'Upload stopped by a PHP extension.',
+                ];
+                $errors[] = $uploadErrors[$_FILES['project_screenshot_edit']['error']] ?? 'Upload error #' . $_FILES['project_screenshot_edit']['error'];
             } else {
-                $errors[] = 'Failed to upload new file.';
+                $allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                $file = $_FILES['project_screenshot_edit'];
+
+                if (function_exists('finfo_open')) {
+                    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                    $mime = finfo_file($finfo, $file['tmp_name']);
+                    finfo_close($finfo);
+                } else {
+                    $mime = $file['type'];
+                }
+
+                if (!in_array($mime, $allowed)) {
+                    $errors[] = 'Invalid file type.';
+                } elseif ($file['size'] > 5 * 1024 * 1024) {
+                    $errors[] = 'File is too large (max 5MB).';
+                } else {
+                    $old_path = __DIR__ . '/../' . $screenshot_path;
+                    if (file_exists($old_path) && is_file($old_path)) @unlink($old_path);
+
+                    $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+                    $filename = uniqid('proj_', true) . '.' . $ext;
+                    $dest = __DIR__ . '/../assets/img/uploads/' . $filename;
+
+                    if (move_uploaded_file($file['tmp_name'], $dest)) {
+                        $screenshot_path = 'assets/img/uploads/' . $filename;
+                    } else {
+                        $errors[] = 'Failed to upload new file.';
+                    }
+                }
             }
         }
-    }
 
-    if (empty($errors)) {
-        try {
-            $category = trim($_POST['category'] ?? 'Websites');
-            $techStack = trim($_POST['tech_stack'] ?? '');
-            $completionYear = trim($_POST['completion_year'] ?? '');
-            $isLive = isset($_POST['is_live']) ? 1 : 0;
-            $stmt = $pdo->prepare("UPDATE portfolio SET project_title = ?, project_desc = ?, project_link = ?, category = ?, tech_stack = ?, completion_year = ?, is_live = ?, project_screenshot = ? WHERE id = ?");
-            $stmt->execute([$title, $desc, $link, $category, $techStack, $completionYear, $isLive, $screenshot_path, $eid]);
-            $success_msg = 'Project updated successfully!';
-        } catch (Exception $e) {
-            error_log('edit_project DB error: ' . $e->getMessage());
-            $errors[] = 'Database error. Please try again.';
+        if (empty($errors)) {
+            try {
+                $category = trim($_POST['category'] ?? 'Websites');
+                $techStack = trim($_POST['tech_stack'] ?? '');
+                $completionYear = trim($_POST['completion_year'] ?? '');
+                $isLive = isset($_POST['is_live']) ? 1 : 0;
+                $stmt = $pdo->prepare("UPDATE portfolio SET project_title = ?, project_desc = ?, project_link = ?, category = ?, tech_stack = ?, completion_year = ?, is_live = ?, project_screenshot = ? WHERE id = ?");
+                $stmt->execute([$title, $desc, $link, $category, $techStack, $completionYear, $isLive, $screenshot_path, $eid]);
+                $success_msg = 'Project updated successfully!';
+            } catch (Exception $e) {
+                error_log('edit_project DB error: ' . $e->getMessage());
+                $errors[] = 'Database error. Please try again.';
+            }
         }
-    }
 
-    if (!$success_msg && !empty($errors)) {
-        $error_msg = implode(' ', $errors);
-    }
+        if (!$success_msg && !empty($errors)) {
+            $error_msg = implode(' ', $errors);
+        }
 
-    // Refresh project list
-$projects = $pdo->query("SELECT id, project_title, project_desc, project_link, category, tech_stack, completion_year, is_live, project_screenshot, created_at FROM portfolio ORDER BY created_at DESC")->fetchAll();
+        $projects = $pdo->query("SELECT id, project_title, project_desc, project_link, category, tech_stack, completion_year, is_live, project_screenshot, created_at FROM portfolio ORDER BY created_at DESC")->fetchAll();
+    }
 }
 
 require_once 'admin_header.php';
