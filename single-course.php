@@ -126,7 +126,7 @@ echo '<script type="application/ld+json">' . json_encode($course_schema, JSON_UN
 require_once 'header.php';
 ?>
 
-<section class="page-header">
+<section class="page-header<?= $course['thumbnail'] ? ' page-header-with-bg' : '' ?>"<?php if ($course['thumbnail']): ?> style="background-image:url('/<?= htmlspecialchars($course['thumbnail']) ?>')"<?php endif; ?>>
     <div class="container">
         <h1><?= htmlspecialchars($course['title']) ?></h1>
         <p>
