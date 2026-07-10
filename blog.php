@@ -1,12 +1,28 @@
 <?php
 require_once __DIR__ . '/db_connect.php';
 
+try {
+    $cols = $pdo->query("SHOW COLUMNS FROM blogs")->fetchAll(PDO::FETCH_COLUMN);
+    if (!in_array('description', $cols)) $pdo->exec("ALTER TABLE blogs ADD COLUMN description TEXT AFTER slug");
+    if (!in_array('author', $cols)) $pdo->exec("ALTER TABLE blogs ADD COLUMN author VARCHAR(100) DEFAULT 'Admin' AFTER feature_image");
+    if (!in_array('is_published', $cols)) $pdo->exec("ALTER TABLE blogs ADD COLUMN is_published TINYINT(1) DEFAULT 1 AFTER author");
+    if (!in_array('updated_at', $cols)) $pdo->exec("ALTER TABLE blogs ADD COLUMN updated_at DATETIME DEFAULT NULL AFTER created_at");
+} catch (Exception $e) {
+    error_log('blog migration: ' . $e->getMessage());
+}
+
 $slug = $_GET['slug'] ?? '';
 
 if ($slug) {
     $stmt = $pdo->prepare("SELECT * FROM blogs WHERE slug = ? AND is_published = 1");
     $stmt->execute([$slug]);
     $post = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$post && is_numeric($slug)) {
+        $stmt = $pdo->prepare("SELECT * FROM blogs WHERE id = ? AND is_published = 1");
+        $stmt->execute([(int)$slug]);
+        $post = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
     if (!$post) {
         header('HTTP/1.0 404 Not Found');
@@ -83,7 +99,7 @@ if ($slug) {
                         <?php if (!empty($p['description'])): ?>
                         <p class="text-muted small flex-grow-1"><?= htmlspecialchars(mb_strimwidth($p['description'], 0, 120, '...')) ?></p>
                         <?php endif; ?>
-                        <a href="/blog/<?= htmlspecialchars($p['slug']) ?>" class="btn btn-outline-red mt-auto align-self-start">Read More <i class="bi bi-arrow-right ms-1"></i></a>
+                        <a href="/blog/<?= htmlspecialchars($p['slug'] ?: $p['id']) ?>" class="btn btn-outline-red mt-auto align-self-start">Read More <i class="bi bi-arrow-right ms-1"></i></a>
                     </div>
                 </div>
             </div>

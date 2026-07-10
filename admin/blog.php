@@ -17,6 +17,15 @@ try {
     if (!in_array('author', $cols)) $pdo->exec("ALTER TABLE blogs ADD COLUMN author VARCHAR(100) DEFAULT 'Admin' AFTER feature_image");
     if (!in_array('is_published', $cols)) $pdo->exec("ALTER TABLE blogs ADD COLUMN is_published TINYINT(1) DEFAULT 1 AFTER author");
     if (!in_array('updated_at', $cols)) $pdo->exec("ALTER TABLE blogs ADD COLUMN updated_at DATETIME DEFAULT NULL AFTER created_at");
+    $emptySlugs = $pdo->query("SELECT id, title FROM blogs WHERE slug IS NULL OR slug = ''")->fetchAll();
+    foreach ($emptySlugs as $row) {
+        $newSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $row['title']), '-'));
+        if (empty($newSlug)) $newSlug = 'post-' . $row['id'];
+        $check = $pdo->prepare("SELECT id FROM blogs WHERE slug = ? AND id != ?");
+        $check->execute([$newSlug, $row['id']]);
+        if ($check->fetch()) $newSlug .= '-' . $row['id'];
+        $pdo->prepare("UPDATE blogs SET slug = ? WHERE id = ?")->execute([$newSlug, $row['id']]);
+    }
 } catch (Exception $e) {
     error_log('blog migration: ' . $e->getMessage());
 }
@@ -75,11 +84,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!$error_msg) {
             try {
-                $slug = $edit_id > 0 ? '' : strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title), '-'));
-
                 if ($edit_id > 0) {
+                    $existing_slug = $pdo->prepare("SELECT slug FROM blogs WHERE id = ?");
+                    $existing_slug->execute([$edit_id]);
+                    $old = $existing_slug->fetch();
+                    $slug = $old['slug'] ?? '';
+                    if (empty($slug)) {
+                        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title), '-'));
+                    }
                     $stmt = $pdo->prepare("UPDATE blogs SET title = ?, slug = ?, description = ?, content = ?, feature_image = ?, author = ?, is_published = ?, updated_at = NOW() WHERE id = ?");
-                    $stmt->execute([$title, $slug ?: null, $description, $content, $feature_image, $author, $is_published, $edit_id]);
+                    $stmt->execute([$title, $slug, $description, $content, $feature_image, $author, $is_published, $edit_id]);
                     $success_msg = 'Blog post updated successfully!';
                 } else {
                     $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title), '-'));
