@@ -162,7 +162,6 @@ require_once 'admin_header.php';
                                 data-id="<?= $p['id'] ?>"
                                 data-title="<?= htmlspecialchars($p['title'], ENT_QUOTES) ?>"
                                 data-description="<?= htmlspecialchars($p['description'] ?? '', ENT_QUOTES) ?>"
-                                data-content="<?= htmlspecialchars($p['content'] ?? '', ENT_QUOTES) ?>"
                                 data-author="<?= htmlspecialchars($p['author'] ?? '', ENT_QUOTES) ?>"
                                 data-image="<?= htmlspecialchars($p['feature_image'] ?? '', ENT_QUOTES) ?>"
                                 data-published="<?= $p['is_published'] ?>"
@@ -282,10 +281,10 @@ require_once 'admin_header.php';
 document.addEventListener('DOMContentLoaded', function () {
     $(document).on('click', '.btn-edit-blog', function () {
         var btn = $(this);
-        $('#edit-id').val(btn.data('id'));
+        var id = btn.data('id');
+        $('#edit-id').val(id);
         $('#edit-title').val(btn.data('title'));
         $('#edit-description').val(btn.data('description'));
-        $('#edit-content').val(btn.data('content'));
         $('#edit-author').val(btn.data('author'));
         var img = btn.data('image');
         if (img) {
@@ -294,7 +293,16 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#edit-image-preview').hide();
         }
         $('#editIsPublished').prop('checked', btn.data('published') == 1);
+        $('#edit-content').val('Loading...');
         $('#editBlogModal').modal('show');
+
+        $.get('blog_ajax.php?id=' + id, function(data) {
+            if (data && data.content !== undefined) {
+                $('#edit-content').val(data.content);
+            }
+        }, 'json').fail(function() {
+            $('#edit-content').val('');
+        });
     });
 });
 </script>
