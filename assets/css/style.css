@@ -2495,7 +2495,7 @@ body.auth-page-bg main {
 .auth-wrap-full .auth-right {
     width: 100%;
     min-height: auto;
-    padding: 28px 20px;
+    padding: 24px 16px;
 }
 .auth-wrap-full .auth-right h1,
 .auth-wrap-full .auth-right h2 {
