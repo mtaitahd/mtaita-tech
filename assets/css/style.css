@@ -3426,7 +3426,7 @@ img, video, iframe, embed, object, table, pre, code {
 /* Auth card on very small screens — full width with padding */
 @media (max-width: 575px) {
     .auth-card {
-    padding: 20px 10px;
+    padding: 14px 8px;
         border-radius: 0;
         box-shadow: none;
         border-left: none;
