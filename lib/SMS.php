@@ -170,7 +170,7 @@ class SMS {
         $label = $typeLabels[$type] ?? 'verification';
         $mins = $type === 'reset' ? '15' : '10';
         $greeting = $name ? "Dear $name" : "Dear User";
-        $message = "$greeting: Your verification code is $otp. Use this code to complete your $label. Code expires in $mins minutes. Regards, MtaitaTech";
+        $message = "$greeting: Your verification code is $otp. Use this code to complete your $label. Code expires in $mins minutes.\nRegards, MtaitaTech";
         return $this->send($phone, $message);
     }
 
