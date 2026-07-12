@@ -80,45 +80,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = trim($_POST['message'] ?? '');
         $recipient_type = $_POST['recipient_type'] ?? 'all';
         $test_phone = trim($_POST['test_phone'] ?? '');
+        $selectedUserIds = $_POST['selected_users'] ?? [];
 
         if (empty($message)) {
             $error_msg = 'Message is required.';
         } elseif ($recipient_type === 'test' && empty($test_phone)) {
             $error_msg = 'Phone number is required for test send.';
+        } elseif ($recipient_type === 'selected' && empty($selectedUserIds)) {
+            $error_msg = 'Please select at least one user.';
         } else {
             $sms = new SMS();
             $recipients = [];
             $sentCount = 0;
-            $allPhones = [];
+            $totalCount = 0;
 
             if ($recipient_type === 'test') {
-                $recipients[] = ['phone' => $test_phone, 'name' => 'Test'];
+                $recipients[] = ['id' => 0, 'phone' => $test_phone, 'name' => 'Test'];
+            } elseif ($recipient_type === 'selected') {
+                $placeholders = implode(',', array_fill(0, count($selectedUserIds), '?'));
+                $stmt = $pdo->prepare("SELECT id, phone, name FROM public_users WHERE id IN ($placeholders) AND phone IS NOT NULL AND phone != ''");
+                $stmt->execute($selectedUserIds);
+                $recipients = $stmt->fetchAll();
             } else {
-                $userQuery = "SELECT phone, name FROM public_users WHERE phone IS NOT NULL AND phone != ''";
+                $userQuery = "SELECT id, phone, name FROM public_users WHERE phone IS NOT NULL AND phone != ''";
                 $stmt = $pdo->query($userQuery);
                 $recipients = $stmt->fetchAll();
             }
 
-            if (empty($recipients)) {
+            $totalCount = count($recipients);
+            if ($totalCount === 0) {
                 $error_msg = 'No recipients found.';
             } else {
+                try {
+                    $insertStmt = $pdo->prepare("INSERT INTO sms_log (type, recipient, recipient_name, message, status) VALUES ('manual', ?, ?, ?, ?)");
+                } catch (Exception $e) {
+                    $insertStmt = null;
+                }
+
                 foreach ($recipients as $r) {
                     $personalized = $message;
                     $personalized = str_replace('{name}', $r['name'] ?? '', $personalized);
                     $personalized = str_replace('{phone}', $r['phone'] ?? '', $personalized);
 
+                    $status = 'failed';
                     if ($sms->send($r['phone'], $personalized)) {
+                        $status = 'sent';
                         $sentCount++;
                     }
-                    $allPhones[] = $r['phone'];
+
+                    if ($insertStmt) {
+                        try {
+                            $insertStmt->execute([$r['phone'], $r['name'] ?? '', $personalized, $status]);
+                        } catch (Exception $e) {}
+                    }
                 }
 
                 if ($sentCount > 0) {
-                    $success_msg = 'Notification sent to ' . $sentCount . ' of ' . count($recipients) . ' recipient(s).';
-                    try {
-                        $insertStmt = $pdo->prepare("INSERT INTO sms_log (type, recipient, message, status) VALUES ('manual', ?, ?, 'sent')");
-                        $insertStmt->execute([implode(', ', $allPhones), $message]);
-                    } catch (Exception $e) {}
+                    $success_msg = "Notification sent to $sentCount of $totalCount recipient(s).";
                 } else {
                     $error_msg = 'Failed to send notification. Check your SMS balance and API key.';
                 }
@@ -132,6 +150,9 @@ $templates = $pdo->query("SELECT * FROM notification_templates WHERE is_active =
 $categories = $pdo->query("SELECT DISTINCT category FROM notification_templates WHERE is_active = 1 ORDER BY category")->fetchAll(\PDO::FETCH_COLUMN);
 
 require_once 'admin_header.php';
+
+// Fetch all users with phone numbers for the checkbox list
+$usersWithPhones = $pdo->query("SELECT id, name, email, phone FROM public_users WHERE phone IS NOT NULL AND phone != '' ORDER BY name ASC")->fetchAll();
 ?>
 <ul class="nav nav-tabs mb-4" id="notifTabs" role="tablist">
     <li class="nav-item" role="presentation">
@@ -143,6 +164,11 @@ require_once 'admin_header.php';
         <button class="nav-link" id="templates-tab" data-bs-toggle="tab" data-bs-target="#templates" type="button" role="tab">
             <i class="fas fa-template me-1"></i> Message Templates
         </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" href="sms-logs">
+            <i class="fas fa-list me-1"></i> SMS Logs
+        </a>
     </li>
 </ul>
 
@@ -182,10 +208,40 @@ require_once 'admin_header.php';
                                 <label class="form-check-label" for="rAll">All users with phone numbers</label>
                             </div>
                             <div class="form-check">
+                                <input class="form-check-input" type="radio" name="recipient_type" value="selected" id="rSelected">
+                                <label class="form-check-label" for="rSelected">Select specific users</label>
+                            </div>
+                            <div class="form-check">
                                 <input class="form-check-input" type="radio" name="recipient_type" value="test" id="rTest">
                                 <label class="form-check-label" for="rTest">Send test to single number</label>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="mb-3" id="selectedUsersGroup" style="display:none;">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label class="form-label fw-semibold mb-0">Choose Users <small class="text-muted">(<?= count($usersWithPhones) ?> with phone)</small></label>
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="toggleAllUsers(true)">Select All</button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleAllUsers(false)">Deselect All</button>
+                            </div>
+                        </div>
+                        <div class="border rounded p-2" style="max-height:250px;overflow-y:auto;">
+                            <?php if ($usersWithPhones): ?>
+                            <?php foreach ($usersWithPhones as $u): ?>
+                            <div class="form-check py-1 px-2 border-bottom" style="border-color:#f0f0f0 !important;">
+                                <input class="form-check-input user-checkbox" type="checkbox" name="selected_users[]" value="<?= $u['id'] ?>" id="user_<?= $u['id'] ?>">
+                                <label class="form-check-label" for="user_<?= $u['id'] ?>">
+                                    <?= htmlspecialchars($u['name']) ?>
+                                    <small class="text-muted">(<?= htmlspecialchars($u['phone']) ?>)</small>
+                                </label>
+                            </div>
+                            <?php endforeach; ?>
+                            <?php else: ?>
+                            <p class="text-muted small mb-0 p-2">No users with phone numbers found.</p>
+                            <?php endif; ?>
+                        </div>
+                        <div class="form-text">Selected: <span id="selectedCount">0</span> user(s)</div>
                     </div>
 
                     <div class="mb-3" id="testPhoneGroup" style="display:none;">
@@ -455,11 +511,30 @@ function closeTemplateForm() {
     document.getElementById('templateFormCard').style.display = 'none';
 }
 
+// Recipient type toggle
+function updateSelectedCount() {
+    var checked = document.querySelectorAll('.user-checkbox:checked').length;
+    document.getElementById('selectedCount').textContent = checked;
+}
+
 document.querySelectorAll('input[name="recipient_type"]').forEach(function(el) {
     el.addEventListener('change', function() {
         document.getElementById('testPhoneGroup').style.display = this.value === 'test' ? 'block' : 'none';
+        document.getElementById('selectedUsersGroup').style.display = this.value === 'selected' ? 'block' : 'none';
     });
 });
+
+document.querySelectorAll('.user-checkbox').forEach(function(cb) {
+    cb.addEventListener('change', updateSelectedCount);
+});
+
+function toggleAllUsers(checked) {
+    document.querySelectorAll('.user-checkbox').forEach(function(cb) {
+        cb.checked = checked;
+    });
+    updateSelectedCount();
+}
+
 document.querySelector('textarea[name="message"]').addEventListener('input', function() {
     document.getElementById('charCount').textContent = this.value.length;
 });

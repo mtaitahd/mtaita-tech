@@ -197,6 +197,13 @@ $get_error = $_GET['error'] ?? '';
             </a>
         </li>
 
+        <li class="nav-item<?= $active_page === 'sms-logs' ? ' active' : '' ?>">
+            <a class="nav-link" href="sms-logs">
+                <i class="fas fa-fw fa-list"></i>
+                <span>SMS Logs</span>
+            </a>
+        </li>
+
         <hr class="sidebar-divider">
 
         <li class="nav-item<?= $active_page === 'settings' ? ' active' : '' ?>">
