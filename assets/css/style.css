@@ -2515,7 +2515,7 @@ body.auth-page-bg main {
 .auth-wrap-full .auth-right .auth-field input {
     padding: 14px 14px;
     font-size: 0.85rem;
-    max-width: 300px;
+    max-width: 340px;
     width: 100%;
 }
 .auth-wrap-full .auth-right .auth-btn {
