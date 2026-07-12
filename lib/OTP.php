@@ -48,10 +48,10 @@ class OTP {
         return $mailer->send($email, $subject, $body, true);
     }
 
-    public function sendSms($phone, $otp, $type) {
+    public function sendSms($phone, $otp, $type, $name = '') {
         require_once __DIR__ . '/SMS.php';
         $sms = new SMS();
-        return $sms->sendOTP($phone, $otp, $type);
+        return $sms->sendOTP($phone, $otp, $type, $name);
     }
 
     public function sendUserOTP($userId, $type, $method = 'email') {
@@ -68,7 +68,7 @@ class OTP {
 
         if ($method === 'sms') {
             if (!empty($user['phone'])) {
-                return $this->sendSms($user['phone'], $otp, $type);
+                return $this->sendSms($user['phone'], $otp, $type, $user['name']);
             }
             return false;
         }

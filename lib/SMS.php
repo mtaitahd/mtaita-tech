@@ -165,11 +165,12 @@ class SMS {
         return false;
     }
 
-    public function sendOTP($phone, $otp, $type) {
-        $typeLabels = ['verify' => 'email verification', 'login' => 'login', 'reset' => 'password reset'];
+    public function sendOTP($phone, $otp, $type, $name = '') {
+        $typeLabels = ['verify' => 'verification', 'login' => 'login', 'reset' => 'password reset'];
         $label = $typeLabels[$type] ?? 'verification';
         $mins = $type === 'reset' ? '15' : '10';
-        $message = "Mtaita Tech: Your verification code is $otp. Use this code to complete your $label. Code expires in $mins minutes.";
+        $greeting = $name ? "Dear $name" : "Dear User";
+        $message = "$greeting: Your verification code is $otp. Use this code to complete your $label. Code expires in $mins minutes. Regards, MtaitaTech";
         return $this->send($phone, $message);
     }
 
