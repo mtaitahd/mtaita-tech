@@ -49,7 +49,7 @@ if ($existingUser) {
 
 $_SESSION['google_logged_in'] = true;
 
-$redirect = $_SESSION['redirect_after_login'] ?? 'index.php';
+$redirect = $_SESSION['redirect_after_login'] ?? 'dashboard.php';
 unset($_SESSION['redirect_after_login']);
 header('Location: ' . $redirect);
 exit;
