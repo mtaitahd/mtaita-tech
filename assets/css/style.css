@@ -2489,13 +2489,39 @@ body.auth-page-bg main {
     overflow: hidden;
 }
 .auth-wrap-full {
-    max-width: 440px;
+    max-width: 380px;
     margin: 0 auto;
 }
 .auth-wrap-full .auth-right {
     width: 100%;
     min-height: auto;
-    padding: 40px 36px;
+    padding: 24px 18px;
+}
+.auth-wrap-full .auth-right h1,
+.auth-wrap-full .auth-right h2 {
+    font-size: 1.2rem;
+}
+.auth-wrap-full .auth-right .auth-sub {
+    font-size: 0.8rem;
+    margin-bottom: 18px;
+}
+.auth-wrap-full .auth-right .auth-field {
+    margin-bottom: 12px;
+}
+.auth-wrap-full .auth-right .auth-field label {
+    font-size: 0.78rem;
+}
+.auth-wrap-full .auth-right .auth-field input {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+}
+.auth-wrap-full .auth-right .auth-btn {
+    padding: 13px;
+    font-size: 0.92rem;
+}
+.auth-wrap-full .auth-right .auth-link {
+    font-size: 0.8rem;
+    margin-top: 16px;
 }
 .auth-left {
     width: 50%;
