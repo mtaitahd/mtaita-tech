@@ -222,26 +222,35 @@ $usersWithPhones = $pdo->query("SELECT id, name, email, phone FROM public_users 
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <label class="form-label fw-semibold mb-0">Choose Users <small class="text-muted">(<?= count($usersWithPhones) ?> with phone)</small></label>
                             <div class="btn-group btn-group-sm">
-                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="toggleAllUsers(true)">Select All</button>
-                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleAllUsers(false)">Deselect All</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="toggleAllUsers(true)"><i class="fas fa-check-double me-1"></i>Select All</button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleAllUsers(false)"><i class="fas fa-times me-1"></i>Deselect All</button>
                             </div>
                         </div>
-                        <div class="border rounded p-2" style="max-height:250px;overflow-y:auto;">
-                            <?php if ($usersWithPhones): ?>
-                            <?php foreach ($usersWithPhones as $u): ?>
-                            <div class="form-check py-1 px-2 border-bottom" style="border-color:#f0f0f0 !important;">
-                                <input class="form-check-input user-checkbox" type="checkbox" name="selected_users[]" value="<?= $u['id'] ?>" id="user_<?= $u['id'] ?>">
-                                <label class="form-check-label" for="user_<?= $u['id'] ?>">
-                                    <?= htmlspecialchars($u['name']) ?>
-                                    <small class="text-muted">(<?= htmlspecialchars($u['phone']) ?>)</small>
-                                </label>
-                            </div>
-                            <?php endforeach; ?>
-                            <?php else: ?>
-                            <p class="text-muted small mb-0 p-2">No users with phone numbers found.</p>
-                            <?php endif; ?>
+                        <div class="border rounded" style="max-height:280px;overflow-y:auto;background:#fff;">
+                            <table class="table table-sm mb-0">
+                                <thead class="table-light" style="position:sticky;top:0;z-index:1;">
+                                    <tr>
+                                        <th style="width:30px;"><input type="checkbox" id="selectAllUsers" class="form-check-input" onclick="toggleAllUsers(this.checked)"></th>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if ($usersWithPhones): ?>
+                                    <?php foreach ($usersWithPhones as $u): ?>
+                                    <tr class="user-row">
+                                        <td><input class="form-check-input user-checkbox" type="checkbox" name="selected_users[]" value="<?= $u['id'] ?>" id="user_<?= $u['id'] ?>"></td>
+                                        <td><label class="form-check-label mb-0" for="user_<?= $u['id'] ?>"><?= htmlspecialchars($u['name']) ?></label></td>
+                                        <td><small class="text-muted"><?= htmlspecialchars($u['phone']) ?></small></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                    <?php else: ?>
+                                    <tr><td colspan="3" class="text-center text-muted py-3">No users with phone numbers found.</td></tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="form-text">Selected: <span id="selectedCount">0</span> user(s)</div>
+                        <div class="form-text">Selected: <span id="selectedCount" class="fw-bold text-primary">0</span> user(s)</div>
                     </div>
 
                     <div class="mb-3" id="testPhoneGroup" style="display:none;">
@@ -525,13 +534,21 @@ document.querySelectorAll('input[name="recipient_type"]').forEach(function(el) {
 });
 
 document.querySelectorAll('.user-checkbox').forEach(function(cb) {
-    cb.addEventListener('change', updateSelectedCount);
+    cb.addEventListener('change', function() {
+        updateSelectedCount();
+        var all = document.querySelectorAll('.user-checkbox');
+        var checked = document.querySelectorAll('.user-checkbox:checked');
+        var headerCb = document.getElementById('selectAllUsers');
+        if (headerCb) headerCb.checked = all.length === checked.length;
+    });
 });
 
 function toggleAllUsers(checked) {
     document.querySelectorAll('.user-checkbox').forEach(function(cb) {
         cb.checked = checked;
     });
+    var headerCb = document.getElementById('selectAllUsers');
+    if (headerCb) headerCb.checked = checked;
     updateSelectedCount();
 }
 
