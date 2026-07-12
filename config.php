@@ -80,7 +80,7 @@ define('CURRENCY_MIN_AMOUNT', 1000);
 
 // Meseji SMS
 define('MESEJI_API_KEY', env('MESEJI_API_KEY', ''));
-define('MESEJI_SENDER_ID', env('MESEJI_SENDER_ID', 'MTAITATEC'));
+define('MESEJI_SENDER_ID', env('MESEJI_SENDER_ID', 'MTAITATECH'));
 
 // Default SEO meta
 $page_title = $page_title ?? SITE_NAME . ' — ' . SITE_TAGLINE;

@@ -8,7 +8,7 @@ class SMS {
 
     public function __construct() {
         $this->apiKey = defined('MESEJI_API_KEY') ? MESEJI_API_KEY : '';
-        $this->senderId = defined('MESEJI_SENDER_ID') ? MESEJI_SENDER_ID : 'MTAITATEC';
+        $this->senderId = defined('MESEJI_SENDER_ID') ? MESEJI_SENDER_ID : 'MTAITATECH';
 
         if (class_exists('Settings')) {
             $this->apiKey = Settings::get('meseji_api_key', $this->apiKey);

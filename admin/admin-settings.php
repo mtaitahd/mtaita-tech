@@ -178,7 +178,7 @@ function s($key, $default = '') {
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Sender ID</label>
-                        <input type="text" name="meseji_sender_id" class="form-control" value="<?= htmlspecialchars(s('meseji_sender_id', 'MTAITATEC')) ?>">
+                        <input type="text" name="meseji_sender_id" class="form-control" value="<?= htmlspecialchars(s('meseji_sender_id', 'MTAITATECH')) ?>">
                     </div>
                 </div>
             </div>
