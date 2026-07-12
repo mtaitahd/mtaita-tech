@@ -112,7 +112,7 @@ require_once 'header.php';
             <?php if ($error_msg): ?><div class="alert alert-danger d-none swal-msg" data-type="error"><?= htmlspecialchars($error_msg) ?></div><?php endif; ?>
             <?php if ($success_msg): ?><div class="alert alert-success d-none swal-msg" data-type="success"><?= htmlspecialchars($success_msg) ?></div><?php endif; ?>
 
-            <h1 style="font-size:1.5rem;"><?= $otp_method === 'sms' ? 'Check Your Phone' : 'Check Your Email' ?></h1>
+            <h1><?= $otp_method === 'sms' ? 'Check Your Phone' : 'Check Your Email' ?></h1>
             <p class="auth-sub">We sent a 6-digit code <?= $otp_method === 'sms' ? 'via SMS to your registered phone number' : 'to <strong>' . htmlspecialchars($email) . '</strong>' ?></p>
             <?php if ($otp_method !== 'sms'): ?>
             <p class="auth-sub" style="margin-top:-14px;font-size:0.78rem;color:#e67e22;"><i class="fas fa-exclamation-triangle me-1"></i>If not in inbox, check your <strong>Spam</strong> folder.</p>

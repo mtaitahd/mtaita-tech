@@ -61,7 +61,7 @@ require_once 'header.php';
             <?php if ($get_msg): ?><div class="alert alert-success d-none swal-msg" data-type="success"><?= htmlspecialchars($get_msg) ?></div><?php endif; ?>
             <?php if ($get_error): ?><div class="alert alert-danger d-none swal-msg" data-type="error"><?= htmlspecialchars($get_error) ?></div><?php endif; ?>
 
-            <h1 style="font-size:1.5rem;">Forgot Password</h1>
+            <h1>Forgot Password</h1>
             <p class="auth-sub">Enter your email to receive a reset code</p>
 
             <form method="POST" action="forgot-password">

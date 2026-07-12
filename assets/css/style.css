@@ -2488,6 +2488,25 @@ body.auth-page-bg main {
     border-radius: 0;
     overflow: hidden;
 }
+.auth-wrap-full {
+    max-width: 480px;
+    margin: 0 auto;
+}
+.auth-wrap-full .auth-right {
+    width: 100%;
+    min-height: auto;
+    padding: 40px 36px;
+}
+.auth-wrap-full .auth-right h1,
+.auth-wrap-full .auth-right h2 {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 4px;
+}
+.auth-wrap-full .auth-right .auth-sub {
+    text-align: center;
+    margin-bottom: 20px;
+}
 .auth-left {
     width: 40%;
     background: rgb(105, 105, 141);
@@ -2791,6 +2810,8 @@ body.auth-page-bg main {
     .auth-right { padding: 30px 24px; }
     .auth-right .auth-otp-inputs { gap: 6px; }
     .auth-right .auth-otp-inputs input { width: 42px; height: 48px; font-size: 1.1rem; }
+    .auth-wrap-full .auth-right { padding: 30px 24px; }
+    .auth-wrap-full .auth-right h1 { font-size: 1.15rem; }
 }
 @media (max-width: 576px) {
     .auth-page { padding: 12px; }
@@ -2803,6 +2824,8 @@ body.auth-page-bg main {
     .auth-right .auth-field input { margin-bottom: 15px; }
     .auth-wrap { flex-direction: column; }
     .auth-right .auth-btn { font-size: 14px; padding: 12px; }
+    .auth-wrap-full .auth-right { padding: 24px 20px; }
+    .auth-wrap-full .auth-right h1 { font-size: 1.05rem; }
 }
 @media (max-width: 480px) {
     .auth-page { padding: 8px; }
@@ -2815,6 +2838,8 @@ body.auth-page-bg main {
     .auth-right .auth-field input { padding: 12px; font-size: 0.82rem; }
     .auth-right .auth-btn { padding: 12px; font-size: 0.85rem; }
     .auth-right .auth-link { font-size: 0.76rem; }
+    .auth-wrap-full .auth-right { padding: 20px 16px; }
+    .auth-wrap-full .auth-right h1 { font-size: 1rem; }
 }
 @media (max-width: 360px) {
     .auth-page { padding: 4px; }
@@ -2824,6 +2849,8 @@ body.auth-page-bg main {
     .auth-right { padding: 14px 10px; }
     .auth-right .auth-field input { padding: 10px; font-size: 0.78rem; }
     .auth-right .auth-btn { padding: 10px; font-size: 0.82rem; }
+    .auth-wrap-full .auth-right { padding: 16px 12px; }
+    .auth-wrap-full .auth-right h1 { font-size: 0.95rem; }
 }
 
 /* ============ Page Loader ============ */
