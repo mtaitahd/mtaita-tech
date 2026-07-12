@@ -19,6 +19,34 @@ try {
     }
 } catch (Exception $e) {}
 
+// Migrate old comma-separated log entries into individual rows
+try {
+    $oldLogs = $pdo->query("SELECT * FROM sms_log WHERE recipient LIKE '%,%' OR recipient_name = ''")->fetchAll();
+    $migrated = 0;
+    foreach ($oldLogs as $old) {
+        $phones = array_filter(array_map('trim', explode(',', $old['recipient'] ?? '')));
+        if (count($phones) <= 1) {
+            // Single phone, just look up name if missing
+            if (empty($old['recipient_name']) && !empty($old['recipient'])) {
+                $nameStmt = $pdo->prepare("SELECT name FROM public_users WHERE phone = ? LIMIT 1");
+                $nameStmt->execute([$old['recipient']]);
+                $name = $nameStmt->fetchColumn() ?: '';
+                $pdo->prepare("UPDATE sms_log SET recipient_name = ? WHERE id = ?")->execute([$name, $old['id']]);
+            }
+            continue;
+        }
+        $insertStmt = $pdo->prepare("INSERT INTO sms_log (type, recipient, recipient_name, message, status, created_at) VALUES (?, ?, ?, ?, ?, ?)");
+        foreach ($phones as $ph) {
+            $nameStmt = $pdo->prepare("SELECT name FROM public_users WHERE phone = ? LIMIT 1");
+            $nameStmt->execute([$ph]);
+            $name = $nameStmt->fetchColumn() ?: '';
+            $insertStmt->execute([$old['type'] ?? 'manual', $ph, $name, $old['message'] ?? '', $old['status'] ?? 'sent', $old['created_at'] ?? date('Y-m-d H:i:s')]);
+        }
+        $pdo->prepare("DELETE FROM sms_log WHERE id = ?")->execute([$old['id']]);
+        $migrated++;
+    }
+} catch (Exception $e) {}
+
 // Handle actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['delete_log'])) {
