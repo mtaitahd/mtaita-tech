@@ -2488,6 +2488,15 @@ body.auth-page-bg main {
     border-radius: 0;
     overflow: hidden;
 }
+.auth-wrap-full {
+    max-width: 480px;
+    margin: 0 auto;
+}
+.auth-wrap-full .auth-right {
+    width: 100%;
+    min-height: auto;
+    padding: 40px 36px;
+}
 .auth-left {
     width: 50%;
     background: rgb(105, 105, 141);

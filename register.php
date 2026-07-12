@@ -70,20 +70,7 @@ $body_class = 'auth-page-bg';
 require_once 'header.php';
 ?>
 <section class="auth-page">
-    <div class="auth-wrap">
-        <div class="auth-left">
-            <img src="/assets/img/jj.png" alt="Mtaita Tech">
-            <h3>MTAITA TECH</h3>
-            <p>IT &amp; Graphic Design Agency</p>
-            <div class="auth-social">
-                <a href="https://web.facebook.com/profile.php?id=61583334572270" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/johnsonpaul1269/" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@mtaitatech" target="_blank" rel="noopener"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-            </div>
-            <div class="auth-location"><i class="fas fa-map-marker-alt"></i> Arusha, Tanzania</div>
-            <a href="/" class="auth-home-link"><i class="fas fa-home"></i> Back to Home</a>
-        </div>
+    <div class="auth-wrap auth-wrap-full">
         <div class="auth-right">
             <?php if ($success_msg): ?><div class="alert alert-success d-none swal-msg" data-type="success"><?= htmlspecialchars($success_msg) ?></div><?php endif; ?>
             <?php if ($error_msg): ?><div class="alert alert-danger d-none swal-msg" data-type="error"><?= htmlspecialchars($error_msg) ?></div><?php endif; ?>
