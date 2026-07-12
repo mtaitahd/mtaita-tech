@@ -2506,13 +2506,14 @@ body.auth-page-bg main {
     margin-bottom: 18px;
 }
 .auth-wrap-full .auth-right .auth-field {
-    margin-bottom: 12px;
+    margin-bottom: 18px;
 }
 .auth-wrap-full .auth-right .auth-field label {
     font-size: 0.78rem;
+    margin-bottom: 6px;
 }
 .auth-wrap-full .auth-right .auth-field input {
-    padding: 12px 14px;
+    padding: 14px 14px;
     font-size: 0.85rem;
 }
 .auth-wrap-full .auth-right .auth-btn {
