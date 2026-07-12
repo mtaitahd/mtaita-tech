@@ -2489,49 +2489,48 @@ body.auth-page-bg main {
     overflow: hidden;
 }
 .auth-wrap-full {
-    max-width: 500px;
+    max-width: 400px;
     width: 100%;
     margin: 0 auto;
     background: #ffffff;
-    border-radius: 18px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.06);
+    border-radius: 0.35rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 .auth-wrap-full .auth-right {
     width: 100%;
     min-height: auto;
-    padding: 40px;
+    padding: 24px 28px;
     background: transparent;
-    border-radius: 18px;
 }
 .auth-wrap-full .auth-right h1,
 .auth-wrap-full .auth-right h2 {
-    font-size: 1.35rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: #0f172a;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     text-align: center;
 }
 .auth-wrap-full .auth-right .auth-sub {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: #64748b;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
     text-align: center;
 }
 .auth-wrap-full .auth-right .auth-field {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 .auth-wrap-full .auth-right .auth-field label {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     font-weight: 600;
     color: #334155;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     display: block;
 }
 .auth-wrap-full .auth-right .auth-field input {
     width: 100%;
-    height: 52px;
-    padding: 0 16px;
-    font-size: 15px;
+    height: 44px;
+    padding: 0 14px;
+    font-size: 14px;
     border: 2.5px solid #2d2f6c;
     border-radius: 10px;
     background: #ffffff;
@@ -2550,9 +2549,9 @@ body.auth-page-bg main {
 }
 .auth-wrap-full .auth-right .auth-btn {
     width: 100%;
-    height: 52px;
+    height: 44px;
     padding: 0;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 700;
     border-radius: 10px;
     border: none;
@@ -2563,14 +2562,14 @@ body.auth-page-bg main {
     align-items: center;
     justify-content: center;
     transition: background 0.2s;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 .auth-wrap-full .auth-right .auth-btn:hover {
     background: rgb(85, 85, 121);
 }
 .auth-wrap-full .auth-right .auth-forgot {
     text-align: right;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 .auth-wrap-full .auth-right .auth-forgot a {
     color: rgb(105, 105, 141);
@@ -2585,8 +2584,8 @@ body.auth-page-bg main {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin: 20px 0;
-    font-size: 0.8rem;
+    margin: 14px 0;
+    font-size: 0.78rem;
     color: #94a3b8;
 }
 .auth-wrap-full .auth-right .auth-divider::before,
@@ -2598,12 +2597,12 @@ body.auth-page-bg main {
 }
 .auth-wrap-full .auth-right .auth-btn-google {
     width: 100%;
-    height: 52px;
+    height: 44px;
     padding: 0;
     border-radius: 10px;
     border: 2.5px solid #e2e8f0;
     background: #ffffff;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2619,8 +2618,8 @@ body.auth-page-bg main {
     background: #f8fafc;
 }
 .auth-wrap-full .auth-right .auth-link {
-    font-size: 0.82rem;
-    margin-top: 20px;
+    font-size: 0.8rem;
+    margin-top: 16px;
     text-align: center;
     color: #94a3b8;
 }
@@ -3001,8 +3000,8 @@ body.auth-page-bg main {
     .auth-right { padding: 30px 24px; }
     .auth-right .auth-otp-inputs { gap: 6px; }
     .auth-right .auth-otp-inputs input { width: 42px; height: 48px; font-size: 1.1rem; }
-    .auth-wrap-full { max-width: 500px; }
-    .auth-wrap-full .auth-right { padding: 32px 28px; }
+    .auth-wrap-full { max-width: 400px; }
+    .auth-wrap-full .auth-right { padding: 24px 28px; }
 }
 @media (max-width: 576px) {
     .auth-page { padding: 12px; }
@@ -3044,10 +3043,10 @@ body.auth-page-bg main {
     .auth-right .auth-link { font-size: 0.76rem; margin-top: 14px; }
     .auth-right .auth-forgot a { font-size: 0.76rem; }
     .auth-right .auth-otp-inputs input { width: 32px; height: 38px; font-size: 0.9rem; }
-    .auth-wrap-full .auth-right { padding: 24px 16px; }
-    .auth-wrap-full .auth-right .auth-field input { height: 46px; font-size: 14px; }
+    .auth-wrap-full .auth-right { padding: 20px 16px; }
+    .auth-wrap-full .auth-right .auth-field input { height: 42px; font-size: 13px; }
     .auth-wrap-full .auth-right .auth-btn,
-    .auth-wrap-full .auth-right .auth-btn-google { height: 46px; }
+    .auth-wrap-full .auth-right .auth-btn-google { height: 42px; }
 }
 @media (max-width: 360px) {
     .auth-page { padding: 4px; }
@@ -3060,10 +3059,10 @@ body.auth-page-bg main {
     .auth-right .auth-btn { padding: 10px; font-size: 0.82rem; }
     .auth-right .auth-otp-inputs input { width: 28px; height: 34px; font-size: 0.82rem; border-width: 2px; }
     .auth-right .auth-otp-inputs { gap: 4px; }
-    .auth-wrap-full .auth-right { padding: 20px 14px; }
-    .auth-wrap-full .auth-right .auth-field input { height: 44px; }
+    .auth-wrap-full .auth-right { padding: 16px 12px; }
+    .auth-wrap-full .auth-right .auth-field input { height: 40px; }
     .auth-wrap-full .auth-right .auth-btn,
-    .auth-wrap-full .auth-right .auth-btn-google { height: 44px; }
+    .auth-wrap-full .auth-right .auth-btn-google { height: 40px; }
 }
 
 /* ============ Page Loader ============ */
