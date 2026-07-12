@@ -2465,6 +2465,7 @@ img, video, iframe, embed, object {
 body.auth-page-bg {
     background: #000 !important;
     min-height: 100vh;
+    padding-top: 0 !important;
 }
 body.auth-page-bg main {
     background: #000;
