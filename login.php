@@ -66,8 +66,8 @@ $get_error = $_GET['error'] ?? '';
             <?php if ($get_msg): ?><div class="alert alert-success d-none swal-msg" data-type="success"><?= htmlspecialchars($get_msg) ?></div><?php endif; ?>
             <?php if ($get_error): ?><div class="alert alert-danger d-none swal-msg" data-type="error"><?= htmlspecialchars($get_error) ?></div><?php endif; ?>
 
-            <h1 style="font-size:1.5rem;">Welcome Back</h1>
-            <p class="auth-sub">Sign in to your account to continue</p>
+            <h1 style="font-size:1.2rem;text-align:center;">Welcome Back</h1>
+            <p class="auth-sub" style="text-align:center;">Sign in to your account to continue</p>
 
             <form method="POST" action="login">
                 <input type="hidden" name="csrf_token" value="<?= generateCsrfToken() ?>">

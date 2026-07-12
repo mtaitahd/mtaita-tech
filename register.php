@@ -75,8 +75,8 @@ require_once 'header.php';
             <?php if ($success_msg): ?><div class="alert alert-success d-none swal-msg" data-type="success"><?= htmlspecialchars($success_msg) ?></div><?php endif; ?>
             <?php if ($error_msg): ?><div class="alert alert-danger d-none swal-msg" data-type="error"><?= htmlspecialchars($error_msg) ?></div><?php endif; ?>
 
-            <h1 style="font-size:1.5rem;">Create Account</h1>
-            <p class="auth-sub">Join Mtaita Tech to access courses</p>
+            <h1 style="font-size:1.2rem;text-align:center;">Create Account</h1>
+            <p class="auth-sub" style="text-align:center;">Join Mtaita Tech to access courses</p>
 
             <form method="POST" action="register">
                 <input type="hidden" name="csrf_token" value="<?= generateCsrfToken() ?>">
