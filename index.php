@@ -255,7 +255,7 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
                                     <?php endfor; ?>
                                 </div>
                                 <p class="testimonial-content">"<?= htmlspecialchars($t['content']) ?>"</p>
-                                <a href="https://g.page/r/CV7D8gf6yuhmEAE/review" target="_blank" rel="nofollow noopener" class="testimonial-read-more">Read more <i class="fa-brands fa-google"></i></a>
+                                <a href="https://g.page/r/CV7D8gf6yuhmEAE/review" target="_blank" rel="nofollow noopener" class="testimonial-read-more"><i class="fa-brands fa-google"></i> Read more <i class="bi bi-arrow-right"></i></a>
                             </div>
                             <?php endforeach; ?>
                         </div>
