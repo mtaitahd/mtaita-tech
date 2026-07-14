@@ -871,7 +871,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
 }
 
 .service-detail-card ul li::before {
-    content: 'âœ“';
+    content: '✔';
     color: #10B981;
     font-weight: 700;
 }
