@@ -3693,13 +3693,10 @@ img, video, iframe, embed, object, table, pre, code {
     max-height: 60%;
     object-fit: contain;
     transition: all 0.3s ease;
-    filter: grayscale(100%);
-    opacity: 0.65;
 }
 
 .partner-card:hover .partner-logo {
-    filter: grayscale(0);
-    opacity: 1;
+    transform: scale(1.05);
 }
 
 .partner-name-only {
