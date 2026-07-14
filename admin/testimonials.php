@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $position = trim($_POST['position'] ?? '');
     $company = trim($_POST['company'] ?? '');
     $content = trim($_POST['content'] ?? '');
+    $read_more_url = trim($_POST['read_more_url'] ?? '');
     $rating = (int)($_POST['rating'] ?? 5);
     $is_approved = isset($_POST['is_approved']) ? 1 : 0;
 
@@ -74,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'company' => $company,
                         'avatar' => $avatar_path,
                         'content' => $content,
+                        'read_more_url' => $read_more_url,
                         'rating' => $rating,
                         'is_approved' => $is_approved
                     ]);
@@ -85,6 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'company' => $company,
                         'avatar' => $avatar_path,
                         'content' => $content,
+                        'read_more_url' => $read_more_url,
                         'rating' => $rating,
                         'is_approved' => $is_approved
                     ]);
@@ -116,11 +119,11 @@ require_once 'admin_header.php';
     <div class="table-responsive">
         <table class="table table-dark table-hover align-middle mb-0">
             <thead>
-                <tr><th>ID</th><th>Avatar</th><th>Name</th><th>Position</th><th>Company</th><th>Rating</th><th>Approved</th><th>Actions</th></tr>
+                <tr><th>ID</th><th>Avatar</th><th>Name</th><th>Position</th><th>Company</th><th>Read More URL</th><th>Rating</th><th>Approved</th><th>Actions</th></tr>
             </thead>
             <tbody>
                 <?php if (empty($testimonials)): ?>
-                    <tr><td colspan="8" class="text-muted text-center">No testimonials found.</td></tr>
+                    <tr><td colspan="9" class="text-muted text-center">No testimonials found.</td></tr>
                 <?php else: ?>
                     <?php foreach ($testimonials as $t): ?>
                     <tr>
@@ -135,6 +138,7 @@ require_once 'admin_header.php';
                         <td><?= htmlspecialchars($t['name']) ?></td>
                         <td><?= htmlspecialchars($t['position'] ?? '—') ?></td>
                         <td><?= htmlspecialchars($t['company'] ?? '—') ?></td>
+                        <td><?= $t['read_more_url'] ? '<a href="'.htmlspecialchars($t['read_more_url']).'" target="_blank" class="text-cyan text-truncate d-inline-block" style="max-width:180px;" title="'.htmlspecialchars($t['read_more_url']).'">'.htmlspecialchars($t['read_more_url']).'</a>' : '<span class="text-muted">Default</span>' ?></td>
                         <td>
                             <?php for ($i = 1; $i <= 5; $i++): ?>
                             <i class="bi bi-star<?= $i <= $t['rating'] ? '-fill text-warning' : ' text-muted' ?>"></i>
@@ -148,6 +152,7 @@ require_once 'admin_header.php';
                                 data-position="<?= htmlspecialchars($t['position'] ?? '', ENT_QUOTES) ?>"
                                 data-company="<?= htmlspecialchars($t['company'] ?? '', ENT_QUOTES) ?>"
                                 data-content="<?= htmlspecialchars($t['content'], ENT_QUOTES) ?>"
+                                data-read-more-url="<?= htmlspecialchars($t['read_more_url'] ?? '', ENT_QUOTES) ?>"
                                 data-rating="<?= $t['rating'] ?>"
                                 data-avatar="<?= htmlspecialchars($t['avatar'] ?? '', ENT_QUOTES) ?>"
                                 data-approved="<?= $t['is_approved'] ?>"
@@ -199,6 +204,11 @@ require_once 'admin_header.php';
                         <div class="col-12">
                             <label class="form-label">Content</label>
                             <textarea name="content" rows="4" class="form-control" required></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Read More URL (optional)</label>
+                            <input type="url" name="read_more_url" class="form-control" placeholder="https://g.page/r/... or any review link">
+                            <small class="text-muted">Leave empty to use the default Google review link.</small>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Avatar (optional)</label>
@@ -261,6 +271,11 @@ require_once 'admin_header.php';
                             <textarea name="content" id="edit-content" rows="4" class="form-control" required></textarea>
                         </div>
                         <div class="col-12">
+                            <label class="form-label">Read More URL (optional)</label>
+                            <input type="url" name="read_more_url" id="edit-read-more-url" class="form-control" placeholder="https://g.page/r/... or any review link">
+                            <small class="text-muted">Leave empty to use the default Google review link.</small>
+                        </div>
+                        <div class="col-12">
                             <label class="form-label">Current Avatar</label>
                             <div><img id="edit-avatar-preview" src="" alt="" height="50" width="50" style="border-radius:50%;object-fit:cover;" onerror="this.style.display='none'"></div>
                             <label class="form-label mt-2">New Avatar (optional)</label>
@@ -292,6 +307,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $('#edit-position').val($(this).data('position'));
         $('#edit-company').val($(this).data('company'));
         $('#edit-content').val($(this).data('content'));
+        $('#edit-read-more-url').val($(this).data('read-more-url'));
         $('#edit-rating').val($(this).data('rating'));
         var avatar = $(this).data('avatar');
         if (avatar) {

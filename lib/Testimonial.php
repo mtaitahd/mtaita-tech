@@ -22,15 +22,15 @@ class Testimonial {
     }
 
     public function create($data) {
-        $stmt = $this->pdo->prepare("INSERT INTO testimonials (name, position, company, avatar, content, rating, is_approved) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$data['name'], $data['position'] ?? null, $data['company'] ?? null, $data['avatar'] ?? null, $data['content'], $data['rating'] ?? 5, $data['is_approved'] ?? 1]);
+        $stmt = $this->pdo->prepare("INSERT INTO testimonials (name, position, company, avatar, content, read_more_url, rating, is_approved) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$data['name'], $data['position'] ?? null, $data['company'] ?? null, $data['avatar'] ?? null, $data['content'], $data['read_more_url'] ?? null, $data['rating'] ?? 5, $data['is_approved'] ?? 1]);
         return $this->pdo->lastInsertId();
     }
 
     public function update($id, $data) {
-        $sql = "UPDATE testimonials SET name = ?, position = ?, company = ?, avatar = ?, content = ?, rating = ?, is_approved = ? WHERE id = ?";
+        $sql = "UPDATE testimonials SET name = ?, position = ?, company = ?, avatar = ?, content = ?, read_more_url = ?, rating = ?, is_approved = ? WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$data['name'], $data['position'] ?? null, $data['company'] ?? null, $data['avatar'] ?? null, $data['content'], $data['rating'] ?? 5, $data['is_approved'] ?? 1, $id]);
+        return $stmt->execute([$data['name'], $data['position'] ?? null, $data['company'] ?? null, $data['avatar'] ?? null, $data['content'], $data['read_more_url'] ?? null, $data['rating'] ?? 5, $data['is_approved'] ?? 1, $id]);
     }
 
     public function delete($id) {
