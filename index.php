@@ -198,22 +198,29 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
             <h2><?= __('partners_heading') ?></h2>
             <p class="text-muted"><?= __('partners_subtitle') ?></p>
         </div>
-        <div class="partners-slider">
-            <div class="partners-track">
-                <?php for ($rep = 0; $rep < 2; $rep++): ?>
+        <div class="swiper partners-swiper">
+            <div class="swiper-wrapper">
                 <?php foreach ($partners as $partner): ?>
-                <div class="partner-item">
-                    <?php if ($partner['website_url']): ?><a href="<?= htmlspecialchars($partner['website_url']) ?>" target="_blank" rel="noopener"><?php endif; ?>
-                    <?php if ($partner['logo']): ?>
-                    <img src="<?= htmlspecialchars(webp_url($partner['logo'])) ?>" alt="<?= htmlspecialchars($partner['name']) ?>" class="partner-logo" loading="lazy" onerror="this.src='https://via.placeholder.com/150x60/0F172A/00E5FF?text=<?= urlencode($partner['name']) ?>'">
-                    <?php else: ?>
-                    <span class="partner-name-only"><?= htmlspecialchars($partner['name']) ?></span>
-                    <?php endif; ?>
-                    <?php if ($partner['website_url']): ?></a><?php endif; ?>
+                <div class="swiper-slide">
+                    <div class="partner-card">
+                        <?php if ($partner['website_url']): ?>
+                        <a href="<?= htmlspecialchars($partner['website_url']) ?>" target="_blank" rel="noopener" class="partner-card-link">
+                        <?php endif; ?>
+                        <?php if ($partner['logo']): ?>
+                        <img src="<?= htmlspecialchars(webp_url($partner['logo'])) ?>" alt="<?= htmlspecialchars($partner['name']) ?>" class="partner-logo" loading="lazy" onerror="this.src='https://via.placeholder.com/150x60/0F172A/00E5FF?text=<?= urlencode($partner['name']) ?>'">
+                        <?php else: ?>
+                        <span class="partner-name-only"><?= htmlspecialchars($partner['name']) ?></span>
+                        <?php endif; ?>
+                        <?php if ($partner['website_url']): ?>
+                        </a>
+                        <?php endif; ?>
+                    </div>
                 </div>
                 <?php endforeach; ?>
-                <?php endfor; ?>
             </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
         </div>
     </div>
 </section>
@@ -225,7 +232,7 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
     <div class="container">
         <div class="testimonial-header">
             <h2 class="testimonial-heading">Our Latest Customer Reviews</h2>
-            <a href="/contact" class="btn btn-review-cta">Leave a Review <i class="bi bi-arrow-right ms-2"></i></a>
+            <a href="https://g.page/r/CV7D8gf6yuhmEAE/review" target="_blank" rel="nofollow noopener" class="btn btn-review-cta">Leave a Review <i class="bi bi-arrow-right ms-2"></i></a>
         </div>
         <?php $testimonialGroups = array_chunk($testimonials, 2); ?>
         <div class="testimonial-carousel-wrapper">
@@ -248,7 +255,7 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
                                     <?php endfor; ?>
                                 </div>
                                 <p class="testimonial-content">"<?= htmlspecialchars($t['content']) ?>"</p>
-                                <a href="javascript:void(0)" class="testimonial-read-more" onclick="var p=this.previousElementSibling; p.classList.toggle('expanded'); this.innerHTML=p.classList.contains('expanded')?'Show less <i class=\'bi bi-arrow-up\'></i>':'Read more <i class=\'bi bi-arrow-right\'></i>';">Read more <i class="bi bi-arrow-right"></i></a>
+                                <a href="https://g.page/r/CV7D8gf6yuhmEAE/review" target="_blank" rel="nofollow noopener" class="testimonial-read-more">Read more <i class="bi bi-arrow-right"></i></a>
                             </div>
                             <?php endforeach; ?>
                         </div>

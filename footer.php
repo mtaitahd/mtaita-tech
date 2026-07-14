@@ -69,6 +69,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="<?= SITE_URL ?>/assets/js/script.js"></script>
 <script>
 $(function () {
@@ -124,6 +125,23 @@ $(function () {
         return match ? match[2] : null;
     }
 });
+</script>
+<script>
+if (document.querySelector('.partners-swiper')) {
+    new Swiper('.partners-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        loop: true,
+        autoplay: { delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true },
+        pagination: { el: '.partners-swiper .swiper-pagination', clickable: true },
+        navigation: { nextEl: '.partners-swiper .swiper-button-next', prevEl: '.partners-swiper .swiper-button-prev' },
+        breakpoints: {
+            576: { slidesPerView: 2, spaceBetween: 20 },
+            768: { slidesPerView: 3, spaceBetween: 24 },
+            1024: { slidesPerView: 4, spaceBetween: 24 }
+        }
+    });
+}
 </script>
 
 </body>
