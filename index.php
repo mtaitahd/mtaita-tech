@@ -221,48 +221,54 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
 
 <!-- Testimonials -->
 <?php if (!empty($testimonials)): ?>
-<section class="section-padding testimonial-section">
+<section class="testimonial-section">
     <div class="container">
-        <div class="text-center mb-5">
-            <h2><?= __('testimonials_heading') ?></h2>
-            <p class="text-muted"><?= __('testimonials_subtitle') ?></p>
+        <div class="testimonial-header">
+            <h2 class="testimonial-heading">Our Latest Customer Reviews</h2>
+            <a href="/contact" class="btn btn-review-cta">Leave a Review <i class="bi bi-arrow-right ms-2"></i></a>
         </div>
-        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
-            <div class="carousel-inner">
-                <?php $ti = 0; foreach ($testimonials as $t): ?>
-                <div class="carousel-item <?= $ti === 0 ? 'active' : '' ?>">
-                    <div class="testimonial-card">
-                        <div class="testimonial-stars">
-                            <?php for ($i = 1; $i <= 5; $i++): ?>
-                            <i class="bi bi-star<?= $i <= $t['rating'] ? '-fill' : '' ?>"></i>
-                            <?php endfor; ?>
-                        </div>
-                        <p class="testimonial-content">"<?= htmlspecialchars($t['content']) ?>"</p>
-                        <div class="testimonial-author">
-                            <?php if ($t['avatar']): ?>
-                            <img src="<?= htmlspecialchars(webp_url($t['avatar'])) ?>" alt="<?= htmlspecialchars($t['name']) ?>" class="testimonial-avatar" onerror="this.style.display='none'">
-                            <?php endif; ?>
-                            <div>
-                                <strong><?= htmlspecialchars($t['name']) ?></strong>
-                                <?php if ($t['position'] || $t['company']): ?>
-                                <span class="d-block small text-muted"><?= htmlspecialchars(trim(($t['position'] ?? '') . ($t['position'] && $t['company'] ? ', ' : '') . ($t['company'] ?? ''))) ?></span>
+        <?php $testimonialGroups = array_chunk($testimonials, 2); ?>
+        <div class="testimonial-carousel-wrapper">
+            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="hover">
+                <div class="carousel-inner">
+                    <?php foreach ($testimonialGroups as $gi => $group): ?>
+                    <div class="carousel-item <?= $gi === 0 ? 'active' : '' ?>">
+                        <div class="testimonial-slide-row">
+                            <?php foreach ($group as $t): ?>
+                            <div class="testimonial-card">
+                                <?php if ($t['avatar']): ?>
+                                <img src="<?= htmlspecialchars(webp_url($t['avatar'])) ?>" alt="<?= htmlspecialchars($t['name']) ?>" class="testimonial-avatar" onerror="this.style.display='none'">
+                                <?php else: ?>
+                                <div class="testimonial-avatar-placeholder"><?= strtoupper(mb_substr(htmlspecialchars($t['name']), 0, 1)) ?></div>
                                 <?php endif; ?>
+                                <h4 class="testimonial-name"><?= htmlspecialchars($t['name']) ?></h4>
+                                <div class="testimonial-stars">
+                                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <i class="bi bi-star<?= $i <= ($t['rating'] ?? 5) ? '-fill' : '' ?>"></i>
+                                    <?php endfor; ?>
+                                </div>
+                                <p class="testimonial-content">"<?= htmlspecialchars($t['content']) ?>"</p>
+                                <a href="javascript:void(0)" class="testimonial-read-more" onclick="var p=this.previousElementSibling; p.classList.toggle('expanded'); this.innerHTML=p.classList.contains('expanded')?'Show less <i class=\'bi bi-arrow-up\'></i>':'Read more <i class=\'bi bi-arrow-right\'></i>';">Read more <i class="bi bi-arrow-right"></i></a>
                             </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
+                    <?php endforeach; ?>
                 </div>
-                <?php $ti++; endforeach; ?>
-            </div>
-            <?php if (count($testimonials) > 1): ?>
-            <div class="testimonial-controls">
-                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev" class="testimonial-arrow testimonial-arrow-prev">
+                <?php if (count($testimonials) > 1): ?>
+                <button type="button" class="testimonial-nav-btn testimonial-nav-prev" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
                     <i class="bi bi-chevron-left"></i>
                 </button>
-                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next" class="testimonial-arrow testimonial-arrow-next">
+                <button type="button" class="testimonial-nav-btn testimonial-nav-next" data-bs-target="#testimonialCarousel" data-bs-slide="next">
                     <i class="bi bi-chevron-right"></i>
                 </button>
+                <div class="testimonial-indicators">
+                    <?php foreach ($testimonialGroups as $gi => $group): ?>
+                    <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="<?= $gi ?>" class="<?= $gi === 0 ? 'active' : '' ?>" aria-current="<?= $gi === 0 ? 'true' : 'false' ?>"></button>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
             </div>
-            <?php endif; ?>
         </div>
     </div>
 </section>
