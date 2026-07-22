@@ -35,7 +35,9 @@ if (!empty($reference)) {
         if (!$enrollment && $payment['status'] === 'completed') {
             require_once __DIR__ . '/services/PaymentService.php';
             $paymentService = new PaymentService($pdo);
-            $paymentService->verifyPayment($reference);
+            // Activate service directly — don't call verifyPayment() which
+            // can revert "completed" to "pending" via a race condition.
+            $paymentService->activateService($payment);
             $stmt = $pdo->prepare("SELECT e.* FROM enrollments e WHERE e.payment_reference = ? LIMIT 1");
             $stmt->execute([$reference]);
             $enrollment = $stmt->fetch();

@@ -67,6 +67,11 @@ if (!empty($secret) && !empty($webhookSignature)) {
 }
 
 if (!$signatureValid) {
+    file_put_contents(
+        $logDir . '/webhooks_snippe.log',
+        date('Y-m-d H:i:s') . " | SIGNATURE FAILED | secret_set: " . (!empty($secret) ? 'yes(' . strlen($secret) . 'chars)' : 'no') . " | timestamp: {$webhookTimestamp} | sig: " . substr($webhookSignature, 0, 16) . "..." . PHP_EOL,
+        FILE_APPEND | LOCK_EX
+    );
     http_response_code(400);
     header('Content-Type: text/plain');
     echo 'Invalid signature';
@@ -76,6 +81,12 @@ if (!$signatureValid) {
 // ================================================================
 // PARSE EVENT
 // ================================================================
+file_put_contents(
+    $logDir . '/webhooks_snippe.log',
+    date('Y-m-d H:i:s') . " | SIGNATURE OK | EVENT: {$webhookEvent}" . PHP_EOL,
+    FILE_APPEND | LOCK_EX
+);
+
 $event = json_decode($rawBody, true);
 if (json_last_error() !== JSON_ERROR_NONE) {
     http_response_code(400);
@@ -135,29 +146,11 @@ try {
 }
 
 // ================================================================
-// VERIFY PAYMENT AFTER WEBHOOK
+// NOTE: No verifyPayment() call here — handleWebhook() already
+// updates the status. Calling verifyPayment() after creates a
+// race condition where the Snippe API returns "pending" and
+// reverts the "completed" status set by handleWebhook().
 // ================================================================
-// Per Snippe best practices: always verify after webhook
-if ($handled && in_array($eventType, ['payment.completed', 'payment.failed'])) {
-    $snippeRef = $eventData['reference'] ?? '';
-    if (!empty($snippeRef)) {
-        try {
-            // Find our payment reference by snippe reference
-            $stmt = $pdo->prepare("SELECT payment_reference FROM payments WHERE snippe_reference = ? LIMIT 1");
-            $stmt->execute([$snippeRef]);
-            $payment = $stmt->fetch();
-            if ($payment) {
-                $paymentService->verifyPayment($payment['payment_reference']);
-            }
-        } catch (Exception $e) {
-            file_put_contents(
-                $logDir . '/webhooks_snippe.log',
-                date('Y-m-d H:i:s') . ' | Verification error: ' . $e->getMessage() . PHP_EOL,
-                FILE_APPEND | LOCK_EX
-            );
-        }
-    }
-}
 
 exit;
 

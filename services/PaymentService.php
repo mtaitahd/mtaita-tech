@@ -184,8 +184,14 @@ class PaymentService
         // Map Snippe status to our status
         $newStatus = $this->mapSnippeStatus($snippeStatus);
 
-        // If status changed, update DB
-        if ($newStatus !== $payment['status']) {
+        // SAFETY: Never downgrade a completed payment.
+        // If Snippe API returns "pending" due to a race condition after
+        // the webhook already set "completed", we keep "completed".
+        $statusPriority = ['pending' => 0, 'failed' => 1, 'voided' => 1, 'expired' => 1, 'completed' => 2];
+        $currentPriority = $statusPriority[$payment['status']] ?? 0;
+        $newPriority = $statusPriority[$newStatus] ?? 0;
+
+        if ($newPriority > $currentPriority) {
             $this->updatePaymentStatus($payment['id'], $newStatus, $snippeStatus);
 
             // STEP 6: If completed, activate service
@@ -366,7 +372,7 @@ class PaymentService
      *   - Webhook received AND
      *   - Payment verification completed
      */
-    private function activateService(array $payment): void
+    public function activateService(array $payment): void
     {
         $metadata = json_decode($payment['metadata'] ?? '{}', true);
         $itemId   = (int)($metadata['item_id'] ?? 0);

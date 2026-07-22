@@ -79,13 +79,13 @@ try {
         exit;
     }
 
-    // Step 2: Verify payment
-    $verified = $paymentService->verifyPayment($ref);
+    // Step 2: Verify the payment was actually updated (read from DB, don't call API)
+    $verified = $paymentService->getPaymentByReference($ref);
 
     if ($verified && $verified['status'] === 'completed') {
         echo json_encode([
             'status'    => 'success',
-            'message'   => 'Payment simulated and verified successfully.',
+            'message'   => 'Payment simulated successfully.',
             'reference' => $ref,
         ]);
     } else {

@@ -67,6 +67,9 @@ RewriteRule ^blog/(.+)$ blog.php?slug=$1 [L,QSA]
 # Admin page routes
 RewriteRule ^admin/index$ admin/login.php [L]
 RewriteRule ^admin/login/?$ admin/login.php [L]
+
+# Webhook routes (must be accessible without .php extension)
+RewriteRule ^webhooks/snippe/?$ webhooks/snippe.php [L,QSA]
 RewriteRule ^admin/dashboard/?$ admin/dashboard.php [L,QSA]
 RewriteRule ^admin/manage-courses/?$ admin/manage-courses.php [L,QSA]
 RewriteRule ^admin/course-builder/?$ admin/course_builder.php [L,QSA]
