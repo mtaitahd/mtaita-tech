@@ -7,6 +7,30 @@ require_once __DIR__ . '/auth_helper.php';
 require_once __DIR__ . '/services/PaymentService.php';
 
 $reference = trim($_GET['ref'] ?? '');
+
+// AJAX handler: verify payment via Snippe API and return status
+if (isset($_GET['action']) && $_GET['action'] === 'verify' && !empty($reference)) {
+    header('Content-Type: application/json');
+    $paymentService = new PaymentService($pdo);
+
+    // Check current status
+    $payment = $paymentService->getPaymentByReference($reference);
+    if (!$payment) {
+        echo json_encode(['status' => 'not_found']);
+        exit;
+    }
+
+    // If pending, verify via Snippe API
+    if ($payment['status'] === 'pending') {
+        $paymentService->verifyPayment($reference);
+        $payment = $paymentService->getPaymentByReference($reference);
+    }
+
+    $status = $payment['status'] === 'completed' ? 'active' : $payment['status'];
+    echo json_encode(['status' => $status, 'reference' => $reference]);
+    exit;
+}
+
 if (empty($reference)) {
     header('Location: index');
     exit;
@@ -177,7 +201,7 @@ function checkStatus() {
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Checking...';
 
-    fetch('check-payment-status.php?ref=' + encodeURIComponent(ref))
+    fetch('payment-pending.php?action=verify&ref=' + encodeURIComponent(ref))
         .then(function(r) { return r.json(); })
         .then(function(data) {
             btn.disabled = false;
@@ -227,7 +251,7 @@ function simulatePayment() {
 }
 
 checkInterval = setInterval(function() {
-    fetch('check-payment-status.php?ref=' + encodeURIComponent(ref))
+    fetch('payment-pending.php?action=verify&ref=' + encodeURIComponent(ref))
         .then(function(r) { return r.json(); })
         .then(function(data) {
             if (data.status === 'active') {
