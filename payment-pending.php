@@ -33,6 +33,28 @@ if (!$payment) {
 }
 
 $paymentService = new PaymentService($pdo);
+
+// Auto-verify on page load if payment is still pending and older than 30s
+// This catches missed webhooks without relying on any other file
+if ($payment['status'] === 'pending') {
+    $created = strtotime($payment['created_at'] ?? 'now');
+    if (time() - $created > 30) {
+        $paymentService->verifyPayment($reference);
+        // Re-fetch payment after verification
+        $stmt = $pdo->prepare("SELECT p.*,
+            COALESCE(c.title, pr.title) AS item_title,
+            COALESCE(c.slug, pr.id) AS item_slug,
+            JSON_UNQUOTE(JSON_EXTRACT(p.metadata, '$.item_type')) AS item_type,
+            JSON_UNQUOTE(JSON_EXTRACT(p.metadata, '$.item_id')) AS item_id
+        FROM payments p
+        LEFT JOIN courses c ON JSON_UNQUOTE(JSON_EXTRACT(p.metadata, '$.item_type')) = 'course' AND JSON_UNQUOTE(JSON_EXTRACT(p.metadata, '$.item_id')) = c.id
+        LEFT JOIN products pr ON JSON_UNQUOTE(JSON_EXTRACT(p.metadata, '$.item_type')) = 'product' AND JSON_UNQUOTE(JSON_EXTRACT(p.metadata, '$.item_id')) = pr.id
+        WHERE p.payment_reference = ? LIMIT 1");
+        $stmt->execute([$reference]);
+        $payment = $stmt->fetch();
+    }
+}
+
 $completed = $paymentService->isPaymentCompleted($reference);
 
 if ($completed) {
