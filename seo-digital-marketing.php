@@ -12,7 +12,21 @@ $hero_bg = Settings::get('hero_bg_services', '');
 $stmt = $pdo->prepare("SELECT id, project_title, project_desc, project_link, project_screenshot FROM portfolio WHERE category = ? ORDER BY created_at DESC LIMIT 12");
 $stmt->execute([$service_category]);
 $projects = $stmt->fetchAll();
+
+$faq_schema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'FAQPage',
+    'mainEntity' => [
+        ['@type' => 'Question', 'name' => 'Do you offer on-page & off-page SEO optimization?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we provide comprehensive on-page and off-page SEO optimization to improve your search engine rankings and visibility.']],
+        ['@type' => 'Question', 'name' => 'Do you conduct keyword research & competitor analysis?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Absolutely. We perform in-depth keyword research and competitor analysis to develop a data-driven SEO strategy tailored to your business.']],
+        ['@type' => 'Question', 'name' => 'Do you provide social media management & content strategy?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we manage your social media presence and create content strategies that engage your audience and drive growth.']],
+        ['@type' => 'Question', 'name' => 'Do you provide Google Analytics & performance reporting?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we provide detailed analytics and monthly performance reports so you can track traffic, rankings, and ROI.']],
+        ['@type' => 'Question', 'name' => 'Do you offer pay-per-click (PPC) campaign management?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we manage PPC campaigns across Google Ads and social media platforms to drive targeted traffic and maximize your ad spend ROI.']]
+    ]
+];
 ?>
+
+<script type="application/ld+json"><?= json_encode($faq_schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) ?></script>
 
 <section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars(webp_url($hero_bg)) ?>')"<?php endif; ?>>
     <div class="container">
@@ -142,4 +156,17 @@ $projects = $stmt->fetchAll();
     </div>
 </section>
 
+<section class="section-padding bg-light-section">
+    <div class="container">
+        <div class="text-center">
+            <h2>SEO Services Across Tanzania</h2>
+            <p class="text-muted">Find expert SEO services in your city</p>
+            <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+                <a href="/seo-dar-es-salaam" class="btn btn-outline-red">SEO Dar es Salaam</a>
+                <a href="/seo-arusha" class="btn btn-outline-red">SEO Arusha</a>
+                <a href="/seo-moshi" class="btn btn-outline-red">SEO Moshi</a>
+            </div>
+        </div>
+    </div>
+</section>
 <?php require_once 'footer.php'; ?>

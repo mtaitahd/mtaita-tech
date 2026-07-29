@@ -74,6 +74,41 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <priority>0.7</priority>
         <changefreq>weekly</changefreq>
     </url>
+    <url>
+        <loc><?= SITE_URL ?>/web-designer-dar-es-salaam</loc>
+        <priority>0.7</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc><?= SITE_URL ?>/web-designer-arusha</loc>
+        <priority>0.7</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc><?= SITE_URL ?>/web-designer-mwanza</loc>
+        <priority>0.7</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc><?= SITE_URL ?>/seo-moshi</loc>
+        <priority>0.7</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc><?= SITE_URL ?>/seo-arusha</loc>
+        <priority>0.7</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc><?= SITE_URL ?>/seo-dar-es-salaam</loc>
+        <priority>0.7</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc><?= SITE_URL ?>/mobile-apps-zanzibar</loc>
+        <priority>0.7</priority>
+        <changefreq>monthly</changefreq>
+    </url>
     <?php foreach ($courses as $c): ?>
     <url>
         <loc><?= SITE_URL ?>/course/<?= htmlspecialchars($c['slug']) ?></loc>

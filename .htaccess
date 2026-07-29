@@ -37,6 +37,16 @@ RewriteRule ^graphic-design/?$ graphic-design.php [L,QSA]
 RewriteRule ^mobile-apps/?$ mobile-apps.php [L,QSA]
 RewriteRule ^seo-digital-marketing/?$ seo-digital-marketing.php [L,QSA]
 
+# City landing page routes
+RewriteRule ^web-designer-dar-es-salaam/?$ web-designer-dar-es-salaam.php [L,QSA]
+RewriteRule ^web-designer-arusha/?$ web-designer-arusha.php [L,QSA]
+RewriteRule ^web-designer-mwanza/?$ web-designer-mwanza.php [L,QSA]
+RewriteRule ^seo-moshi/?$ seo-moshi.php [L,QSA]
+RewriteRule ^seo-arusha/?$ seo-arusha.php [L,QSA]
+RewriteRule ^seo-dar-es-salaam/?$ seo-dar-es-salaam.php [L,QSA]
+RewriteRule ^mobile-apps-zanzibar/?$ mobile-apps-zanzibar.php [L,QSA]
+RewriteRule ^app-development-zanzibar/?$ mobile-apps-zanzibar.php [L,R=301]
+
 # Additional page routes (non-conflicting pages handled by fallback)
 RewriteRule ^dashboard/?$ dashboard.php [L,QSA]
 RewriteRule ^lesson/?$ lesson.php [L,QSA]

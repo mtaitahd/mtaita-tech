@@ -12,7 +12,21 @@ $hero_bg = Settings::get('hero_bg_services', '');
 $stmt = $pdo->prepare("SELECT id, project_title, project_desc, project_link, project_screenshot FROM portfolio WHERE category = ? ORDER BY created_at DESC LIMIT 12");
 $stmt->execute([$service_category]);
 $projects = $stmt->fetchAll();
+
+$faq_schema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'FAQPage',
+    'mainEntity' => [
+        ['@type' => 'Question', 'name' => 'Do you build custom responsive websites?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we build fully custom responsive websites using modern technologies, tailored to your brand and business needs.']],
+        ['@type' => 'Question', 'name' => 'Do you offer e-commerce with secure payment integration?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Absolutely. We build e-commerce platforms with secure payment gateways including mobile money, card payments, and more.']],
+        ['@type' => 'Question', 'name' => 'Do you provide content management systems?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we integrate easy-to-use CMS platforms so you can update your website content anytime without technical skills.']],
+        ['@type' => 'Question', 'name' => 'Is your code SEO-optimized and performance tuned?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we follow SEO best practices and performance optimization techniques to ensure fast loading speeds and good search engine rankings.']],
+        ['@type' => 'Question', 'name' => 'Do you provide ongoing maintenance and support?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we offer ongoing maintenance and 24/7 technical support to keep your website running smoothly and securely.']]
+    ]
+];
 ?>
+
+<script type="application/ld+json"><?= json_encode($faq_schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) ?></script>
 
 <section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars(webp_url($hero_bg)) ?>')"<?php endif; ?>>
     <div class="container">
@@ -142,4 +156,17 @@ $projects = $stmt->fetchAll();
     </div>
 </section>
 
+<section class="section-padding bg-light-section">
+    <div class="container">
+        <div class="text-center">
+            <h2>Web Design Services Across Tanzania</h2>
+            <p class="text-muted">Find a professional web designer in your city</p>
+            <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+                <a href="/web-designer-dar-es-salaam" class="btn btn-outline-red">Web Designer Dar es Salaam</a>
+                <a href="/web-designer-arusha" class="btn btn-outline-red">Web Designer Arusha</a>
+                <a href="/web-designer-mwanza" class="btn btn-outline-red">Web Designer Mwanza</a>
+            </div>
+        </div>
+    </div>
+</section>
 <?php require_once 'footer.php'; ?>

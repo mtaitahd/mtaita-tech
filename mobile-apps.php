@@ -12,7 +12,21 @@ $hero_bg = Settings::get('hero_bg_services', '');
 $stmt = $pdo->prepare("SELECT id, project_title, project_desc, project_link, project_screenshot FROM portfolio WHERE category = ? ORDER BY created_at DESC LIMIT 12");
 $stmt->execute([$service_category]);
 $projects = $stmt->fetchAll();
+
+$faq_schema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'FAQPage',
+    'mainEntity' => [
+        ['@type' => 'Question', 'name' => 'Do you offer native & cross-platform app development?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we develop both native iOS/Android apps and cross-platform apps using React Native and Flutter for consistent performance across devices.']],
+        ['@type' => 'Question', 'name' => 'Do you provide clean, intuitive UI/UX design for mobile?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Absolutely. We design clean and intuitive mobile interfaces focused on excellent user experience and smooth navigation.']],
+        ['@type' => 'Question', 'name' => 'Do you handle backend API integration & cloud sync?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we integrate robust backend APIs and cloud synchronization to ensure your app data is always up-to-date and accessible.']],
+        ['@type' => 'Question', 'name' => 'Do you assist with app store deployment & submission?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we handle the full deployment process including App Store and Google Play submission, ensuring your app meets all platform guidelines.']],
+        ['@type' => 'Question', 'name' => 'Do you provide ongoing support & feature updates?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we offer ongoing maintenance, support, and regular feature updates to keep your app running smoothly and up-to-date.']]
+    ]
+];
 ?>
+
+<script type="application/ld+json"><?= json_encode($faq_schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) ?></script>
 
 <section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars(webp_url($hero_bg)) ?>')"<?php endif; ?>>
     <div class="container">
@@ -142,4 +156,16 @@ $projects = $stmt->fetchAll();
     </div>
 </section>
 
+<section class="section-padding bg-light-section">
+    <div class="container">
+        <div class="text-center">
+            <h2>App Development Services Across Tanzania</h2>
+            <p class="text-muted">Find mobile app development services in your region</p>
+            <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+                <a href="/mobile-apps-zanzibar" class="btn btn-outline-red">App Development Zanzibar</a>
+                <a href="/web-development" class="btn btn-outline-red">Web Development Tanzania</a>
+            </div>
+        </div>
+    </div>
+</section>
 <?php require_once 'footer.php'; ?>

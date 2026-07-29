@@ -12,7 +12,21 @@ $hero_bg = Settings::get('hero_bg_services', '');
 $stmt = $pdo->prepare("SELECT id, project_title, project_desc, project_link, project_screenshot FROM portfolio WHERE category = ? ORDER BY created_at DESC LIMIT 12");
 $stmt->execute([$service_category]);
 $projects = $stmt->fetchAll();
+
+$faq_schema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'FAQPage',
+    'mainEntity' => [
+        ['@type' => 'Question', 'name' => 'Do you offer professional logo and brand identity design?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we create professional logos and complete brand identity packages including color palettes, typography, and brand guidelines.']],
+        ['@type' => 'Question', 'name' => 'Do you design social media and marketing materials?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Absolutely. We design custom social media graphics, flyers, brochures, and all marketing collateral tailored to your brand.']],
+        ['@type' => 'Question', 'name' => 'Do you create business cards, flyers, and print materials?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we design business cards, flyers, banners, and all print collateral with print-ready specifications.']],
+        ['@type' => 'Question', 'name' => 'Do you provide UI/UX design for web and mobile?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we design intuitive and visually appealing UI/UX for websites and mobile applications to enhance user experience.']],
+        ['@type' => 'Question', 'name' => 'Do you offer fast turnaround with revisions?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes, we offer fast turnaround times and unlimited revisions to ensure you are completely satisfied with the final design.']]
+    ]
+];
 ?>
+
+<script type="application/ld+json"><?= json_encode($faq_schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) ?></script>
 
 <section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars(webp_url($hero_bg)) ?>')"<?php endif; ?>>
     <div class="container">
