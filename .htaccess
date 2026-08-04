@@ -113,6 +113,17 @@ RewriteRule ^admin/ajax-unread/?$ admin/ajax_unread.php [L,QSA]
 RewriteRule ^admin/manage-users/?$ admin/manage-users.php [L,QSA]
 RewriteRule ^admin/test-mail/?$ admin/test-mail.php [L,QSA]
 RewriteRule ^admin/settings/?$ admin/admin-settings.php [L,QSA]
+RewriteRule ^admin/blog/?$ admin/blog.php [L,QSA]
+RewriteRule ^admin/course_builder/?$ admin/course_builder.php [L,QSA]
+RewriteRule ^admin/news/?$ admin/news.php [L,QSA]
+RewriteRule ^admin/partners/?$ admin/partners.php [L,QSA]
+RewriteRule ^admin/testimonials/?$ admin/testimonials.php [L,QSA]
+RewriteRule ^admin/solutions/?$ admin/solutions.php [L,QSA]
+RewriteRule ^admin/page-heroes/?$ admin/page-heroes.php [L,QSA]
+RewriteRule ^admin/image-compressor/?$ admin/image-compressor.php [L,QSA]
+RewriteRule ^admin/sms-logs/?$ admin/sms-logs.php [L,QSA]
+RewriteRule ^admin/search/?$ admin/search.php [L,QSA]
+RewriteRule ^admin/profile/?$ admin/profile.php [L,QSA]
 
 # Protect sensitive files
 <FilesMatch "\.(env|env\.example)|smtp\.txt$">
