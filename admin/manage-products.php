@@ -44,21 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] === UPLOAD_ERR_OK) {
-            $file = $_FILES['attachment'];
-            $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-            $allowed = ['zip', 'rar', '7z', 'gz', 'tar'];
-            if (in_array($ext, $allowed, true) && $file['size'] <= 200 * 1024 * 1024) {
-                $upload_dir = __DIR__ . '/../assets/uploads/products/';
-                if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
-                $filename = 'product_' . uniqid() . '.' . $ext;
-                if (move_uploaded_file($file['tmp_name'], $upload_dir . $filename)) {
-                    if ($zipFile) @unlink(__DIR__ . '/../' . $zipFile);
-                    $zipFile = 'assets/uploads/products/' . $filename;
-                }
-            }
-        }
-
         $data = [
             'title' => $title,
             'description' => $description,
@@ -98,6 +83,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $products = $productModel->getAll();
+$productZips = [];
+$zipDir = __DIR__ . '/../assets/uploads/products/';
+if (is_dir($zipDir)) {
+    foreach (glob($zipDir . '*.{zip,rar,7z,gz,tar}', GLOB_BRACE) ?: [] as $file) {
+        $productZips[] = 'assets/uploads/products/' . basename($file);
+    }
+}
 require_once 'admin_header.php';
 ?>
 <div class="page-header">
@@ -185,7 +177,6 @@ require_once 'admin_header.php';
                 <input type="hidden" name="save_product" value="1">
                 <input type="hidden" name="id" id="product-id" value="0">
                 <input type="hidden" name="existing_thumbnail" id="product-existing-thumbnail" value="">
-                <input type="hidden" name="existing_zip" id="product-existing-zip" value="">
                 <div class="modal-header">
                     <h5 class="modal-title"><i class="bi bi-box text-cyan me-2"></i><span id="product-modal-title">New Product</span></h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -228,7 +219,13 @@ require_once 'admin_header.php';
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">ZIP File</label>
-                            <input type="file" name="attachment" class="form-control">
+                            <select name="existing_zip" id="product-existing-zip" class="form-select">
+                                <option value="">— Select archive —</option>
+                                <?php foreach ($productZips as $zip): ?>
+                                    <option value="<?= htmlspecialchars($zip) ?>"><?= htmlspecialchars(basename($zip)) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <div class="form-text">Upload the .zip into <code>assets/uploads/products/</code> via cPanel, then pick it here.</div>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Thumbnail</label>
@@ -265,7 +262,16 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('product-is-visible').checked = btn.dataset.isVisible !== '0';
             document.getElementById('product-youtube').value = btn.dataset.youtube || '';
             document.getElementById('product-existing-thumbnail').value = btn.dataset.thumbnail || '';
-            document.getElementById('product-existing-zip').value = btn.dataset.zip || '';
+            var zipSel = document.getElementById('product-existing-zip');
+            var curZip = btn.dataset.zip || '';
+            zipSel.value = curZip;
+            if (curZip && zipSel.value !== curZip) {
+                var opt = document.createElement('option');
+                opt.value = curZip;
+                opt.text = curZip.split('/').pop() + ' (current)';
+                zipSel.appendChild(opt);
+                zipSel.value = curZip;
+            }
             document.getElementById('product-modal-title').textContent = id !== '0' ? 'Edit Product' : 'New Product';
 
             var thumb = btn.dataset.thumbnail || '';

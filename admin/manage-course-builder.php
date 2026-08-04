@@ -79,21 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] === UPLOAD_ERR_OK) {
-            $file = $_FILES['attachment'];
-            $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-            $allowed = ['zip', 'rar', '7z', 'gz', 'tar'];
-            if (in_array($ext, $allowed, true) && $file['size'] <= 200 * 1024 * 1024) {
-                $upload_dir = __DIR__ . '/../assets/uploads/lessons/';
-                if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
-                $filename = 'lesson_' . uniqid() . '.' . $ext;
-                if (move_uploaded_file($file['tmp_name'], $upload_dir . $filename)) {
-                    if ($zipFile) @unlink(__DIR__ . '/../' . $zipFile);
-                    $zipFile = 'assets/uploads/lessons/' . $filename;
-                }
-            }
-        }
-
         if ($title && $cid > 0 && $moduleId > 0) {
             $data = [
                 'course_id' => $cid,
@@ -161,6 +146,14 @@ foreach ($modules as $mod) {
     $lessons = $lessonModel->getByModuleId($mod['id']);
     $lessonsByModule[$mod['id']] = $lessons;
     $allLessons = array_merge($allLessons, $lessons);
+}
+
+$lessonZips = [];
+$zipDir = __DIR__ . '/../assets/uploads/lessons/';
+if (is_dir($zipDir)) {
+    foreach (glob($zipDir . '*.{zip,rar,7z,gz,tar}', GLOB_BRACE) ?: [] as $file) {
+        $lessonZips[] = 'assets/uploads/lessons/' . basename($file);
+    }
 }
 
 require_once 'admin_header.php';
@@ -331,7 +324,6 @@ require_once 'admin_header.php';
                 <input type="hidden" name="course_id" value="<?= $courseId ?>">
                 <input type="hidden" name="module_id" id="lesson-module-id" value="">
                 <input type="hidden" name="existing_thumbnail" id="lesson-existing-thumbnail" value="">
-                <input type="hidden" name="existing_zip" id="lesson-existing-zip" value="">
                 <div class="modal-header">
                     <h5 class="modal-title"><i class="bi bi-file text-cyan me-2"></i><span id="lesson-modal-title">New Lesson</span></h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -369,7 +361,13 @@ require_once 'admin_header.php';
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">ZIP File (source)</label>
-                            <input type="file" name="attachment" class="form-control">
+                            <select name="existing_zip" id="lesson-existing-zip" class="form-select">
+                                <option value="">— Select archive —</option>
+                                <?php foreach ($lessonZips as $zip): ?>
+                                    <option value="<?= htmlspecialchars($zip) ?>"><?= htmlspecialchars(basename($zip)) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <div class="form-text">Upload the .zip into <code>assets/uploads/lessons/</code> via cPanel, then pick it here.</div>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Code / Notes</label>
@@ -425,7 +423,16 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('lesson-code').value = btn.dataset.code || '';
             document.getElementById('lesson-is-paid').checked = btn.dataset.isPaid === '1';
             document.getElementById('lesson-existing-thumbnail').value = btn.dataset.thumbnail || '';
-            document.getElementById('lesson-existing-zip').value = btn.dataset.zip || '';
+            var zipSel = document.getElementById('lesson-existing-zip');
+            var curZip = btn.dataset.zip || '';
+            zipSel.value = curZip;
+            if (curZip && zipSel.value !== curZip) {
+                var opt = document.createElement('option');
+                opt.value = curZip;
+                opt.text = curZip.split('/').pop() + ' (current)';
+                zipSel.appendChild(opt);
+                zipSel.value = curZip;
+            }
             document.getElementById('lesson-modal-title').textContent = id !== '0' ? 'Edit Lesson' : 'New Lesson';
 
             // Set module
