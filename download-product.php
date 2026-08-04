@@ -63,8 +63,11 @@ if (!file_exists($filePath)) {
 
 $productModel->incrementDownloadCount($productId);
 
+$dlName = preg_replace('/[^A-Za-z0-9._-]+/', '_', strtolower($prod['title']));
+$dlName = trim($dlName, '._-') ?: 'product';
+
 header('Content-Type: application/zip');
-header('Content-Disposition: attachment; filename="' . basename($prod['zip_file']) . '"');
+header('Content-Disposition: attachment; filename="' . $dlName . '.zip"');
 header('Content-Length: ' . filesize($filePath));
 header('Cache-Control: no-cache');
 readfile($filePath);
