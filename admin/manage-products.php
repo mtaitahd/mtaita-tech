@@ -225,7 +225,11 @@ require_once 'admin_header.php';
                                     <option value="<?= htmlspecialchars($zip) ?>"><?= htmlspecialchars(basename($zip)) ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <div class="form-text">Upload the .zip into <code>assets/uploads/products/</code> via cPanel, then pick it here.</div>
+                            <div class="d-flex gap-2 mt-2">
+                                <input type="file" id="zip-upload-input" class="form-control form-control-sm" accept=".zip">
+                                <button type="button" id="zip-upload-btn" class="btn btn-sm btn-cyan text-nowrap"><i class="bi bi-cloud-arrow-up"></i> Upload ZIP</button>
+                            </div>
+                            <div class="form-text" id="zip-upload-status">Upload a .zip (max 100MB) or pick an existing one.</div>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Thumbnail</label>
@@ -283,6 +287,52 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 wrap.style.display = 'none';
             }
+        });
+    }
+
+    var uploadBtn = document.getElementById('zip-upload-btn');
+    var uploadInput = document.getElementById('zip-upload-input');
+    var uploadStatus = document.getElementById('zip-upload-status');
+    if (uploadBtn && uploadInput) {
+        uploadBtn.addEventListener('click', function () {
+            var file = uploadInput.files[0];
+            if (!file) {
+                uploadStatus.textContent = 'Choose a .zip file first.';
+                uploadStatus.className = 'form-text text-warning';
+                return;
+            }
+            if (!/\.zip$/i.test(file.name)) {
+                uploadStatus.textContent = 'Only .zip files are allowed.';
+                uploadStatus.className = 'form-text text-danger';
+                return;
+            }
+            if (file.size > 100 * 1024 * 1024) {
+                uploadStatus.textContent = 'File must be smaller than 100MB.';
+                uploadStatus.className = 'form-text text-danger';
+                return;
+            }
+            var fd = new FormData();
+            fd.append('zip_file', file);
+            uploadBtn.disabled = true;
+            uploadStatus.textContent = 'Uploading...';
+            uploadStatus.className = 'form-text text-info';
+            fetch('upload-product-zip.php', { method: 'POST', body: fd })
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (data.ok) {
+                        location.reload();
+                    } else {
+                        uploadStatus.textContent = data.message || 'Upload failed.';
+                        uploadStatus.className = 'form-text text-danger';
+                    }
+                })
+                .catch(function () {
+                    uploadStatus.textContent = 'Upload failed. Try again.';
+                    uploadStatus.className = 'form-text text-danger';
+                })
+                .finally(function () {
+                    uploadBtn.disabled = false;
+                });
         });
     }
 });

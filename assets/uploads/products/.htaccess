@@ -1,0 +1,7 @@
+# Disable PHP execution in this folder
+php_flag engine off
+RemoveHandler .php .phtml .php3 .php4 .php5 .php6 .php7 .phps .phar
+RemoveType .php .phtml .php3 .php4 .php5 .php6 .php7 .phps .phar
+<FilesMatch "\.(php|phtml|phar|php[0-9])$">
+  Require all denied
+</FilesMatch>
