@@ -44,14 +44,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        if (isset($_FILES['zip_file']) && $_FILES['zip_file']['error'] === UPLOAD_ERR_OK) {
-            $allowed_zip = ['application/zip', 'application/x-zip-compressed'];
-            $file = $_FILES['zip_file'];
-            $mime = function_exists('finfo_open') ? finfo_file(finfo_open(FILEINFO_MIME_TYPE), $file['tmp_name']) : $file['type'];
-            if (in_array($mime, $allowed_zip) || pathinfo($file['name'], PATHINFO_EXTENSION) === 'zip') {
+        if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] === UPLOAD_ERR_OK) {
+            $file = $_FILES['attachment'];
+            $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            $allowed = ['zip', 'rar', '7z', 'gz', 'tar'];
+            if (in_array($ext, $allowed, true) && $file['size'] <= 200 * 1024 * 1024) {
                 $upload_dir = __DIR__ . '/../assets/uploads/products/';
                 if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
-                $filename = 'product_' . uniqid() . '.zip';
+                $filename = 'product_' . uniqid() . '.' . $ext;
                 if (move_uploaded_file($file['tmp_name'], $upload_dir . $filename)) {
                     if ($zipFile) @unlink(__DIR__ . '/../' . $zipFile);
                     $zipFile = 'assets/uploads/products/' . $filename;
@@ -228,7 +228,7 @@ require_once 'admin_header.php';
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">ZIP File</label>
-                            <input type="file" name="zip_file" class="form-control" accept=".zip">
+                            <input type="file" name="attachment" class="form-control">
                         </div>
                         <div class="col-12">
                             <label class="form-label">Thumbnail</label>
