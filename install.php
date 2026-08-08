@@ -129,9 +129,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 $statements = explode(';', $sql);
                 foreach ($statements as $stmt) {
                     $stmt = trim($stmt);
-                    if ($stmt !== '') {
-                        $pdo_test->exec($stmt);
+                    if ($stmt === '') continue;
+                    // Skip CREATE DATABASE / USE: the connection already targets the DB from .env,
+                    // and the DB user may not have privileges to create/switch to another database.
+                    $stmt_upper = strtoupper($stmt);
+                    if (str_starts_with($stmt_upper, 'CREATE DATABASE') || str_starts_with($stmt_upper, 'USE ')) {
+                        continue;
                     }
+                    $pdo_test->exec($stmt);
                 }
             }
 
