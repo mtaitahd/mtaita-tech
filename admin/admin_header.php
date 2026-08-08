@@ -113,6 +113,21 @@ $get_error = $_GET['error'] ?? '';
         </li>
 
         <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCoding" aria-expanded="true" aria-controls="collapseCoding">
+                <i class="fas fa-fw fa-code"></i>
+                <span>Coding Challenges</span>
+            </a>
+            <div id="collapseCoding" class="collapse" aria-labelledby="headingCoding" data-bs-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Coding Bootcamp</h6>
+                    <a class="collapse-item" href="coding-challenges">Manage Challenges</a>
+                    <a class="collapse-item" href="coding-challenge-edit">Add Challenge</a>
+                    <a class="collapse-item" href="coding-analytics">Analytics</a>
+                </div>
+            </div>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMedia" aria-expanded="true" aria-controls="collapseMedia">
                 <i class="fas fa-fw fa-images"></i>
                 <span>Media</span>

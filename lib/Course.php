@@ -41,6 +41,31 @@ class Course {
         return (int) $stmt->fetchColumn();
     }
 
+    public function countItemsInCourse($courseId) {
+        $lessons = $this->countLessons($courseId);
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM coding_challenges WHERE course_id = ? AND is_published = 1");
+        $stmt->execute([$courseId]);
+        return $lessons + (int) $stmt->fetchColumn();
+    }
+
+    public function countCompletedItemsInCourse($userId, $courseId) {
+        $stmt = $this->pdo->prepare("
+            SELECT COUNT(*) FROM lesson_progress lp
+            JOIN lessons l ON lp.lesson_id = l.id
+            WHERE lp.user_id = ? AND l.course_id = ? AND lp.completed = 1
+        ");
+        $stmt->execute([$userId, $courseId]);
+        $lessonsDone = (int) $stmt->fetchColumn();
+
+        $stmt2 = $this->pdo->prepare("
+            SELECT COUNT(DISTINCT s.challenge_id) FROM coding_submissions s
+            JOIN coding_challenges c ON s.challenge_id = c.id
+            WHERE s.user_id = ? AND c.course_id = ? AND c.is_published = 1 AND s.passed = 1
+        ");
+        $stmt2->execute([$userId, $courseId]);
+        return $lessonsDone + (int) $stmt2->fetchColumn();
+    }
+
     public function getLessonIdsOrdered($courseId) {
         $stmt = $this->pdo->prepare("
             SELECT l.id FROM lessons l

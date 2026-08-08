@@ -68,6 +68,8 @@ RewriteRule ^404/?$ 404.php [L,QSA]
 RewriteRule ^products/?$ products.php [L,QSA]
 RewriteRule ^my-courses/?$ my-courses.php [L,QSA]
 RewriteRule ^profile/?$ profile.php [L,QSA]
+RewriteRule ^challenge/?$ challenge.php [L,QSA]
+RewriteRule ^coding-submissions/?$ coding-submissions.php [L,QSA]
 
 # Course & Blog detail routes
 RewriteRule ^course/(.+)$ single-course.php?slug=$1 [L,QSA]
@@ -124,6 +126,10 @@ RewriteRule ^admin/image-compressor/?$ admin/image-compressor.php [L,QSA]
 RewriteRule ^admin/sms-logs/?$ admin/sms-logs.php [L,QSA]
 RewriteRule ^admin/search/?$ admin/search.php [L,QSA]
 RewriteRule ^admin/profile/?$ admin/profile.php [L,QSA]
+RewriteRule ^admin/coding-challenges/?$ admin/coding-challenges.php [L,QSA]
+RewriteRule ^admin/coding-challenge-edit/?$ admin/coding-challenge-edit.php [L,QSA]
+RewriteRule ^admin/coding-analytics/?$ admin/coding-analytics.php [L,QSA]
+RewriteRule ^admin/coding-dropdown-ajax/?$ admin/coding_dropdown_ajax.php [L,QSA]
 
 # Protect sensitive files
 <FilesMatch "\.(env|env\.example)|smtp\.txt$">

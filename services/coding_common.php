@@ -1,0 +1,49 @@
+<?php
+function coding_require_auth() {
+    require_once __DIR__ . '/../auth_helper.php';
+    require_once __DIR__ . '/../db_connect.php';
+    if (!isPublicLoggedIn()) {
+        coding_json_response(['error' => 'You must be logged in.'], 401);
+    }
+    if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+        coding_json_response(['error' => 'Invalid request method.'], 405);
+    }
+    $token = $_POST['csrf_token'] ?? '';
+    if (!verifyCsrfToken($token)) {
+        coding_json_response(['error' => 'Invalid security token. Please refresh the page.'], 403);
+    }
+    return getPublicUserId();
+}
+
+function coding_load_challenge($challengeId) {
+    global $pdo;
+    require_once __DIR__ . '/../lib/CodingChallenge.php';
+    require_once __DIR__ . '/../lib/AccessControl.php';
+    $challengeModel = new CodingChallenge();
+    $challenge = $challengeModel->getByIdWithCourse((int)$challengeId);
+    if (!$challenge || $challenge['course_status'] !== 'published' || !$challenge['is_published']) {
+        coding_json_response(['error' => 'Challenge not found.'], 404);
+    }
+    $userId = getPublicUserId();
+    $accessControl = new AccessControl();
+    if (!$accessControl->hasCourseAccess($userId, ['id' => (int)$challenge['course_id'], 'type' => $challenge['course_type']])) {
+        coding_json_response(['error' => 'You are not enrolled in this course.'], 403);
+    }
+    return $challenge;
+}
+
+function coding_normalize_output($text) {
+    $lines = preg_split('/\r\n|\r|\n/', (string)$text);
+    $lines = array_map('rtrim', $lines);
+    while (!empty($lines) && end($lines) === '') {
+        array_pop($lines);
+    }
+    return implode("\n", $lines);
+}
+
+function coding_json_response($data, $code = 200) {
+    http_response_code($code);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode($data);
+    exit;
+}

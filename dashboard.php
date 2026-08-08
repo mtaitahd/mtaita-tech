@@ -8,6 +8,9 @@ require_once __DIR__ . '/lib/Course.php';
 require_once __DIR__ . '/lib/Order.php';
 require_once __DIR__ . '/lib/CourseAccess.php';
 require_once __DIR__ . '/lib/LessonProgress.php';
+require_once __DIR__ . '/lib/CodingChallenge.php';
+require_once __DIR__ . '/lib/CodingSubmission.php';
+require_once __DIR__ . '/lib/CodingProgress.php';
 
 $user = getPublicUser();
 $userId = $user['id'];
@@ -15,6 +18,8 @@ $enrollment = new Enrollment();
 $courseModel = new Course();
 $order = new Order();
 $courseAccess = new CourseAccess();
+$codingProgress = new CodingProgress();
+$codingSubmissionModel = new CodingSubmission();
 
 foreach ($courseAccess->getGrantedCourseIds($userId) as $grantCourseId) {
     $enrollment->ensureEnrollment($userId, $grantCourseId);
@@ -26,15 +31,24 @@ $purchases = $order->getByUserId($userId);
 $totalEnrolled = count($myCourses);
 $totalCompletedLessons = 0;
 $totalLessonsAvailable = 0;
+$totalCompletedChallenges = 0;
+$totalChallengesAvailable = 0;
 if ($totalEnrolled > 0) {
     $lp = new LessonProgress();
     $courseIds = array_column($myCourses, 'course_id');
     foreach ($courseIds as $cid) {
-        $totalCompletedLessons += $lp->countCompletedInCourse($userId, (int)$cid);
-        $totalLessonsAvailable += $courseModel->countLessons((int)$cid);
+        $cid = (int)$cid;
+        $totalCompletedLessons += $lp->countCompletedInCourse($userId, $cid);
+        $totalLessonsAvailable += $courseModel->countLessons($cid);
+        $totalCompletedChallenges += $codingProgress->countCompletedChallengesInCourse($userId, $cid);
+        $totalChallengesAvailable += $codingProgress->countTotalChallengesInCourse($cid);
     }
 }
-$overallProgress = $totalLessonsAvailable > 0 ? round(($totalCompletedLessons / $totalLessonsAvailable) * 100) : 0;
+$totalItemsAvailable = $totalLessonsAvailable + $totalChallengesAvailable;
+$totalItemsCompleted = $totalCompletedLessons + $totalCompletedChallenges;
+$overallProgress = $totalItemsAvailable > 0 ? round(($totalItemsCompleted / $totalItemsAvailable) * 100) : 0;
+$codingStreak = $codingProgress->getStreakDays($userId);
+$codingStats = $codingSubmissionModel->getStatsForUser($userId);
 
 $page_title = 'Dashboard';
 $active_page = 'dashboard';
@@ -77,6 +91,67 @@ require_once 'user_header.php';
             </div>
         </div>
     </div>
+    <div class="col">
+        <div class="stat-card">
+            <div class="stat-icon bg-danger"><i class="bi bi-code-slash"></i></div>
+            <div class="stat-info">
+                <h3><?= $totalCompletedChallenges ?><small class="text-muted fs-6">/<?= $totalChallengesAvailable ?></small></h3>
+                <p>Coding Challenges</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-12">
+        <div class="admin-card">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                <h5 class="mb-0"><i class="bi bi-code-square text-cyan me-2"></i>Coding Bootcamp</h5>
+                <div class="d-flex gap-2">
+                    <a href="coding-submissions" class="btn btn-outline-cyan btn-sm"><i class="bi bi-clock-history me-1"></i>My Submissions</a>
+                    <a href="courses" class="btn btn-cyan btn-sm"><i class="bi bi-play me-1"></i>Start Coding</a>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="d-flex align-items-center gap-3 p-3 rounded" style="background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);">
+                        <i class="bi bi-send fs-3" style="color:#06B6D4;"></i>
+                        <div>
+                            <div class="fs-4 fw-bold"><?= (int)($codingStats['total_submissions'] ?? 0) ?></div>
+                            <div class="small text-muted">Submissions</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="d-flex align-items-center gap-3 p-3 rounded" style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);">
+                        <i class="bi bi-trophy fs-3" style="color:#22C55E;"></i>
+                        <div>
+                            <div class="fs-4 fw-bold"><?= (int)($codingStats['passed_submissions'] ?? 0) ?></div>
+                            <div class="small text-muted">Challenges Passed</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="d-flex align-items-center gap-3 p-3 rounded" style="background:rgba(250,204,21,0.08);border:1px solid rgba(250,204,21,0.2);">
+                        <i class="bi bi-stars fs-3" style="color:#FACC15;"></i>
+                        <div>
+                            <div class="fs-4 fw-bold"><?= (int)($codingStats['total_xp'] ?? 0) ?></div>
+                            <div class="small text-muted">XP Earned</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="d-flex align-items-center gap-3 p-3 rounded" style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);">
+                        <i class="bi bi-fire fs-3" style="color:#EF4444;"></i>
+                        <div>
+                            <div class="fs-4 fw-bold"><?= (int)$codingStreak ?></div>
+                            <div class="small text-muted">Day Streak</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row g-3 mb-4">
@@ -111,6 +186,8 @@ require_once 'user_header.php';
                         <thead>
                             <tr>
                                 <th>Course</th>
+                                <th>Lessons</th>
+                                <th>Challenges</th>
                                 <th>Progress</th>
                                 <th></th>
                             </tr>
@@ -118,9 +195,15 @@ require_once 'user_header.php';
                         <tbody>
                             <?php foreach ($myCourses as $mc): ?>
                             <?php
-                            $c = $courseModel->getById((int)$mc['course_id']);
-                            $ids = $c ? $courseModel->getLessonIdsOrdered((int)$mc['course_id']) : [];
+                            $cid = (int)$mc['course_id'];
+                            $c = $courseModel->getById($cid);
+                            $ids = $c ? $courseModel->getLessonIdsOrdered($cid) : [];
                             $resume = !empty($ids) ? 'lesson.php?id=' . (int)$ids[0] : 'single-course.php?slug=' . urlencode($mc['slug']);
+                            $lp = new LessonProgress();
+                            $lessonsDone = $lp->countCompletedInCourse($userId, $cid);
+                            $lessonsTotal = $courseModel->countLessons($cid);
+                            $chalDone = $codingProgress->countCompletedChallengesInCourse($userId, $cid);
+                            $chalTotal = $codingProgress->countTotalChallengesInCourse($cid);
                             ?>
                             <tr>
                                 <td>
@@ -132,6 +215,16 @@ require_once 'user_header.php';
                                         <?php endif; ?>
                                         <span class="fw-semibold"><?= htmlspecialchars($mc['title']) ?></span>
                                     </div>
+                                </td>
+                                <td><small class="text-muted"><?= $lessonsDone ?>/<?= $lessonsTotal ?></small></td>
+                                <td>
+                                    <?php if ($chalTotal > 0): ?>
+                                        <a href="single-course?slug=<?= urlencode($mc['slug']) ?>" class="text-decoration-none">
+                                            <small class="text-cyan"><?= $chalDone ?>/<?= $chalTotal ?> <i class="bi bi-code-slash"></i></small>
+                                        </a>
+                                    <?php else: ?>
+                                        <small class="text-muted">—</small>
+                                    <?php endif; ?>
                                 </td>
                                 <td style="width:200px;">
                                     <div class="d-flex align-items-center gap-2">

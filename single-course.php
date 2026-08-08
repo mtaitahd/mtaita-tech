@@ -6,6 +6,8 @@ require_once __DIR__ . '/lib/Lesson.php';
 require_once __DIR__ . '/lib/LessonProgress.php';
 require_once __DIR__ . '/lib/Enrollment.php';
 require_once __DIR__ . '/lib/Settings.php';
+require_once __DIR__ . '/lib/CodingChallenge.php';
+require_once __DIR__ . '/lib/CodingSubmission.php';
 
 $slug = $_GET['slug'] ?? '';
 if (empty($slug)) {
@@ -85,6 +87,18 @@ if ($active_lesson_index < 0) $active_lesson_index = 0;
 if ($active_lesson_index >= count($allLessons)) $active_lesson_index = max(0, count($allLessons) - 1);
 
 $lessonProgress = new LessonProgress();
+
+$codingChallengeModel = new CodingChallenge();
+$codingSubmissionModel = new CodingSubmission();
+$courseChallenges = $codingChallengeModel->getByCourseId($course['id'], true);
+$passedChallengeIds = [];
+if ($userId) {
+    foreach ($courseChallenges as $cc) {
+        if ($codingSubmissionModel->hasPassed($userId, $cc['id'])) {
+            $passedChallengeIds[(int)$cc['id']] = true;
+        }
+    }
+}
 
 function extractYoutubeId($url): ?string {
     $pattern = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i';
@@ -341,9 +355,55 @@ $hero_bg_services = Settings::get('hero_bg_services', '');
                                 </a>
                                 <?php $globalIndex++; endforeach; ?>
                             <?php endif; ?>
-                        <?php endif; ?>
+                    <?php endif; ?>
+                </div>
+                </div>
+
+                <?php if (!empty($courseChallenges)): ?>
+                <div class="mt-4">
+                    <h5 style="color: var(--deep-blue);" class="mb-3 d-flex align-items-center gap-2">
+                        <i class="bi bi-code-slash"></i>Coding Challenges
+                        <small class="text-muted fw-normal ms-auto"><?= count($passedChallengeIds) ?>/<?= count($courseChallenges) ?></small>
+                    </h5>
+                    <div class="course-curriculum" style="max-height:300px;overflow-y:auto;">
+                        <?php foreach ($courseChallenges as $cc): ?>
+                        <a 
+                            href="challenge?id=<?= (int)$cc['id'] ?>"
+                            class="list-group-item list-group-item-action d-flex align-items-start gap-2"
+                            style="border-radius:6px;margin-bottom:4px;border:1px solid var(--border-light);cursor:pointer;padding:8px 10px;font-size:0.85rem;"
+                            <?php if (!$is_enrolled && !$is_free): ?>
+                            onclick="event.preventDefault(); showPurchaseAlert();"
+                            <?php endif; ?>
+                        >
+                            <?php if (!empty($passedChallengeIds[(int)$cc['id']])): ?>
+                                <i class="bi bi-check-circle-fill" style="color:#10B981;font-size:0.9rem;margin-top:2px;"></i>
+                            <?php else: ?>
+                                <div class="flex-shrink-0 d-flex align-items-center justify-content-center" 
+                                     style="width:26px;height:26px;border-radius:50%;margin-top:1px;background:var(--light-gray);color:var(--deep-blue);font-size:0.8rem;">
+                                    <i class="bi bi-code"></i>
+                                </div>
+                            <?php endif; ?>
+                            <div class="flex-grow-1 min-w-0">
+                                <div class="text-truncate" style="color:var(--deep-blue);">
+                                    <?= htmlspecialchars($cc['title']) ?>
+                                </div>
+                                <div class="text-muted" style="font-size:0.75rem;">
+                                    <span class="badge" style="background:<?= $cc['difficulty'] === 'easy' ? '#D1FAE5' : ($cc['difficulty'] === 'medium' ? '#FEF3C7' : '#FEE2E2') ?>;color:<?= $cc['difficulty'] === 'easy' ? '#065F46' : ($cc['difficulty'] === 'medium' ? '#92400E' : '#991B1B') ?>;">
+                                        <?= ucfirst($cc['difficulty']) ?>
+                                    </span>
+                                    <span class="ms-1"><?= (int)$cc['marks'] ?> marks</span>
+                                </div>
+                            </div>
+                            <?php if (!$is_enrolled && !$is_free): ?>
+                            <i class="bi bi-lock-fill text-muted flex-shrink-0" style="font-size:0.75rem;margin-top:3px;"></i>
+                            <?php else: ?>
+                            <i class="bi bi-chevron-right text-muted flex-shrink-0" style="font-size:0.75rem;margin-top:3px;"></i>
+                            <?php endif; ?>
+                        </a>
+                        <?php endforeach; ?>
                     </div>
                 </div>
+                <?php endif; ?>
 
                 <?php if (!$is_free && !$is_enrolled): ?>
                 <div class="floating-card mt-4 text-center" style="border: 2px solid var(--red);">

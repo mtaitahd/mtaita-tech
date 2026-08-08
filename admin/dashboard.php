@@ -140,6 +140,39 @@ $pending_enrollments = $pdo->query("SELECT COUNT(*) FROM enrollments WHERE statu
             </div>
         </a>
     </div>
+    <div class="col">
+        <a href="coding-challenges" class="text-decoration-none">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="bi bi-code-slash"></i></div>
+                <div class="stat-info">
+                    <h3><?php try { echo (int)$pdo->query("SELECT COUNT(*) FROM coding_challenges")->fetchColumn(); } catch (Exception $e) { echo 0; } ?></h3>
+                    <p>Coding Challenges</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="coding-analytics" class="text-decoration-none">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="bi bi-send"></i></div>
+                <div class="stat-info">
+                    <h3><?php try { echo (int)$pdo->query("SELECT COUNT(*) FROM coding_submissions")->fetchColumn(); } catch (Exception $e) { echo 0; } ?></h3>
+                    <p>Code Submissions</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="coding-analytics" class="text-decoration-none">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="bi bi-trophy"></i></div>
+                <div class="stat-info">
+                    <h3><?php try { echo (int)$pdo->query("SELECT COUNT(*) FROM coding_submissions WHERE passed = 1")->fetchColumn(); } catch (Exception $e) { echo 0; } ?></h3>
+                    <p>Passed Submissions</p>
+                </div>
+            </div>
+        </a>
+    </div>
 </div>
 
 <div class="row mt-4">
@@ -155,6 +188,8 @@ $pending_enrollments = $pdo->query("SELECT COUNT(*) FROM enrollments WHERE statu
                 <a href="partners" class="btn btn-outline-cyan btn-sm"><i class="bi bi-plus-lg"></i> Add Partner</a>
                 <a href="testimonials" class="btn btn-outline-cyan btn-sm"><i class="bi bi-plus-lg"></i> Add Testimonial</a>
                 <a href="solutions" class="btn btn-outline-cyan btn-sm"><i class="bi bi-plus-lg"></i> Add Solution</a>
+                <a href="coding-challenge-edit" class="btn btn-outline-cyan btn-sm"><i class="bi bi-code-slash"></i> Add Coding Challenge</a>
+                <a href="coding-analytics" class="btn btn-outline-cyan btn-sm"><i class="bi bi-bar-chart"></i> Coding Analytics</a>
                 <a href="contacts" class="btn btn-outline-cyan btn-sm"><i class="bi bi-envelope"></i> View Messages</a>
             </div>
         </div>

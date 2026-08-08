@@ -8,6 +8,7 @@ require_once __DIR__ . '/lib/Course.php';
 require_once __DIR__ . '/lib/AccessControl.php';
 require_once __DIR__ . '/lib/Enrollment.php';
 require_once __DIR__ . '/lib/LessonProgress.php';
+require_once __DIR__ . '/lib/CodingChallenge.php';
 
 $lessonModel = new Lesson();
 $courseModel = new Course();
@@ -46,6 +47,9 @@ $nextId = ($idx !== false && $idx < count($sequence) - 1) ? $sequence[$idx + 1] 
 
 $embedUrl = $lessonModel->getYoutubeEmbedUrl($row['video_url'] ?: $row['youtube_url']);
 $completed = $userId ? $lessonProgress->isCompleted($userId, $lessonId) : false;
+
+$codingChallengeModel = new CodingChallenge();
+$lessonChallenge = $codingChallengeModel->getByLessonId($lessonId);
 
 $page_title = htmlspecialchars($row['title']) . ' — Mtaita Tech';
 $page_desc = 'Watch lesson ' . htmlspecialchars($row['title']) . ' from ' . htmlspecialchars($row['course_title']) . ' on Mtaita Tech.';
@@ -116,6 +120,11 @@ require_once 'header.php';
                                 <?= $completed ? 'Completed' : 'Mark Complete' ?>
                             </button>
                         </form>
+                    <?php endif; ?>
+                    <?php if ($lessonChallenge): ?>
+                        <a href="challenge?id=<?= (int)$lessonChallenge['id'] ?>" class="btn btn-sm btn-cyan">
+                            <i class="bi bi-code-slash me-1"></i>Coding Challenge
+                        </a>
                     <?php endif; ?>
                     <?php if ($nextId): ?>
                         <a href="lesson?id=<?= $nextId ?>" class="btn btn-sm btn-red">Next <i class="bi bi-arrow-right ms-1"></i></a>

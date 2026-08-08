@@ -110,6 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 'migration_006_sms_notifications.sql',
                 'migration_007_portfolio_categories.sql',
                 'migration_008_sections.sql',
+                'migration_011_coding_bootcamp.sql',
                 'install_public_users.sql',
                 'install_contacts.sql',
                 'install_courses.sql',

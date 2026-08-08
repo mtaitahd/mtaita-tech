@@ -32,13 +32,13 @@ class Enrollment {
     public function updateProgressForUserCourse($userId, $courseId) {
         $lessonProgress = new LessonProgress();
         $course = new Course();
-        $total = $course->countLessons($courseId);
-        $completed = $lessonProgress->countCompletedInCourse($userId, $courseId);
+        $total = $course->countItemsInCourse($courseId);
+        $completed = $course->countCompletedItemsInCourse($userId, $courseId);
         $progress = $total > 0 ? round(($completed / $total) * 100) : 0;
 
         $existing = $this->getByUserAndCourse($userId, $courseId);
         if ($existing) {
-            $stmt = $this->pdo->prepare("UPDATE enrollments SET progress = ? WHERE id = ?");
+            $stmt = $this->pdo->prepare("UPDATE enrollments SET progress = ?, updated_at = NOW() WHERE id = ?");
             $stmt->execute([$progress, $existing['id']]);
         }
         return $progress;

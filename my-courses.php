@@ -6,11 +6,13 @@ requirePublicLogin();
 require_once __DIR__ . '/lib/Enrollment.php';
 require_once __DIR__ . '/lib/Course.php';
 require_once __DIR__ . '/lib/LessonProgress.php';
+require_once __DIR__ . '/lib/CodingProgress.php';
 
 $user = getPublicUser();
 $userId = $user['id'];
 $enrollment = new Enrollment();
 $courseModel = new Course();
+$codingProgress = new CodingProgress();
 
 $myCourses = $enrollment->getCoursesForUser($userId);
 
@@ -36,6 +38,8 @@ require_once 'user_header.php';
                         <thead>
                             <tr>
                                 <th>Course</th>
+                                <th>Lessons</th>
+                                <th>Challenges</th>
                                 <th>Progress</th>
                                 <th></th>
                             </tr>
@@ -43,9 +47,15 @@ require_once 'user_header.php';
                         <tbody>
                             <?php foreach ($myCourses as $mc): ?>
                             <?php
-                            $c = $courseModel->getById((int)$mc['course_id']);
-                            $ids = $c ? $courseModel->getLessonIdsOrdered((int)$mc['course_id']) : [];
+                            $cid = (int)$mc['course_id'];
+                            $c = $courseModel->getById($cid);
+                            $ids = $c ? $courseModel->getLessonIdsOrdered($cid) : [];
                             $resume = !empty($ids) ? 'lesson.php?id=' . (int)$ids[0] : 'single-course.php?slug=' . urlencode($mc['slug']);
+                            $lp = new LessonProgress();
+                            $lessonsDone = $lp->countCompletedInCourse($userId, $cid);
+                            $lessonsTotal = $courseModel->countLessons($cid);
+                            $chalDone = $codingProgress->countCompletedChallengesInCourse($userId, $cid);
+                            $chalTotal = $codingProgress->countTotalChallengesInCourse($cid);
                             ?>
                             <tr>
                                 <td>
@@ -57,6 +67,16 @@ require_once 'user_header.php';
                                         <?php endif; ?>
                                         <span class="fw-semibold"><?= htmlspecialchars($mc['title']) ?></span>
                                     </div>
+                                </td>
+                                <td><small class="text-muted"><?= $lessonsDone ?>/<?= $lessonsTotal ?></small></td>
+                                <td>
+                                    <?php if ($chalTotal > 0): ?>
+                                        <a href="single-course?slug=<?= urlencode($mc['slug']) ?>" class="text-decoration-none">
+                                            <small class="text-cyan"><?= $chalDone ?>/<?= $chalTotal ?> <i class="bi bi-code-slash"></i></small>
+                                        </a>
+                                    <?php else: ?>
+                                        <small class="text-muted">—</small>
+                                    <?php endif; ?>
                                 </td>
                                 <td style="width:220px;">
                                     <div class="d-flex align-items-center gap-2">
