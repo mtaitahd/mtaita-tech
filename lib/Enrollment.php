@@ -30,6 +30,8 @@ class Enrollment {
     }
 
     public function updateProgressForUserCourse($userId, $courseId) {
+        require_once __DIR__ . '/LessonProgress.php';
+        require_once __DIR__ . '/Course.php';
         $lessonProgress = new LessonProgress();
         $course = new Course();
         $total = $course->countItemsInCourse($courseId);
