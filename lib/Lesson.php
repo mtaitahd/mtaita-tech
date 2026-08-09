@@ -15,8 +15,8 @@ class Lesson {
 
     public function getByIdWithCourse($id) {
         $stmt = $this->pdo->prepare("
-            SELECT l.*, m.title AS module_title, c.title AS course_title, c.status AS course_status,
-                   c.type AS course_type, c.price AS course_price, c.id AS course_id
+            SELECT l.*, m.title AS module_title, c.title AS course_title, c.slug AS course_slug,
+                   c.status AS course_status, c.type AS course_type, c.price AS course_price, c.id AS course_id
             FROM lessons l
             LEFT JOIN modules m ON l.module_id = m.id
             JOIN courses c ON l.course_id = c.id

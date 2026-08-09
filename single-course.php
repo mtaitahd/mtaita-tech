@@ -49,20 +49,40 @@ $page_keywords = htmlspecialchars($course['title']) . ', course, Mtaita Tech, on
 $moduleModel = new Module();
 $lessonModel = new Lesson();
 $modules = $moduleModel->getByCourseId($course['id']);
-$allLessons = [];
-$lessonList = []; // flat ordered for backward compat
+$moduleIds = [];
+foreach ($modules as $m) $moduleIds[(int)$m['id']] = true;
+
+$courseLessons = $lessonModel->getByCourseId($course['id']);
+
+$curriculumGroups = [];
+$seenLessonIds = [];
 foreach ($modules as $mod) {
-    $lessons = $lessonModel->getByModuleId($mod['id']);
-    $mod['lessons'] = $lessons;
-    foreach ($lessons as $l) {
-        $lessonList[] = $l;
-        $allLessons[] = $l;
+    $modLessons = [];
+    foreach ($courseLessons as $l) {
+        if ((int)$l['module_id'] === (int)$mod['id']) {
+            $modLessons[] = $l;
+            $seenLessonIds[(int)$l['id']] = true;
+        }
+    }
+    if (!empty($modLessons)) {
+        $curriculumGroups[] = ['module_title' => $mod['title'], 'lessons' => $modLessons];
     }
 }
-// Fallback: if no modules, get lessons directly (legacy support)
-if (empty($allLessons)) {
-    $lessonList = $lessonModel->getByCourseId($course['id']);
-    $allLessons = $lessonList;
+$orphanLessons = [];
+foreach ($courseLessons as $l) {
+    if (!isset($seenLessonIds[(int)$l['id']])) $orphanLessons[] = $l;
+}
+if (!empty($orphanLessons)) {
+    $curriculumGroups[] = ['module_title' => 'Course Lessons', 'lessons' => $orphanLessons];
+}
+
+$allLessons = [];
+$lessonList = [];
+foreach ($curriculumGroups as $g) {
+    foreach ($g['lessons'] as $l) {
+        $allLessons[] = $l;
+        $lessonList[] = $l;
+    }
 }
 
 $is_enrolled = false;
@@ -164,27 +184,44 @@ $hero_bg_services = Settings::get('hero_bg_services', '');
     <div class="container">
         <div class="row g-4">
             <div class="col-lg-8">
-                <?php if ($is_enrolled && !empty($allLessons) && $active_video_id): ?>
-                    <div class="ratio ratio-16x9 mb-4" style="background: #000;">
-                        <iframe 
-                            id="video-player"
-                            src="https://www.youtube-nocookie.com/embed/<?= htmlspecialchars($active_video_id) ?>?rel=0"
-                            title="<?= htmlspecialchars($active_lesson['title'] ?? 'Lesson Video') ?>"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
+                <?php if ($is_enrolled && !empty($allLessons) && $active_lesson): ?>
+                    <?php if ($active_video_id): ?>
+                        <div class="ratio ratio-16x9 mb-4" style="background: #000;">
+                            <iframe 
+                                id="video-player"
+                                src="https://www.youtube-nocookie.com/embed/<?= htmlspecialchars($active_video_id) ?>?rel=0"
+                                title="<?= htmlspecialchars($active_lesson['title'] ?? 'Lesson Video') ?>"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    <?php else: ?>
+                        <div class="d-flex align-items-center justify-content-center mb-4" style="height:300px;background:#000;border-radius:12px;">
+                            <div class="text-center text-muted">
+                                <i class="bi bi-camera-video-off" style="font-size:2.5rem;"></i>
+                                <p class="mt-2 mb-3">This lesson has no video. Open it to view the content.</p>
+                                <a href="lesson?id=<?= (int)$active_lesson['id'] ?>" class="btn btn-red">
+                                    <i class="bi bi-box-arrow-up-right me-1"></i>Open Lesson
+                                </a>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                     <h4 class="mb-1" style="color: var(--deep-blue);" id="lesson-title">
                         <?= htmlspecialchars($active_lesson['title'] ?? 'No Title') ?>
                     </h4>
-                    <div class="d-flex align-items-center justify-content-between mb-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
                         <span class="text-muted small">Lesson <span id="lesson-number"><?= $active_lesson_index + 1 ?></span> of <?= count($allLessons) ?></span>
-                        <?php if ($active_lesson && $active_lesson['youtube_url']): ?>
-                        <a href="<?= htmlspecialchars($active_lesson['youtube_url']) ?>" target="_blank" rel="noopener" class="text-decoration-none small" style="color:var(--red);">
-                            <i class="bi bi-youtube me-1"></i>Watch on YouTube
-                        </a>
-                        <?php endif; ?>
+                        <div class="d-flex gap-3">
+                            <?php if ($active_lesson && $active_lesson['youtube_url']): ?>
+                            <a href="<?= htmlspecialchars($active_lesson['youtube_url']) ?>" target="_blank" rel="noopener" class="text-decoration-none small" style="color:var(--red);">
+                                <i class="bi bi-youtube me-1"></i>Watch on YouTube
+                            </a>
+                            <?php endif; ?>
+                            <a href="lesson?id=<?= (int)$active_lesson['id'] ?>" class="text-decoration-none small fw-semibold" style="color:var(--red);">
+                                <i class="bi bi-box-arrow-up-right me-1"></i>Open Lesson
+                            </a>
+                        </div>
                     </div>
                 <?php elseif (!$is_enrolled && !$is_free): ?>
                     <div class="floating-card text-center py-5">
@@ -249,80 +286,24 @@ $hero_bg_services = Settings::get('hero_bg_services', '');
                             </div>
                         <?php else: ?>
                             <?php $globalIndex = 0; ?>
-                            <?php if (!empty($modules)): ?>
-                                <?php foreach ($modules as $mod): ?>
-                                <div class="mb-3">
-                                    <div class="d-flex align-items-center gap-2 mb-2" style="padding:0 4px;">
-                                        <i class="bi bi-folder2-open text-cyan" style="font-size:0.85rem;"></i>
-                                        <span class="fw-semibold small" style="color:var(--deep-blue);">
-                                            <?= htmlspecialchars($mod['title']) ?>
-                                        </span>
-                                        <span class="text-muted" style="font-size:0.7rem;">(<?= count($mod['lessons']) ?>)</span>
-                                    </div>
-                                    <?php foreach ($mod['lessons'] as $lesson):
-                                        $is_active = $globalIndex === $active_lesson_index;
-                                        $video_id = $lesson_videos[$lesson['id']] ?? null;
-                                        $is_completed = $userId ? $lessonProgress->isCompleted($userId, $lesson['id']) : false;
-                                    ?>
-                                    <a 
-                                        href="single-course?slug=<?= htmlspecialchars($slug) ?>&lesson=<?= $globalIndex + 1 ?>"
-                                        class="list-group-item list-group-item-action d-flex align-items-start gap-2 <?= $is_active ? 'active' : '' ?>"
-                                        style="border-radius:6px;margin-bottom:4px;border:1px solid var(--border-light);cursor:pointer;padding:8px 10px;font-size:0.85rem;"
-                                        <?php if ($is_enrolled && $video_id): ?>
-                                        data-video-id="<?= htmlspecialchars($video_id) ?>"
-                                        data-lesson-index="<?= $globalIndex ?>"
-                                        data-lesson-title="<?= htmlspecialchars($lesson['title']) ?>"
-                                        data-youtube-url="<?= htmlspecialchars($lesson['youtube_url']) ?>"
-                                        <?php endif; ?>
-                                        <?php if (!$is_enrolled && !$is_free): ?>
-                                        onclick="event.preventDefault(); showPurchaseAlert();"
-                                        <?php endif; ?>
-                                    >
-                                        <?php if ($is_completed && $is_enrolled): ?>
-                                            <i class="bi bi-check-circle-fill" style="color:#10B981;font-size:0.9rem;margin-top:2px;"></i>
-                                        <?php elseif (!empty($lesson['thumbnail'])): ?>
-                                            <div class="flex-shrink-0" style="width:60px;height:34px;overflow:hidden;border-radius:3px;background:#000;position:relative;">
-                                                <img src="<?= htmlspecialchars(webp_url($lesson['thumbnail'])) ?>" alt="" style="width:100%;height:100%;object-fit:cover;">
-                                                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:0.85rem;opacity:0.8;">
-                                                    <i class="bi bi-play-circle-fill"></i>
-                                                </div>
-                                            </div>
-                                        <?php else: ?>
-                                            <div class="flex-shrink-0 d-flex align-items-center justify-content-center" 
-                                                 style="width:26px;height:26px;border-radius:50%;margin-top:1px;
-                                                        background:<?= $is_active ? 'var(--red)' : 'var(--light-gray)' ?>; 
-                                                        color:<?= $is_active ? '#fff' : 'var(--deep-blue)' ?>;font-size:0.8rem;">
-                                                <i class="bi <?= $is_active ? 'bi-play-fill' : 'bi-play-circle' ?>"></i>
-                                            </div>
-                                        <?php endif; ?>
-                                        <div class="flex-grow-1 min-w-0">
-                                            <div class="text-truncate" style="color:<?= $is_active ? '#fff' : 'var(--deep-blue)' ?>;">
-                                                <?= htmlspecialchars($lesson['title']) ?>
-                                            </div>
-                                        </div>
-                                        <?php if (!$is_enrolled && !$is_free): ?>
-                                        <i class="bi bi-lock-fill text-muted flex-shrink-0" style="font-size:0.75rem;margin-top:3px;"></i>
-                                        <?php endif; ?>
-                                    </a>
-                                    <?php $globalIndex++; endforeach; ?>
+                            <?php foreach ($curriculumGroups as $group): ?>
+                                <?php if (!empty($group['module_title'])): ?>
+                                <div class="d-flex align-items-center gap-2 mb-2" style="padding:0 4px;<?= $globalIndex > 0 ? 'margin-top:14px;' : '' ?>">
+                                    <i class="bi bi-folder2-open text-cyan" style="font-size:0.85rem;"></i>
+                                    <span class="fw-semibold small" style="color:var(--deep-blue);">
+                                        <?= htmlspecialchars($group['module_title']) ?>
+                                    </span>
+                                    <span class="text-muted" style="font-size:0.7rem;">(<?= count($group['lessons']) ?>)</span>
                                 </div>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <?php foreach ($allLessons as $index => $lesson):
-                                    $is_active = $index === $active_lesson_index;
-                                    $video_id = $lesson_videos[$lesson['id']] ?? null;
+                                <?php endif; ?>
+                                <?php foreach ($group['lessons'] as $lesson):
+                                    $is_active = $globalIndex === $active_lesson_index;
                                     $is_completed = $userId ? $lessonProgress->isCompleted($userId, $lesson['id']) : false;
                                 ?>
                                 <a 
-                                    href="single-course?slug=<?= htmlspecialchars($slug) ?>&lesson=<?= $index + 1 ?>"
+                                    href="lesson?id=<?= (int)$lesson['id'] ?>"
                                     class="list-group-item list-group-item-action d-flex align-items-start gap-2 <?= $is_active ? 'active' : '' ?>"
                                     style="border-radius:6px;margin-bottom:4px;border:1px solid var(--border-light);cursor:pointer;padding:8px 10px;font-size:0.85rem;"
-                                    <?php if ($is_enrolled && $video_id): ?>
-                                    data-video-id="<?= htmlspecialchars($video_id) ?>"
-                                    data-lesson-index="<?= $index ?>"
-                                    data-lesson-title="<?= htmlspecialchars($lesson['title']) ?>"
-                                    data-youtube-url="<?= htmlspecialchars($lesson['youtube_url']) ?>"
-                                    <?php endif; ?>
                                     <?php if (!$is_enrolled && !$is_free): ?>
                                     onclick="event.preventDefault(); showPurchaseAlert();"
                                     <?php endif; ?>
@@ -351,12 +332,14 @@ $hero_bg_services = Settings::get('hero_bg_services', '');
                                     </div>
                                     <?php if (!$is_enrolled && !$is_free): ?>
                                     <i class="bi bi-lock-fill text-muted flex-shrink-0" style="font-size:0.75rem;margin-top:3px;"></i>
+                                    <?php else: ?>
+                                    <i class="bi bi-chevron-right text-muted flex-shrink-0" style="font-size:0.75rem;margin-top:3px;"></i>
                                     <?php endif; ?>
                                 </a>
                                 <?php $globalIndex++; endforeach; ?>
-                            <?php endif; ?>
-                    <?php endif; ?>
-                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
 
                 <?php if (!empty($courseChallenges)): ?>
@@ -452,61 +435,6 @@ $hero_bg_services = Settings::get('hero_bg_services', '');
 <?php endif; ?>
 
 <script>
-<?php if ($is_enrolled && !empty($allLessons)): ?>
-document.addEventListener('DOMContentLoaded', function() {
-    const videoPlayer = document.getElementById('video-player');
-    const lessonItems = document.querySelectorAll('[data-video-id]');
-
-    lessonItems.forEach(function(item) {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            const videoId = this.dataset.videoId;
-            const lessonIndex = parseInt(this.dataset.lessonIndex);
-            const lessonTitle = this.dataset.lessonTitle;
-
-            if (videoId && videoPlayer) {
-                videoPlayer.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?rel=0';
-            }
-
-            const lessonNumberEl = document.getElementById('lesson-number');
-            if (lessonNumberEl) lessonNumberEl.textContent = lessonIndex + 1;
-            const lessonTitleEl = document.getElementById('lesson-title');
-            if (lessonTitleEl) lessonTitleEl.textContent = lessonTitle;
-
-            lessonItems.forEach(function(li) {
-                li.classList.remove('active');
-            });
-
-            this.classList.add('active');
-
-            const url = new URL(window.location.href);
-            url.searchParams.set('lesson', lessonIndex + 1);
-            window.history.pushState({lesson: lessonIndex + 1}, '', url.toString());
-        });
-    });
-
-    // Auto-mark lesson complete after watching
-    let progressTimer = null;
-    if (videoPlayer) {
-        videoPlayer.addEventListener('load', function() {
-            if (progressTimer) clearTimeout(progressTimer);
-            // Mark complete after 60 seconds of viewing
-            progressTimer = setTimeout(function() {
-                const params = new URLSearchParams(window.location.search);
-                const lessonIdx = parseInt(params.get('lesson')) || 1;
-                fetch('lesson_progress_ajax.php?course_id=<?= $course['id'] ?>&lesson_idx=' + lessonIdx)
-                    .then(function(r){ return r.json(); })
-                    .then(function(data){
-                        if (data.completed) {
-                            location.reload();
-                        }
-                    });
-            }, 60000);
-        });
-    }
-});
-<?php endif; ?>
-
 function showPurchaseAlert() {
     Swal.fire({
         icon: 'lock',

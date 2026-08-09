@@ -62,7 +62,7 @@ require_once 'header.php';
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
                 <div>
-                    <a href="single-course?slug=<?= urlencode($row['course_title']) ?>" class="text-decoration-none small" style="color:#94A3B8;">
+                    <a href="single-course?slug=<?= urlencode($row['course_slug']) ?>" class="text-decoration-none small" style="color:#94A3B8;">
                         <i class="bi bi-arrow-left me-1"></i>Back to Course
                     </a>
                     <div class="fw-bold text-white small"><?= htmlspecialchars($row['course_title']) ?></div>
@@ -89,7 +89,7 @@ require_once 'header.php';
                 <h4 class="mt-3" style="color:var(--deep-blue);">Premium Lesson</h4>
                 <p class="text-muted">Purchase this course to unlock all premium lessons.</p>
                 <a href="checkout?type=course&id=<?= $courseId ?>" class="btn btn-red btn-lg">Unlock Course</a>
-                <p class="mt-3 mb-0"><a href="single-course?slug=<?= urlencode($row['course_title']) ?>" style="color:#94A3B8;">Back to course outline</a></p>
+                <p class="mt-3 mb-0"><a href="single-course?slug=<?= urlencode($row['course_slug']) ?>" style="color:#94A3B8;">Back to course outline</a></p>
             </div>
         </div>
     <?php else: ?>
@@ -129,7 +129,7 @@ require_once 'header.php';
                     <?php if ($nextId): ?>
                         <a href="lesson?id=<?= $nextId ?>" class="btn btn-sm btn-red">Next <i class="bi bi-arrow-right ms-1"></i></a>
                     <?php else: ?>
-                        <a href="single-course?slug=<?= urlencode($row['course_title']) ?>" class="btn btn-sm btn-outline-light">Finish</a>
+                        <a href="single-course?slug=<?= urlencode($row['course_slug']) ?>" class="btn btn-sm btn-outline-light">Finish</a>
                     <?php endif; ?>
                 </div>
             </div>
