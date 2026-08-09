@@ -398,6 +398,10 @@ require_once 'header.php';
                 return;
             }
             var r = res.body;
+            if (r.submission_id) {
+                window.location.href = 'submission-result?submission_id=' + r.submission_id;
+                return;
+            }
             var failed = r.tests_failed;
             var cls = r.passed ? 'passed' : 'failed';
             var verdict = r.passed ? 'PASSED' : 'FAILED';

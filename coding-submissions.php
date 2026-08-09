@@ -139,8 +139,7 @@ require_once 'user_header.php';
                                     <button class="btn btn-sm btn-outline-cyan" data-bs-toggle="modal" data-bs-target="#codeModal"
                                         data-code="<?= htmlspecialchars($h['code'], ENT_QUOTES) ?>"
                                         data-title="<?= htmlspecialchars($h['challenge_title'], ENT_QUOTES) ?>">Code</button>
-                                    <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#resultModal"
-                                        data-submission="<?= (int)$h['id'] ?>">Result</button>
+                                    <a class="btn btn-sm btn-outline-info" href="submission-result?submission_id=<?= (int)$h['id'] ?>">Result</a>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -166,20 +165,6 @@ require_once 'user_header.php';
     </div>
 </div>
 
-<div class="modal fade" id="resultModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-        <div class="modal-content" style="background:#0b1220;">
-            <div class="modal-header" style="border-color:#1e293b;">
-                <h5 class="modal-title text-white"><i class="bi bi-clipboard-check text-cyan me-2"></i>Submission Result</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body" id="resultModal-body">
-                <div class="text-muted">Loading...</div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     var codeModal = document.getElementById('codeModal');
@@ -190,49 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('codeModal-content').textContent = btn.dataset.code || '';
         });
     }
-
-    var resultModal = document.getElementById('resultModal');
-    if (resultModal) {
-        resultModal.addEventListener('show.bs.modal', function (e) {
-            var btn = e.relatedTarget;
-            var body = document.getElementById('resultModal-body');
-            body.innerHTML = '<div class="text-muted">Loading...</div>';
-            fetch('services/submission_result.php?submission_id=' + btn.dataset.submission, { credentials: 'same-origin' })
-                .then(function (r) { return r.json(); })
-                .then(function (j) {
-                    if (j.error) { body.innerHTML = '<div class="text-danger">' + j.error + '</div>'; return; }
-                    var html = '<div class="row text-center g-2 mb-3">' +
-                        '<div class="col-4"><div class="text-white fw-bold fs-5">' + j.tests_total + '</div><small class="text-muted">Tests</small></div>' +
-                        '<div class="col-4"><div class="text-success fw-bold fs-5">' + j.tests_passed + '</div><small class="text-muted">Passed</small></div>' +
-                        '<div class="col-4"><div class="text-danger fw-bold fs-5">' + (j.tests_total - j.tests_passed) + '</div><small class="text-muted">Failed</small></div></div>';
-                    html += '<div class="small text-muted mb-2">Score: <b class="text-white">' + j.score + '/' + j.total_marks + '</b> · Status: <b class="text-white">' + j.status + '</b> · Execution: ' + j.execution_time + 's</div>';
-                    if (j.results && j.results.length) {
-                        html += '<div class="list-group">';
-                        j.results.forEach(function (r, i) {
-                            var ok = r.passed ? 'success' : 'danger';
-                            html += '<div class="list-group-item" style="background:#0f172a;border-color:#1e293b;">' +
-                                '<div class="d-flex justify-content-between">' +
-                                '<span class="text-white small fw-semibold">Test ' + (i + 1) + '</span>' +
-                                '<span class="badge bg-' + ok + '">' + (r.passed ? 'Passed' : r.status.replace(/_/g, ' ')) + '</span></div>';
-                            if (r.actual_output) {
-                                html += '<pre class="mt-2 mb-0 small" style="background:#0b1220;color:#e2e8f0;border:1px solid #1e293b;border-radius:6px;padding:8px;white-space:pre-wrap;">' + esc(r.actual_output) + '</pre>';
-                            }
-                            html += '</div>';
-                        });
-                        html += '</div>';
-                    }
-                    body.innerHTML = html;
-                })
-                .catch(function () {
-                    body.innerHTML = '<div class="text-danger">Could not load result.</div>';
-                });
-        });
-    }
 });
-
-function esc(s) {
-    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
 </script>
 
 <?php require_once 'user_footer.php'; ?>
