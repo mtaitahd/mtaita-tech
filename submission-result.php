@@ -63,7 +63,7 @@ require_once 'user_header.php';
 </div>
 
 <div class="row g-3 mb-4">
-    <div class="col">
+    <div class="col-sm-6 col-lg">
         <div class="stat-card">
             <div class="stat-icon <?= $scorePct >= (int)$challenge['passing_score'] && $isPassed ? 'bg-success' : 'bg-primary' ?>"><i class="bi bi-award"></i></div>
             <div class="stat-info">
@@ -72,7 +72,7 @@ require_once 'user_header.php';
             </div>
         </div>
     </div>
-    <div class="col">
+    <div class="col-sm-6 col-lg">
         <div class="stat-card">
             <div class="stat-icon bg-success"><i class="bi bi-check-circle"></i></div>
             <div class="stat-info">
@@ -81,7 +81,7 @@ require_once 'user_header.php';
             </div>
         </div>
     </div>
-    <div class="col">
+    <div class="col-sm-6 col-lg">
         <div class="stat-card">
             <div class="stat-icon bg-danger"><i class="bi bi-x-circle"></i></div>
             <div class="stat-info">
@@ -90,7 +90,7 @@ require_once 'user_header.php';
             </div>
         </div>
     </div>
-    <div class="col">
+    <div class="col-sm-6 col-lg">
         <div class="stat-card">
             <div class="stat-icon bg-info"><i class="bi bi-stopwatch"></i></div>
             <div class="stat-info">

@@ -91,7 +91,7 @@ require_once 'header.php';
                         <?= htmlspecialchars($row['module_title'] ?? '') ?> <?= $row['lesson_title'] ? '&middot; ' . htmlspecialchars($row['lesson_title']) : '' ?>
                     </div>
                 </div>
-                <div class="d-flex gap-2 align-items-center">
+                <div class="d-flex flex-wrap gap-2 align-items-center">
                     <span class="badge badge-lang"><?= $challengeModel->languageLabel($row['language']) ?></span>
                     <span class="badge badge-<?= $row['difficulty'] ?>"><?= ucfirst($row['difficulty']) ?></span>
                     <span class="badge bg-secondary"><?= (int)$row['marks'] ?> marks</span>
