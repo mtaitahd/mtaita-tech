@@ -44,6 +44,8 @@ $csrf = generateCsrfToken();
 $langMonaco = $row['language'] === 'cpp' ? 'cpp' : $row['language'];
 $isMarkup = in_array($row['language'], ['html', 'css'], true);
 
+$visibleTestCases = $challengeModel->getTestCases($challengeId, true);
+
 $page_title = htmlspecialchars($row['title']) . ' — Coding Challenge — Mtaita Tech';
 $page_desc = 'Solve the ' . htmlspecialchars($row['title']) . ' coding challenge on Mtaita Tech.';
 $hide_navbar = true;
@@ -204,6 +206,12 @@ require_once 'header.php';
         language: <?= json_encode($row['language']) ?>,
         isMarkup: <?= $isMarkup ? 'true' : 'false' ?>,
         sampleInput: <?= json_encode($row['sample_input'] ?? '') ?>,
+        testCases: <?= json_encode(array_map(function ($t) {
+            return [
+                'input' => (string)($t['input_data'] ?? ''),
+                'output' => (string)($t['expected_output'] ?? ''),
+            ];
+        }, $visibleTestCases)) ?>,
         starterCode: <?= json_encode($row['starter_code'] ?? '') ?>,
         csrf: <?= json_encode($csrf) ?>
     };
@@ -298,23 +306,29 @@ require_once 'header.php';
         });
     }
 
+    function runInputSource() {
+        if (CHALLENGE.sampleInput) return CHALLENGE.sampleInput;
+        if (CHALLENGE.testCases && CHALLENGE.testCases.length) return CHALLENGE.testCases[0].input;
+        return '';
+    }
+
     function currentRunInput() {
         var box = document.getElementById('cc-custom-input-value');
         var input = box ? box.value : '';
-        if (input === '') input = CHALLENGE.sampleInput;
-        return input;
+        if (input !== '') return input;
+        return runInputSource();
     }
 
     document.addEventListener('DOMContentLoaded', function () {
         var box = document.getElementById('cc-custom-input-value');
         if (box && box.value === '') {
-            box.value = CHALLENGE.sampleInput || '';
+            box.value = runInputSource();
         }
     });
     if (document.readyState !== 'loading') {
         var box = document.getElementById('cc-custom-input-value');
         if (box && box.value === '') {
-            box.value = CHALLENGE.sampleInput || '';
+            box.value = runInputSource();
         }
     }
 
@@ -329,7 +343,7 @@ require_once 'header.php';
             Swal.fire({
                 icon: 'warning',
                 title: 'Running with empty input',
-                text: 'This challenge has no Sample Input and the Custom Input box is empty, so your program receives EMPTY stdin. Any variable read from an empty stream stays uninitialized and prints random values. Type input in the Custom Input box below, or set Sample Input for this challenge in the admin.',
+                text: 'This challenge has no Sample Input, no visible test cases, and the Custom Input box is empty, so your program receives EMPTY stdin. Any variable read from an empty stream stays uninitialized and prints random values. Type input in the Custom Input box below, or add Sample Input / a visible test case with input in the admin.',
                 confirmButtonText: 'Run anyway'
             });
         }
