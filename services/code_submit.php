@@ -52,6 +52,9 @@ if ($isMarkup) {
 
 $runner = null;
 if (!$isMarkup) {
+    if (!file_exists(__DIR__ . '/CodeRunner.php')) {
+        coding_json_response(['error' => 'CodeRunner.php is missing on the server (it may have been quarantined by the host security scanner). Contact the administrator.'], 503);
+    }
     require_once __DIR__ . '/CodeRunner.php';
     $runner = new CodeRunner();
     if (!$runner->isLanguageSupported($language)) {
@@ -59,7 +62,8 @@ if (!$isMarkup) {
     }
 }
 
-foreach ($tests as $i => $test) {
+try {
+    foreach ($tests as $i => $test) {
     if ($overallError === 'compile_error') {
         $results[] = ['test_case_id' => $test['id'], 'passed' => false, 'status' => 'skipped', 'actual_output' => null, 'time' => 0];
         continue;
@@ -108,6 +112,9 @@ foreach ($tests as $i => $test) {
     $ok = coding_normalize_output($run['output']) === coding_normalize_output((string)($test['expected_output'] ?? ''));
     if ($ok) $passedCount++;
     $results[] = ['test_case_id' => $test['id'], 'passed' => $ok, 'status' => $ok ? 'passed' : 'failed', 'actual_output' => $ok ? null : $run['output'], 'time' => $run['time']];
+    }
+} catch (\Throwable $e) {
+    coding_json_response(['error' => 'Grading failed on the server: ' . $e->getMessage()], 500);
 }
 
 $marks = (int)$challenge['marks'];

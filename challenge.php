@@ -246,7 +246,13 @@ require_once 'header.php';
             credentials: 'same-origin',
             body: body.toString()
         }).then(function (r) {
-            return r.json().then(function (j) { return { ok: r.ok, body: j }; });
+            return r.text().then(function (t) {
+                var j = null;
+                try { j = JSON.parse(t); } catch (e) {}
+                if (j !== null) return { ok: r.ok, body: j };
+                var preview = t.length > 400 ? t.slice(0, 400) + '\u2026' : t;
+                return { ok: false, body: { error: 'Server returned a non-JSON response (HTTP ' + r.status + '). ' + preview } };
+            });
         });
     }
 

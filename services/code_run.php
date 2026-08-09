@@ -37,6 +37,9 @@ if ($language === 'html' || $language === 'css') {
     ]);
 }
 
+if (!file_exists(__DIR__ . '/CodeRunner.php')) {
+    coding_json_response(['error' => 'CodeRunner.php is missing on the server (it may have been quarantined by the host security scanner). Contact the administrator.'], 503);
+}
 require_once __DIR__ . '/CodeRunner.php';
 $runner = new CodeRunner();
 
@@ -45,6 +48,10 @@ if (!$runner->isLanguageSupported($language)) {
 }
 
 $input = $customInput !== '' ? $customInput : (string)($challenge['sample_input'] ?? '');
-$result = $runner->run($language, $code, $input, (int)$challenge['time_limit'], (int)$challenge['memory_limit']);
+try {
+    $result = $runner->run($language, $code, $input, (int)$challenge['time_limit'], (int)$challenge['memory_limit']);
+} catch (\Throwable $e) {
+    coding_json_response(['error' => 'Code execution failed on the server: ' . $e->getMessage()], 500);
+}
 
 coding_json_response($result);
