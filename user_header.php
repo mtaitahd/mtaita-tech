@@ -34,8 +34,11 @@ $get_error = $_GET['error'] ?? '';
         <li class="nav-item <?= $active_page === 'my-courses' ? 'active' : '' ?>">
             <a class="nav-link" href="my-courses"><i class="fas fa-fw fa-book"></i><span>My Courses</span></a>
         </li>
+        <li class="nav-item <?= $active_page === 'coding-challenges' ? 'active' : '' ?>">
+            <a class="nav-link" href="coding-challenges"><i class="fas fa-fw fa-code"></i><span>Coding Challenges</span></a>
+        </li>
         <li class="nav-item <?= $active_page === 'coding-submissions' ? 'active' : '' ?>">
-            <a class="nav-link" href="coding-submissions"><i class="fas fa-fw fa-code"></i><span>Coding Submissions</span></a>
+            <a class="nav-link" href="coding-submissions"><i class="fas fa-fw fa-clock"></i><span>Coding Submissions</span></a>
         </li>
         <li class="nav-item <?= $active_page === 'profile' ? 'active' : '' ?>">
             <a class="nav-link" href="profile"><i class="fas fa-fw fa-user"></i><span>My Profile</span></a>

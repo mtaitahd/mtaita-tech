@@ -79,6 +79,19 @@ class CodingChallenge {
         return $stmt->fetchAll();
     }
 
+    public function getAllPublished() {
+        return $this->pdo->query("
+            SELECT cc.*, c.title AS course_title, c.slug AS course_slug, c.type AS course_type,
+                   c.status AS course_status, m.title AS module_title, l.title AS lesson_title
+            FROM coding_challenges cc
+            JOIN courses c ON cc.course_id = c.id
+            LEFT JOIN modules m ON cc.module_id = m.id
+            LEFT JOIN lessons l ON cc.lesson_id = l.id
+            WHERE cc.is_published = 1 AND c.status = 'published'
+            ORDER BY c.title ASC, cc.sort_order ASC, cc.id ASC
+        ")->fetchAll();
+    }
+
     public function getAllAdmin() {
         return $this->pdo->query("
             SELECT cc.*, c.title AS course_title, m.title AS module_title, l.title AS lesson_title,

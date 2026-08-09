@@ -69,6 +69,7 @@ RewriteRule ^products/?$ products.php [L,QSA]
 RewriteRule ^my-courses/?$ my-courses.php [L,QSA]
 RewriteRule ^profile/?$ profile.php [L,QSA]
 RewriteRule ^challenge/?$ challenge.php [L,QSA]
+RewriteRule ^coding-challenges/?$ coding-challenges.php [L,QSA]
 RewriteRule ^coding-submissions/?$ coding-submissions.php [L,QSA]
 
 # Course & Blog detail routes

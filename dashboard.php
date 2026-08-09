@@ -109,7 +109,7 @@ require_once 'user_header.php';
                 <h5 class="mb-0"><i class="bi bi-code-square text-cyan me-2"></i>Coding Bootcamp</h5>
                 <div class="d-flex gap-2">
                     <a href="coding-submissions" class="btn btn-outline-cyan btn-sm"><i class="bi bi-clock-history me-1"></i>My Submissions</a>
-                    <a href="courses" class="btn btn-cyan btn-sm"><i class="bi bi-play me-1"></i>Start Coding</a>
+                    <a href="coding-challenges" class="btn btn-cyan btn-sm"><i class="bi bi-play me-1"></i>Start Coding</a>
                 </div>
             </div>
             <div class="row g-3">
