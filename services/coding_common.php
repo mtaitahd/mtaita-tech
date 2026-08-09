@@ -14,6 +14,7 @@ function coding_shutdown_handler() {
 register_shutdown_function('coding_shutdown_handler');
 
 function coding_require_auth() {
+    global $pdo;
     require_once __DIR__ . '/../auth_helper.php';
     require_once __DIR__ . '/../db_connect.php';
     if (!isPublicLoggedIn()) {
