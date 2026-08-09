@@ -12,7 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
         'admin_email', 'admin_phone', 'admin_location', 'notify_admin_sms',
         'smtp_host', 'smtp_port', 'smtp_encryption', 'smtp_user', 'smtp_pass',
         'from_email', 'from_name', 'reply_email',
-        'meseji_api_key', 'meseji_sender_id'
+        'meseji_api_key', 'meseji_sender_id',
+        'otp_login_enabled'
     ];
     try {
         foreach ($fields as $key) {
@@ -113,6 +114,13 @@ function s($key, $default = '') {
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" name="notify_admin_sms" id="notify_admin_sms" value="1" <?= s('notify_admin_sms', '1') === '1' ? 'checked' : '' ?>>
                             <label class="form-check-label" for="notify_admin_sms">Send SMS notification to admin when contact form is submitted</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3 d-flex align-items-center pt-4">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="otp_login_enabled" id="otp_login_enabled" value="1" <?= s('otp_login_enabled', '1') === '1' ? 'checked' : '' ?>>
+                            <label class="form-check-label" for="otp_login_enabled">Enable OTP login (SMS &amp; Email verification on login)</label>
+                            <small class="d-block text-muted" style="font-weight:400;">When disabled, users log in with password only and the OTP options are hidden from the login page.</small>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">

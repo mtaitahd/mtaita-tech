@@ -3,6 +3,8 @@ require_once __DIR__ . '/auth_helper.php';
 require_once __DIR__ . '/db_connect.php';
 require_once __DIR__ . '/google_oauth_config.php';
 require_once __DIR__ . '/lib/OTP.php';
+require_once __DIR__ . '/lib/Settings.php';
+$otp_login_enabled = Settings::get('otp_login_enabled', '1') === '1';
 $page_title = 'Login — Mtaita Tech';
 $page_desc = 'Login to your Mtaita Tech account to access your courses.';
 $page_keywords = 'login, sign in, Mtaita Tech account, courses access';
@@ -31,6 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $stmt->fetch();
 
     if ($user && $user['password'] !== null && password_verify($password, $user['password'])) {
+        if (!$otp_login_enabled) {
+            $_SESSION['public_user_id'] = $user['id'];
+            $redirect = $_SESSION['redirect_after_login'] ?? 'dashboard.php';
+            unset($_SESSION['redirect_after_login']);
+            header('Location: ' . $redirect);
+            exit;
+        }
+
         if ($otp_method === 'sms' && empty($user['phone'])) {
             header('Location: login.php?error=' . urlencode('No phone number on file. Please use email OTP or update your profile.'));
             exit;
@@ -86,6 +96,7 @@ $get_error = $_GET['error'] ?? '';
                     <a href="forgot-password">Forgot Password?</a>
                 </div>
 
+                <?php if ($otp_login_enabled): ?>
                 <div class="auth-field">
                     <label>Receive verification via</label>
                     <div class="auth-otp-inline">
@@ -104,6 +115,7 @@ $get_error = $_GET['error'] ?? '';
                         </label>
                     </div>
                 </div>
+                <?php endif; ?>
 
                 <button type="submit" class="auth-btn">Login</button>
 

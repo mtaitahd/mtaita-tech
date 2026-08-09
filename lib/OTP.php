@@ -55,6 +55,13 @@ class OTP {
     }
 
     public function sendUserOTP($userId, $type, $method = 'email') {
+        if ($type === 'login') {
+            require_once __DIR__ . '/Settings.php';
+            if (Settings::get('otp_login_enabled', '1') !== '1') {
+                return false;
+            }
+        }
+
         $stmt = $this->pdo->prepare("SELECT id, name, email, phone, otp_preference FROM public_users WHERE id = ?");
         $stmt->execute([$userId]);
         $user = $stmt->fetch();

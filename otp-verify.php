@@ -3,6 +3,7 @@ require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/db_connect.php';
 require_once __DIR__ . '/auth_helper.php';
 require_once __DIR__ . '/lib/OTP.php';
+require_once __DIR__ . '/lib/Settings.php';
 
 $page_title = 'Verify OTP — Mtaita Tech';
 $page_desc = 'Enter the verification code sent to your email.';
@@ -18,6 +19,12 @@ $error_msg = '';
 $success_msg = '';
 
 if (empty($type) || !in_array($type, ['verify', 'login', 'reset']) || empty($userId)) {
+    header('Location: login');
+    exit;
+}
+
+if ($type === 'login' && Settings::get('otp_login_enabled', '1') !== '1') {
+    unset($_SESSION['pending_user_id'], $_SESSION['pending_email'], $_SESSION['pending_type'], $_SESSION['pending_otp_method']);
     header('Location: login');
     exit;
 }
