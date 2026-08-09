@@ -1,4 +1,18 @@
 <?php
+function coding_shutdown_handler() {
+    $err = error_get_last();
+    if (!$err) return;
+    if (in_array($err['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR], true)) {
+        if (function_exists('coding_json_response')) {
+            if (ob_get_level() > 0) {
+                while (ob_get_level() > 0) { ob_end_clean(); }
+            }
+            coding_json_response(['error' => 'Server error: ' . $err['message'] . ' (in ' . $err['file'] . ':' . $err['line'] . ')'], 500);
+        }
+    }
+}
+register_shutdown_function('coding_shutdown_handler');
+
 function coding_require_auth() {
     require_once __DIR__ . '/../auth_helper.php';
     require_once __DIR__ . '/../db_connect.php';
