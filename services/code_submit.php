@@ -119,8 +119,9 @@ try {
 
 $marks = (int)$challenge['marks'];
 $score = $total > 0 ? (int)round($marks * ($passedCount / $total)) : 0;
+$scorePct = $total > 0 ? (int)round(100 * $passedCount / $total) : 0;
 $passingScore = (int)$challenge['passing_score'];
-$passedOverall = ($overallError === null) && $passedCount === $total && $score >= $passingScore;
+$passedOverall = ($overallError === null) && $passedCount === $total && $scorePct >= $passingScore;
 
 if ($overallError === 'compile_error') {
     $status = 'compilation_error';

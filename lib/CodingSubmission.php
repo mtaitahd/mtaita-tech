@@ -22,7 +22,8 @@ class CodingSubmission {
             (challenge_id, user_id, language, code, status, score, total_marks, tests_total, tests_passed, execution_time, passed)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
-        $passed = ($testsTotal > 0 && $testsPassed === $testsTotal && $score >= $challenge['passing_score']) ? 1 : 0;
+        $scorePct = $testsTotal > 0 ? (int)round(100 * $testsPassed / $testsTotal) : 0;
+        $passed = ($testsTotal > 0 && $testsPassed === $testsTotal && $scorePct >= (int)$challenge['passing_score']) ? 1 : 0;
         $stmt->execute([
             $challenge['id'],
             $userId,
