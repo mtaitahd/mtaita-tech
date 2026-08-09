@@ -298,14 +298,41 @@ require_once 'header.php';
         });
     }
 
+    function currentRunInput() {
+        var box = document.getElementById('cc-custom-input-value');
+        var input = box ? box.value : '';
+        if (input === '') input = CHALLENGE.sampleInput;
+        return input;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var box = document.getElementById('cc-custom-input-value');
+        if (box && box.value === '') {
+            box.value = CHALLENGE.sampleInput || '';
+        }
+    });
+    if (document.readyState !== 'loading') {
+        var box = document.getElementById('cc-custom-input-value');
+        if (box && box.value === '') {
+            box.value = CHALLENGE.sampleInput || '';
+        }
+    }
+
     document.getElementById('cc-run').addEventListener('click', function () {
         if (running) return;
         running = true;
         var btn = this;
         btn.disabled = true;
         setStatus('Running...');
-        var input = document.getElementById('cc-custom-input-value').value;
-        if (input === '') input = CHALLENGE.sampleInput;
+        var input = currentRunInput();
+        if (input === '') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Running with empty input',
+                text: 'This challenge has no Sample Input and the Custom Input box is empty, so your program receives EMPTY stdin. Any variable read from an empty stream stays uninitialized and prints random values. Type input in the Custom Input box below, or set Sample Input for this challenge in the admin.',
+                confirmButtonText: 'Run anyway'
+            });
+        }
         post('services/code_run.php', {
             challenge_id: CHALLENGE.id,
             code: getCode(),
@@ -321,7 +348,7 @@ require_once 'header.php';
                 updatePreview();
                 setOutput('<span style="color:#86EFAC;">✓ HTML/CSS validated for preview.</span>\n' + esc(r.output.slice(0, 4000)));
             } else if (r.status === 'ok') {
-                setOutput('<span style="color:#67E8F9;">Compilation: Successful</span>\n\nOutput:\n' + esc(r.output) + '\n\nExecution Time:\n' + r.time + ' seconds');
+                setOutput('<span style="color:#67E8F9;">Compilation: Successful</span>\n\nInput:\n' + esc(input === '' ? '(empty)' : input) + '\n\nOutput:\n' + esc(r.output) + '\n\nExecution Time:\n' + r.time + ' seconds');
             } else if (r.status === 'compile_error') {
                 setOutput('<span style="color:#FCA5A5;">Compilation Error</span>\n\n' + esc(r.output));
             } else if (r.status === 'timeout') {
