@@ -126,6 +126,11 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
             <?php foreach ($solutions as $sol): ?>
             <div class="col-md-6 col-lg-3">
                 <div class="solution-card" data-aos="fade-up">
+                    <?php if (!empty($sol['image'])): ?>
+                    <div class="solution-poster">
+                        <img src="<?= htmlspecialchars($sol['image']) ?>" alt="<?= htmlspecialchars($sol['title']) ?>">
+                    </div>
+                    <?php else: ?>
                     <div class="solution-icon">
                         <?php if ($sol['icon']): ?>
                         <i class="bi bi-<?= htmlspecialchars($sol['icon']) ?>"></i>
@@ -133,6 +138,7 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
                         <i class="bi bi-box"></i>
                         <?php endif; ?>
                     </div>
+                    <?php endif; ?>
                     <h4><?= htmlspecialchars($sol['title']) ?></h4>
                     <p><?= htmlspecialchars($sol['description']) ?></p>
                     <?php if ($sol['link']): ?>

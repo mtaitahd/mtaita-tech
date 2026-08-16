@@ -3410,6 +3410,26 @@ img, video, iframe, embed, object, table, pre, code {
     transform: scaleX(1);
 }
 
+.solution-poster {
+    width: 100%;
+    height: 180px;
+    margin: 0 auto 20px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--light-gray);
+}
+
+.solution-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.solution-card:hover .solution-poster img {
+    transform: scale(1.05);
+}
+
 .solution-icon {
     width: 64px;
     height: 64px;
@@ -4008,6 +4028,7 @@ img, video, iframe, embed, object, table, pre, code {
 
 @media (max-width: 767px) {
     .solution-card { padding: 24px 16px; }
+    .solution-poster { height: 150px; }
     .news-card-body { padding: 16px; }
     .testimonial-heading { font-size: 28px; }
     .testimonial-header { flex-direction: column; gap: 16px; }
@@ -4086,6 +4107,7 @@ img, video, iframe, embed, object, table, pre, code {
     .choose-best .feature-list li i { font-size: 1rem; }
 
     .solution-card { padding: 20px 14px !important; }
+    .solution-card .solution-poster { height: 130px; }
     .solution-card .solution-icon i { font-size: 2rem; }
     .solution-card h4 { font-size: 1rem; }
     .solution-card p { font-size: 0.82rem; }
