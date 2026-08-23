@@ -210,6 +210,13 @@ class SnippeApi
     private function request(string $method, string $path, ?array $body = null, array $extraHeaders = []): ?array
     {
         $url = $this->baseUrl . $path;
+
+        if (trim((string)$this->apiKey) === '') {
+            $this->lastError = 'Snippe API key is missing. Set SNIPPE_API_KEY in your .env file and redeploy it.';
+            $this->logError($this->lastError, ['url' => $url, 'method' => $method]);
+            return null;
+        }
+
         $headers = [
             'Authorization: Bearer ' . $this->apiKey,
             'Content-Type: application/json',
@@ -258,6 +265,13 @@ class SnippeApi
         }
 
         // Log successful API call metadata
+        if ($this->lastHttpCode >= 400) {
+            $this->logError("HTTP {$this->lastHttpCode} from Snippe API", [
+                'method'   => $method,
+                'url'      => $url,
+                'response' => substr($raw, 0, 500),
+            ]);
+        }
         $this->logApiCall($method, $url, $this->lastHttpCode);
 
         return $decoded;
