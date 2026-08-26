@@ -1,5 +1,5 @@
 ﻿/* Mtaita Tech â€” Flake Theme */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap');
 
 :root {
     --white: #FFFFFF;
@@ -24,7 +24,7 @@ html {
 }
 
 body {
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: var(--white);
     color: var(--medium-gray);
     line-height: 1.7;
@@ -33,12 +33,12 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Sora', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: var(--deep-blue);
     font-weight: 700;
 }
 
-p { font-family: 'Inter', sans-serif; color: var(--medium-gray); }
+p { font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--medium-gray); }
 
 a { text-decoration: none; transition: all 0.3s ease; }
 
@@ -418,7 +418,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
     letter-spacing: -2px;
 }
 .hero-typewriter {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .typewriter-wrap {
@@ -452,7 +452,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
 
 /* CTAs */
 .hero-split-cta-primary {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: var(--deep-blue) !important;
     border: 2px solid var(--deep-blue) !important;
     color: var(--white) !important;
@@ -471,7 +471,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
 }
 
 .hero-split-cta-secondary {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: transparent !important;
     border: 2px solid rgba(15,26,58,0.25) !important;
     color: var(--deep-blue) !important;
@@ -649,7 +649,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
 
 /* Buttons */
 .btn-red {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: var(--red);
     color: var(--white);
     font-weight: 600;
@@ -960,7 +960,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
     border-radius: 10px;
     padding: 12px 18px;
     font-size: 0.92rem;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     transition: all 0.3s ease;
 }
 
@@ -2527,7 +2527,7 @@ body.auth-page-bg main {
 }
 .auth-left h3 {
     color: #fff;
-    font-family: Arial Black, sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 1.1rem;
     font-weight: 800;
     margin: 0 0 6px;
@@ -3078,7 +3078,7 @@ body.auth-page-bg main {
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     transition: all 0.3s;
     letter-spacing: 0.02em;
 }
@@ -3720,7 +3720,7 @@ img, video, iframe, embed, object, table, pre, code {
 }
 
 .partner-name-only {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 1rem;
     font-weight: 700;
     color: var(--deep-blue);
@@ -3801,7 +3801,7 @@ img, video, iframe, embed, object, table, pre, code {
 }
 
 .testimonial-heading {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 40px;
     font-weight: 700;
     color: var(--deep-blue);
@@ -3816,7 +3816,7 @@ img, video, iframe, embed, object, table, pre, code {
     border-radius: 10px;
     height: 46px;
     padding: 0 28px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 15px;
     font-weight: 600;
     display: inline-flex;
@@ -3885,14 +3885,14 @@ img, video, iframe, embed, object, table, pre, code {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 16px;
 }
 
 .testimonial-name {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 22px;
     font-weight: 700;
     color: var(--deep-blue);
@@ -3917,7 +3917,7 @@ img, video, iframe, embed, object, table, pre, code {
 }
 
 .testimonial-content {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 16px;
     color: #555555;
     line-height: 1.7;
@@ -3936,7 +3936,7 @@ img, video, iframe, embed, object, table, pre, code {
 }
 
 .testimonial-read-more {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 14px;
     font-weight: 600;
     color: #2563EB;
