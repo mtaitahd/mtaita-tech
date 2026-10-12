@@ -46,8 +46,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS uniq_services_slug ON services (slug);
 --   projects    queries portfolio by service_category -> carousel
 --   city_links  repeater of {title, link}      -> city pill buttons
 CREATE TABLE IF NOT EXISTS service_sections (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    service_id INT NOT NULL,
+    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    service_id INT(11) UNSIGNED NOT NULL,
     section_type VARCHAR(40) NOT NULL DEFAULT 'content',
     column_side ENUM('left','right','full') NOT NULL DEFAULT 'left',
     heading VARCHAR(255) NULL,
@@ -69,8 +69,8 @@ CREATE TABLE IF NOT EXISTS service_sections (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS service_section_items (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    section_id INT NOT NULL,
+    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    section_id INT(11) UNSIGNED NOT NULL,
     item_title VARCHAR(500) NULL,
     item_text TEXT NULL,
     item_icon VARCHAR(120) NULL,
