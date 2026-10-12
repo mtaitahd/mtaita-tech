@@ -50,6 +50,11 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <changefreq>monthly</changefreq>
     </url>
     <url>
+        <loc><?= SITE_URL ?>/tourism-website-development</loc>
+        <priority>0.8</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
         <loc><?= SITE_URL ?>/portfolio</loc>
         <priority>0.8</priority>
         <changefreq>weekly</changefreq>

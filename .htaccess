@@ -36,6 +36,7 @@ RewriteRule ^web-development/?$ web-development.php [L,QSA]
 RewriteRule ^graphic-design/?$ graphic-design.php [L,QSA]
 RewriteRule ^mobile-apps/?$ mobile-apps.php [L,QSA]
 RewriteRule ^seo-digital-marketing/?$ seo-digital-marketing.php [L,QSA]
+RewriteRule ^tourism-website-development/?$ tourism-website-development.php [L,QSA]
 
 # City landing page routes
 RewriteRule ^web-designer-dar-es-salaam/?$ web-designer-dar-es-salaam.php [L,QSA]

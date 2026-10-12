@@ -11,6 +11,8 @@ return [
     'graphic_design' => 'Graphic Design',
     'mobile_apps' => 'Mobile Apps',
     'seo_digital_marketing' => 'SEO & Digital Marketing',
+    'tourism_websites' => 'Tourism Websites',
+    'tourism_website_development' => 'Tourism Website Development',
     'portfolio' => 'Portfolio',
     'blog' => 'Blog',
     'courses_nav' => 'Courses',

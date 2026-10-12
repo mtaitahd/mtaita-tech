@@ -183,6 +183,7 @@ document.addEventListener('submit', function() {
                         <li><a class="dropdown-item" href="/graphic-design"><?= __('graphic_design') ?></a></li>
                         <li><a class="dropdown-item" href="/mobile-apps"><?= __('mobile_apps') ?></a></li>
                         <li><a class="dropdown-item" href="/seo-digital-marketing"><?= __('seo_digital_marketing') ?></a></li>
+                        <li><a class="dropdown-item" href="/tourism-website-development"><?= __('tourism_websites') ?></a></li>
                     </ul>
                 </li>
 

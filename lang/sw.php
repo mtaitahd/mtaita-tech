@@ -11,6 +11,8 @@ return [
     'graphic_design' => 'Ubunifu wa Picha',
     'mobile_apps' => 'Programu za Simu',
     'seo_digital_marketing' => 'SEO na Uuzaji wa Dijitali',
+    'tourism_websites' => 'Tovuti za Utalii',
+    'tourism_website_development' => 'Ukuzaji wa Tovuti za Utalii',
     'portfolio' => 'Kazi Zetu',
     'blog' => 'Blogi',
     'courses_nav' => 'Kozi',
