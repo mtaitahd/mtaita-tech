@@ -1,4 +1,4 @@
-﻿/* Mtaita Tech â€” Flake Theme */
+/* Mtaita Tech — Flake Theme */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap');
 
 :root {
@@ -495,7 +495,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
     color: rgba(15,26,58,0.35);
 }
 
-/* Dark overlay mode — text turns white */
+/* Dark overlay mode � text turns white */
 .hero-posters-wrap ~ .container .hero-split-badge {
     background: rgba(255,255,255,0.12);
     border-color: rgba(255,255,255,0.2);
@@ -687,12 +687,12 @@ a { text-decoration: none; transition: all 0.3s ease; }
     width: 260px;
     height: 260px;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: 0;
     border: 4px solid var(--red);
     box-shadow: var(--shadow-md);
 }
 
-/* Portfolio Cards â€” Premium Modern */
+/* Portfolio Cards — Premium Modern */
 .portfolio-card {
     background: var(--white);
     border-radius: 0;
@@ -744,7 +744,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
     font-size: 0.82rem;
     padding: 10px 24px;
     border: none;
-    border-radius: 8px;
+    border-radius: 0;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -810,7 +810,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
     }
 }
 
-.portfolio-card {
+.portfolio-card { animation: cardFadeUp 0.6s ease forwards; }
     animation: cardFadeUp 0.6s ease forwards;
 }
 
@@ -843,7 +843,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
 .service-detail-card .icon-wrap {
     width: 56px;
     height: 56px;
-    border-radius: 14px;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -871,7 +871,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
 }
 
 .service-detail-card ul li::before {
-    content: '✔';
+    content: '?';
     color: #10B981;
     font-weight: 700;
 }
@@ -900,14 +900,14 @@ a { text-decoration: none; transition: all 0.3s ease; }
 .progress {
     background: #E5E7EB;
     height: 8px;
-    border-radius: 4px;
+    border-radius: 0;
     margin-top: 6px;
     margin-bottom: 16px;
 }
 
 .progress-bar {
     background: var(--gradient-primary);
-    border-radius: 4px;
+    border-radius: 0;
 }
 
 /* Contact */
@@ -1257,7 +1257,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
     width: 600px;
     height: 600px;
     background: radial-gradient(circle, rgba(37, 99, 235, 0.06), transparent 70%);
-    border-radius: 50%;
+    border-radius: 0;
     pointer-events: none;
 }
 
@@ -1353,7 +1353,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
     justify-content: center;
     width: 38px;
     height: 38px;
-    border-radius: 10px;
+    border-radius: 0;
     background: rgba(255,255,255,0.08);
     color: rgba(255,255,255,0.6);
     font-size: 1.1rem;
@@ -1398,7 +1398,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
     padding-left: 0 !important;
 }
 
-/* 3D Watermark â€” footer only */
+/* 3D Watermark — footer only */
 .footer::after {
     content: 'Mtaita Tech';
     position: absolute;
@@ -1520,7 +1520,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
 
 .payment-icon-success {
     background: #ECFDF5;
-    border-radius: 50%;
+    border-radius: 0;
 }
 
 .payment-icon-success i {
@@ -1530,7 +1530,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
 
 .payment-icon-error {
     background: #FEF2F2;
-    border-radius: 50%;
+    border-radius: 0;
 }
 
 .payment-icon-error i {
@@ -1609,7 +1609,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
     padding-bottom: 1rem;
 }
 
-/* ===== RESPONSIVE â€” All Devices ===== */
+/* ===== RESPONSIVE — All Devices ===== */
 
 /* Large tablets / small desktops */
 @media (max-width: 992px) {
@@ -1724,7 +1724,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
     height: 56px;
     background: #25D366;
     color: #fff;
-    border-radius: 50%;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1761,7 +1761,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
     font-size: 0.78rem;
     font-weight: 600;
     padding: 8px 14px;
-    border-radius: 8px;
+    border-radius: 0;
     white-space: nowrap;
     box-shadow: 0 2px 12px rgba(0,0,0,0.12);
     pointer-events: none;
@@ -1787,7 +1787,7 @@ a { text-decoration: none; transition: all 0.3s ease; }
 
 /* Blog Cards */
 .blog-card {
-    background: var(--white);
+    border-radius: 0;
     border: 1px solid var(--border-light);
     box-shadow: var(--shadow-md);
     transition: all 0.3s ease;
@@ -2121,11 +2121,11 @@ a { text-decoration: none; transition: all 0.3s ease; }
 }
 
 /* ===================================================================
-   RESPONSIVE â€” ALL DEVICES WORLDWIDE
+   RESPONSIVE — ALL DEVICES WORLDWIDE
    Preserves original design; only adjusts spacing, sizing, layout
    =================================================================== */
 
-/* Fluid media â€” prevent overflow (preserves inline height attributes) */
+/* Fluid media — prevent overflow (preserves inline height attributes) */
 img, video, iframe, embed, object {
     max-width: 100%;
 }
@@ -2161,13 +2161,13 @@ img, video, iframe, embed, object {
     .footer { padding: 70px 0 0; }
 }
 
-/* ============ â‰¤1399px Smaller desktops ============ */
+/* ============ ≤1399px Smaller desktops ============ */
 @media (max-width: 1399px) {
     .hero-content h1 { font-size: 2.8rem; }
     .choose-best h2 { font-size: 2rem; }
 }
 
-/* ============ â‰¤1199px Tablets landscape ============ */
+/* ============ ≤1199px Tablets landscape ============ */
 @media (max-width: 1199px) {
     .hero-content h1 { font-size: 2.4rem; }
     .service-detail-card { padding: 28px; }
@@ -2175,7 +2175,7 @@ img, video, iframe, embed, object {
     .projects-carousel .carousel-control-next { opacity: 1; }
 }
 
-/* ============ â‰¤991px Tablets / mobile landscape ============ */
+/* ============ ≤991px Tablets / mobile landscape ============ */
 @media (max-width: 991px) {
     .navbar { min-height: auto; padding: 6px 0; }
     .navbar-collapse {
@@ -2247,7 +2247,7 @@ img, video, iframe, embed, object {
     .choose-best .stat-box h3 { font-size: 1.6rem; }
 }
 
-/* ============ â‰¤767px Phones / small tablets ============ */
+/* ============ ≤767px Phones / small tablets ============ */
 @media (max-width: 767px) {
     .hero-slider-arrow { width: 36px; height: 36px; font-size: 1rem; opacity: 1; }
     .hero-arrow-prev { left: 6px; }
@@ -2357,7 +2357,7 @@ img, video, iframe, embed, object {
     .lang-switcher .dropdown-menu { min-width: 50px; }
 }
 
-/* ============ â‰¤576px Larger phones ============ */
+/* ============ ≤576px Larger phones ============ */
 @media (max-width: 576px) {
     .auth-card { padding: 28px 20px; }
     .auth-card h3 { font-size: 1.1rem; }
@@ -2373,7 +2373,7 @@ img, video, iframe, embed, object {
     .auth-otp-inputs { gap: 6px !important; }
 }
 
-/* ============ â‰¤480px Small phones ============ */
+/* ============ ≤480px Small phones ============ */
 @media (max-width: 480px) {
     .hero-section { min-height: 70vh; }
     .hero-content h1 { font-size: 1.3rem; }
@@ -2424,7 +2424,7 @@ img, video, iframe, embed, object {
     .blog-card-img { height: 130px; }
 }
 
-/* ============ â‰¤360px Very small phones ============ */
+/* ============ ≤360px Very small phones ============ */
 @media (max-width: 360px) {
     .hero-content h1 { font-size: 1.15rem; }
     .hero-content p { font-size: 0.78rem; }
@@ -2602,7 +2602,7 @@ body.auth-page-bg main {
     width: 100%;
     padding: 18px;
     border: 3px solid rgb(105, 105, 141);
-    border-radius: 5px;
+    border-radius: 0;
     font-size: 0.88rem;
     color: #333;
     background: #fff;
@@ -2621,7 +2621,7 @@ body.auth-page-bg main {
     padding: 15px;
     background: rgb(105, 105, 141);
     border: none;
-    border-radius: 5px;
+    border-radius: 0;
     color: #fff;
     font-size: 16px;
     font-weight: 700;
@@ -2695,7 +2695,7 @@ body.auth-page-bg main {
     cursor: pointer;
     padding: 10px 16px;
     border: 2px solid #E2E8F0;
-    border-radius: 6px;
+    border-radius: 0;
     transition: border-color 0.2s, background 0.2s;
     flex: 1;
     justify-content: center;
@@ -2750,7 +2750,7 @@ body.auth-page-bg main {
     width: 100%;
     padding: 13px;
     border: 2px solid #E2E8F0;
-    border-radius: 5px;
+    border-radius: 0;
     color: #333;
     font-size: 0.9rem;
     font-weight: 600;
@@ -2772,7 +2772,7 @@ body.auth-page-bg main {
     font-size: 1.3rem;
     font-weight: 700;
     border: 3px solid rgb(105, 105, 141);
-    border-radius: 5px;
+    border-radius: 0;
     background: #fff;
     color: #333;
     outline: none;
@@ -2920,7 +2920,7 @@ body.auth-page-bg main {
     backdrop-filter: blur(18px) saturate(1.2);
     -webkit-backdrop-filter: blur(18px) saturate(1.2);
     border: 1px solid rgba(148, 163, 184, 0.18);
-    border-radius: 16px;
+    border-radius: 0;
     box-shadow: 0 18px 50px rgba(2, 6, 23, 0.55);
 }
 .mt-card-hover {
@@ -2932,14 +2932,14 @@ body.auth-page-bg main {
     border-color: rgba(59, 130, 246, 0.35) !important;
 }
 .mt-dash-hero {
-    border-radius: 20px;
+    border-radius: 0;
     padding: 2rem;
     background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(15, 23, 42, 0.9));
     border: 1px solid rgba(148, 163, 184, 0.18);
     margin-bottom: 2rem;
 }
 .mt-stat-card {
-    border-radius: 16px;
+    border-radius: 0;
     border: 1px solid rgba(148, 163, 184, 0.18);
     background: rgba(30, 41, 59, 0.75);
     backdrop-filter: blur(12px);
@@ -2954,7 +2954,7 @@ body.auth-page-bg main {
 .mt-stat-card .icon-wrap {
     width: 48px;
     height: 48px;
-    border-radius: 14px;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2963,7 +2963,7 @@ body.auth-page-bg main {
     margin-bottom: 1rem;
 }
 .mt-chart-placeholder {
-    border-radius: 16px;
+    border-radius: 0;
     border: 1px dashed rgba(148, 163, 184, 0.25);
     background: rgba(15, 23, 42, 0.5);
     min-height: 220px;
@@ -2974,7 +2974,7 @@ body.auth-page-bg main {
     font-size: 0.9rem;
 }
 .mt-quick-actions .btn {
-    border-radius: 12px;
+    border-radius: 0;
 }
 .mt-btn-glow:hover {
     transform: translateY(-2px);
@@ -3021,7 +3021,7 @@ body.auth-page-bg main {
     background: linear-gradient(145deg, #0f172a, #1a2444);
     color: #f1f5f9;
     padding: 32px 36px;
-    border-radius: 16px;
+    border-radius: 0;
     box-shadow: 0 24px 64px rgba(0,0,0,0.5);
     max-width: 420px;
     width: calc(100% - 48px);
@@ -3044,7 +3044,7 @@ body.auth-page-bg main {
     right: 20%;
     height: 2px;
     background: linear-gradient(90deg, transparent, #FFD700, transparent);
-    border-radius: 2px;
+    border-radius: 0;
 }
 .cookie-consent-text {
     margin: 0;
@@ -3064,7 +3064,7 @@ body.auth-page-bg main {
     text-decoration: none;
     white-space: nowrap;
     padding: 6px 10px;
-    border-radius: 6px;
+    border-radius: 0;
     transition: all 0.25s;
 }
 .cookie-link:hover {
@@ -3074,7 +3074,7 @@ body.auth-page-bg main {
 .cookie-btn {
     border: none;
     padding: 10px 24px;
-    border-radius: 8px;
+    border-radius: 0;
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
@@ -3105,7 +3105,7 @@ body.auth-page-bg main {
 }
 
 /* ===================================================================
-   FINAL RESPONSIVE OVERRIDES — ALL DEVICES & EDGE CASES
+   FINAL RESPONSIVE OVERRIDES � ALL DEVICES & EDGE CASES
    Preserves original design; no layout/functionality changes
    =================================================================== */
 
@@ -3177,7 +3177,7 @@ img, video, iframe, embed, object, table, pre, code {
     }
 }
 
-/* Lesson player page — responsive video */
+/* Lesson player page � responsive video */
 @media (max-width: 575px) {
     .lesson-header-title {
         font-size: 1rem;
@@ -3188,7 +3188,7 @@ img, video, iframe, embed, object, table, pre, code {
     }
 }
 
-/* Floating cards — ensure they never overflow viewport */
+/* Floating cards � ensure they never overflow viewport */
 @media (max-width: 480px) {
     .floating-card {
         padding: 16px 12px !important;
@@ -3207,13 +3207,13 @@ img, video, iframe, embed, object, table, pre, code {
     }
 }
 
-/* Auth page wrappers — fluid on all screens */
+/* Auth page wrappers � fluid on all screens */
 .auth-wrap {
     width: 100%;
     max-width: 900px;
 }
 
-/* Hero typewriter — ensure it scales */
+/* Hero typewriter � ensure it scales */
 @media (max-width: 575px) {
     .hero-typewriter {
         font-size: 1.6rem !important;
@@ -3253,7 +3253,7 @@ img, video, iframe, embed, object, table, pre, code {
     }
 }
 
-/* Single course page — sidebar + video layout */
+/* Single course page � sidebar + video layout */
 @media (max-width: 991px) {
     .course-video-col {
         order: 1;
@@ -3275,7 +3275,7 @@ img, video, iframe, embed, object, table, pre, code {
     }
 }
 
-/* Landing page — hero split buttons stack on small screens */
+/* Landing page � hero split buttons stack on small screens */
 @media (max-width: 575px) {
     .hero-split-cta-primary,
     .hero-split-cta-secondary {
@@ -3302,7 +3302,7 @@ img, video, iframe, embed, object, table, pre, code {
     }
 }
 
-/* Stats section on smallest screens — single column */
+/* Stats section on smallest screens � single column */
 @media (max-width: 420px) {
     .stat-box h3 {
         font-size: 1.2rem;
@@ -3323,7 +3323,7 @@ img, video, iframe, embed, object, table, pre, code {
     }
 }
 
-/* Announcement page items — stack icon on very small screens */
+/* Announcement page items � stack icon on very small screens */
 @media (max-width: 575px) {
     .announcement-page-item {
         flex-direction: column;
@@ -3360,7 +3360,7 @@ img, video, iframe, embed, object, table, pre, code {
     }
 }
 
-/* Auth card on very small screens — full width with padding */
+/* Auth card on very small screens � full width with padding */
 @media (max-width: 575px) {
     .auth-card {
     padding: 14px 8px;
@@ -3415,7 +3415,7 @@ img, video, iframe, embed, object, table, pre, code {
     height: 180px;
     margin: 0 auto 20px;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: 0;
     background: var(--light-gray);
 }
 
@@ -3435,7 +3435,7 @@ img, video, iframe, embed, object, table, pre, code {
     height: 64px;
     margin: 0 auto 20px;
     background: var(--light-gray);
-    border-radius: 12px;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3602,7 +3602,7 @@ img, video, iframe, embed, object, table, pre, code {
     background: var(--light-gray);
     color: var(--medium-gray);
     padding: 2px 7px;
-    border-radius: 3px;
+    border-radius: 0;
 }
 
 /* ===== News Section ===== */
@@ -3685,7 +3685,7 @@ img, video, iframe, embed, object, table, pre, code {
 
 .partner-card {
     background: #F5F8FA;
-    border-radius: 14px;
+    border-radius: 0;
     height: 140px;
     display: flex;
     align-items: center;
@@ -3780,7 +3780,7 @@ img, video, iframe, embed, object, table, pre, code {
 .partners-swiper .swiper-pagination-bullet-active {
     background: var(--deep-blue);
     width: 28px;
-    border-radius: 5px;
+    border-radius: 0;
 }
 
 /* ===== Testimonial Section ===== */
@@ -3813,7 +3813,7 @@ img, video, iframe, embed, object, table, pre, code {
     background: var(--gradient-btn);
     color: #FFFFFF;
     border: none;
-    border-radius: 10px;
+    border-radius: 0;
     height: 46px;
     padding: 0 28px;
     font-family: 'Nunito', -webkit-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -3850,7 +3850,7 @@ img, video, iframe, embed, object, table, pre, code {
 .testimonial-card {
     background: #FFFFFF;
     border: 1px solid #EEF2F7;
-    border-radius: 18px;
+    border-radius: 0;
     padding: 24px;
     max-width: 360px;
     width: calc(50% - 12px);
@@ -4013,7 +4013,7 @@ img, video, iframe, embed, object, table, pre, code {
 .testimonial-indicators button.active {
     background: var(--deep-blue);
     width: 28px;
-    border-radius: 5px;
+    border-radius: 0;
 }
 
 /* ===== CTA Section ===== */
@@ -4059,7 +4059,7 @@ img, video, iframe, embed, object, table, pre, code {
     .live-system-desc { font-size: 0.72rem; }
 }
 
-/* ===== Mobile-First Responsive — All Pages ===== */
+/* ===== Mobile-First Responsive � All Pages ===== */
 
 /* Small devices (phones, <576px) */
 @media (max-width: 575.98px) {
@@ -4210,7 +4210,7 @@ img, video, iframe, embed, object, table, pre, code {
 .home-service-card {
     background: var(--white);
     border: 1px solid var(--border-light);
-    border-radius: 16px;
+    border-radius: 0;
     padding: 32px 28px;
     height: 100%;
     display: flex;
@@ -4266,7 +4266,7 @@ img, video, iframe, embed, object, table, pre, code {
 .home-service-img-wrap {
     width: 100%;
     height: 200px;
-    border-radius: 12px;
+    border-radius: 0;
     overflow: hidden;
     background: var(--light-gray);
 }
@@ -4304,7 +4304,7 @@ img, video, iframe, embed, object, table, pre, code {
 .home-service-link:focus-visible {
     outline: 2px solid var(--red);
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: 0;
 }
 
 .home-services-cta {
@@ -4349,7 +4349,7 @@ img, video, iframe, embed, object, table, pre, code {
     flex: 0 0 auto;
     width: 46px;
     height: 46px;
-    border-radius: 12px;
+    border-radius: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -4443,7 +4443,7 @@ img, video, iframe, embed, object, table, pre, code {
     bottom: 24px;
     width: 46px;
     height: 46px;
-    border-radius: 12px;
+    border-radius: 0;
     background: var(--deep-blue);
     color: #FFD700;
     display: inline-flex;
@@ -4528,7 +4528,7 @@ img, video, iframe, embed, object, table, pre, code {
     background: var(--light-gray);
     border: 1px solid var(--border-light);
     border-left: 4px solid var(--red);
-    border-radius: 12px;
+    border-radius: 0;
     color: var(--deep-blue);
     font-weight: 700;
     font-size: 1rem;
@@ -4567,7 +4567,7 @@ img, video, iframe, embed, object, table, pre, code {
 /* FAQ accordion */
 .wd-page .wd-faq .accordion-item {
     border: 1px solid var(--border-light);
-    border-radius: 12px !important;
+    border-radius: 0;
     overflow: hidden;
     margin-bottom: 12px;
     background: var(--white);
@@ -4629,7 +4629,7 @@ img, video, iframe, embed, object, table, pre, code {
 /* Contact card */
 .wd-page .wd-contact-card {
     background: var(--deep-blue);
-    border-radius: 16px;
+    border-radius: 0;
     padding: 32px 28px;
     color: var(--white);
     position: relative;
@@ -4643,7 +4643,7 @@ img, video, iframe, embed, object, table, pre, code {
     right: -50px;
     width: 180px;
     height: 180px;
-    border-radius: 50%;
+    border-radius: 0;
     background: radial-gradient(circle, rgba(255, 215, 0, 0.18), transparent 70%);
     pointer-events: none;
 }
@@ -4675,7 +4675,7 @@ img, video, iframe, embed, object, table, pre, code {
     align-items: center;
     justify-content: center;
     padding: 12px 28px;
-    border-radius: 8px;
+    border-radius: 0;
     background: #FFD700;
     color: var(--deep-blue);
     font-weight: 700;
@@ -4721,7 +4721,7 @@ img, video, iframe, embed, object, table, pre, code {
 
 /* Overview image */
 .wd-page .wd-overview-img {
-    border-radius: 16px;
+    border-radius: 0;
     overflow: hidden;
     margin-bottom: 28px;
     background: var(--light-gray);
@@ -4746,7 +4746,7 @@ img, video, iframe, embed, object, table, pre, code {
     padding: 14px 18px;
     background: var(--white);
     border: 1px solid var(--border-light);
-    border-radius: 10px;
+    border-radius: 0;
     color: var(--deep-blue);
     font-weight: 600;
     font-size: 0.92rem;
@@ -4777,7 +4777,7 @@ img, video, iframe, embed, object, table, pre, code {
     background: var(--light-gray);
     border: 1px solid var(--border-light);
     border-left: 4px solid var(--red);
-    border-radius: 10px;
+    border-radius: 0;
     padding: 18px;
     height: 100%;
     transition: all 0.3s ease;
@@ -4868,7 +4868,7 @@ img, video, iframe, embed, object, table, pre, code {
     padding: 12px 16px;
     background: rgba(255, 215, 0, 0.12);
     border-left: 4px solid #FFD700;
-    border-radius: 8px;
+    border-radius: 0;
     font-size: 0.86rem;
 }
 
@@ -4876,19 +4876,19 @@ img, video, iframe, embed, object, table, pre, code {
 /* --- Pricing Page --- */
 .pricing-page .pricing-main { background: var(--white); }
 .pricing-page .pricing-col-left { display: flex; flex-direction: column; gap: 24px; }
-.pricing-page .pricing-nav-block { background: var(--white); border: 1px solid var(--border-light); border-radius: 16px; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06); overflow: hidden; }
+.pricing-page .pricing-nav-block { background: var(--white); border: 1px solid var(--border-light); border-radius: 0; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06); overflow: hidden; }
 .pricing-page .pricing-nav-title { background: var(--deep-blue); color: #fff; font-size: 1.15rem; font-weight: 800; padding: 18px 22px; margin: 0; }
 .pricing-page .pricing-service-nav { list-style: none; margin: 0; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
-.pricing-page .pricing-service-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 54px; padding: 14px 18px; border: 1px solid var(--border-light); border-left: 4px solid var(--red); border-radius: 10px; color: var(--deep-blue); font-weight: 700; transition: all 0.25s ease; }
+.pricing-page .pricing-service-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 54px; padding: 14px 18px; border: 1px solid var(--border-light); border-left: 4px solid var(--red); border-radius: 0; color: var(--deep-blue); font-weight: 700; transition: all 0.25s ease; }
 .pricing-page .pricing-service-item:hover, .pricing-page .pricing-service-item:focus-visible { background: var(--light-gray); box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08); color: var(--deep-blue); transform: translateX(2px); }
 .pricing-page .pricing-service-item.active { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); border-left-color: var(--red); box-shadow: 0 10px 26px rgba(15, 23, 42, 0.18); }
 .pricing-page .pricing-service-item.active .pr-arrow { background: var(--red); color: #fff; }
-.pricing-page .pricing-service-item .pr-arrow { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; background: rgba(15, 23, 42, 0.08); color: var(--deep-blue); display: inline-flex; align-items: center; justify-content: center; transition: all 0.25s ease; }
+.pricing-page .pricing-service-item .pr-arrow { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 0; background: rgba(15, 23, 42, 0.08); color: var(--deep-blue); display: inline-flex; align-items: center; justify-content: center; transition: all 0.25s ease; }
 .pricing-page .pricing-service-item:hover .pr-arrow, .pricing-page .pricing-service-item:focus-visible .pr-arrow { background: var(--red); color: #fff; }
 
 
-.pricing-page .pricing-contact-card { background: var(--deep-blue); color: #fff; border-radius: 16px; padding: 30px 26px; position: relative; overflow: hidden; box-shadow: 0 14px 40px rgba(15, 23, 42, 0.18); }
-.pricing-page .pricing-contact-card::before { content: ''; position: absolute; top: -60px; right: -40px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(255,215,0,0.16), transparent 70%); pointer-events: none; }
+.pricing-page .pricing-contact-card { background: var(--deep-blue); color: #fff; border-radius: 0; padding: 30px 26px; position: relative; overflow: hidden; box-shadow: 0 14px 40px rgba(15, 23, 42, 0.18); }
+.pricing-page .pricing-contact-card::before { content: ''; position: absolute; top: -60px; right: -40px; width: 200px; height: 200px; border-radius: 0; background: radial-gradient(circle, rgba(255,215,0,0.16), transparent 70%); pointer-events: none; }
 .pricing-page .pricing-contact-card h3 { color: #fff; font-weight: 800; margin-bottom: 10px; position: relative; }
 .pricing-page .pricing-contact-card p { color: rgba(255,255,255,0.82); margin-bottom: 18px; position: relative; }
 .pricing-page .pricing-contact-meta { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-direction: column; gap: 8px; position: relative; }
@@ -4897,23 +4897,23 @@ img, video, iframe, embed, object, table, pre, code {
 .pricing-page .pricing-contact-meta a { color: rgba(255,255,255,0.92); }
 .pricing-page .pricing-contact-meta a:hover { color: #FFD700; }
 .pricing-page .pricing-contact-actions { margin-bottom: 12px; position: relative; }
-.pricing-page .pricing-pdf-btn { position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 10px; background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.3); transition: all 0.25s ease; }
+.pricing-page .pricing-pdf-btn { position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 0; background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.3); transition: all 0.25s ease; }
 .pricing-page .pricing-pdf-btn:hover, .pricing-page .pricing-pdf-btn:focus-visible { background: #FFD700; color: var(--deep-blue); border-color: #FFD700; }
 .pricing-page .pricing-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 10px; }
 .pricing-page .pricing-head-meta { display: flex; flex-direction: column; gap: 4px; }
 .pricing-page .pricing-valid { display: inline-flex; align-items: center; gap: 6px; color: var(--medium-gray); font-weight: 600; }
 .pricing-page .pricing-starting { color: var(--deep-blue); font-weight: 800; font-size: 1.2rem; }
-.pricing-page .currency-switch { display: inline-flex; background: var(--light-gray); border: 1px solid var(--border-light); border-radius: 999px; overflow: hidden; }
+.pricing-page .currency-switch { display: inline-flex; background: var(--light-gray); border: 1px solid var(--border-light); border-radius: 0; overflow: hidden; }
 .pricing-page .currency-btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 18px; color: var(--deep-blue); font-weight: 700; transition: all 0.2s ease; }
 .pricing-page .currency-btn.active, .pricing-page .currency-btn[aria-current='true'] { background: var(--deep-blue); color: #fff; }
 .pricing-page .pricing-currency-msg { color: var(--medium-gray); margin-bottom: 18px; font-size: 0.95rem; }
-.pricing-page .pricing-panel { border: 1px solid var(--border-light); border-radius: 16px; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06); overflow: hidden; }
+.pricing-page .pricing-panel { border: 1px solid var(--border-light); border-radius: 0; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06); overflow: hidden; }
 .pricing-page .pricing-panel-title { background: linear-gradient(90deg, var(--deep-blue), #1F2A4F); color: #fff; font-weight: 800; font-size: 1.25rem; margin: 0; padding: 16px 22px; }
 .pricing-page .pricing-panel-desc { padding: 14px 22px 0; color: var(--medium-gray); margin: 0; }
 .pricing-page .pricing-rows { display: flex; flex-direction: column; gap: 10px; padding: 18px 22px 24px; }
-.pricing-page .pricing-row { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; border: 1px solid var(--border-light); border-radius: 12px; padding: 14px 18px; transition: all 0.25s ease; }
+.pricing-page .pricing-row { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; border: 1px solid var(--border-light); border-radius: 0; padding: 14px 18px; transition: all 0.25s ease; }
 .pricing-page .pricing-row:hover { box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08); border-color: #FFD700; }
-.pricing-page .pkg-num { width: 36px; height: 36px; border-radius: 50%; background: var(--light-gray); color: var(--deep-blue); font-weight: 800; display: inline-flex; align-items: center; justify-content: center; }
+.pricing-page .pkg-num { width: 36px; height: 36px; border-radius: 0; background: var(--light-gray); color: var(--deep-blue); font-weight: 800; display: inline-flex; align-items: center; justify-content: center; }
 .pricing-page .pkg-body { min-width: 0; }
 .pricing-page .pkg-name { color: var(--deep-blue); font-weight: 800; font-size: 1.02rem; margin-bottom: 4px; }
 .pricing-page .pkg-desc { color: var(--medium-gray); font-size: 0.9rem; line-height: 1.6; }
@@ -4921,19 +4921,19 @@ img, video, iframe, embed, object, table, pre, code {
 .pricing-page .pkg-starting-label { color: var(--medium-gray); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
 .pricing-page .pkg-price { color: var(--red); font-weight: 800; font-size: 1.15rem; white-space: nowrap; }
 .pricing-page .pkg-per { color: var(--medium-gray); font-weight: 600; font-size: 0.95rem; margin-left: 4px; }
-.pricing-page .pricing-empty { margin: 18px 22px 24px; padding: 16px 18px; border: 1px dashed var(--border-light); border-left: 4px solid #FFD700; border-radius: 10px; background: rgba(255,215,0,0.12); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
-.pricing-page .pricing-info-panel { margin-top: 24px; border: 1px solid var(--border-light); border-radius: 16px; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06); overflow: hidden; }
+.pricing-page .pricing-empty { margin: 18px 22px 24px; padding: 16px 18px; border: 1px dashed var(--border-light); border-left: 4px solid #FFD700; border-radius: 0; background: rgba(255,215,0,0.12); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.pricing-page .pricing-info-panel { margin-top: 24px; border: 1px solid var(--border-light); border-radius: 0; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06); overflow: hidden; }
 .pricing-page .pricing-info-panel h3 { background: var(--light-gray); margin: 0; font-size: 1.08rem; font-weight: 800; padding: 14px 22px; border-bottom: 1px solid var(--border-light); }
 .pricing-page .pricing-info-panel ul { margin: 0; padding: 16px 22px 18px 38px; display: flex; flex-direction: column; gap: 8px; color: var(--medium-gray); }
-.pricing-page .pricing-steps { margin-top: 24px; border: 1px solid var(--border-light); border-radius: 16px; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06); overflow: hidden; }
+.pricing-page .pricing-steps { margin-top: 24px; border: 1px solid var(--border-light); border-radius: 0; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06); overflow: hidden; }
 .pricing-page .pricing-steps h3 { margin: 0; padding: 14px 22px; background: var(--light-gray); border-bottom: 1px solid var(--border-light); font-weight: 800; font-size: 1.08rem; }
 .pricing-page .pricing-steps ol { margin: 0; padding: 18px 22px 22px; list-style: none; display: flex; flex-direction: column; gap: 14px; }
 .pricing-page .pricing-steps li { display: flex; align-items: flex-start; gap: 12px; }
-.pricing-page .step-num { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; background: var(--deep-blue); color: #fff; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
+.pricing-page .step-num { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 0; background: var(--deep-blue); color: #fff; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
 .pricing-page .pricing-steps li strong { color: var(--deep-blue); font-weight: 800; }
 .pricing-page .pricing-steps li p { color: var(--medium-gray); margin: 2px 0 0; font-size: 0.95rem; }
-.pricing-page .pricing-cta { margin-top: 28px; background: linear-gradient(90deg, var(--deep-blue), #1F2A4F); border-radius: 16px; padding: 22px 26px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 14px 40px rgba(15, 23, 42, 0.16); }
-.pricing-page .pricing-cta-btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 26px; border-radius: 10px; background: var(--red); color: #fff; font-weight: 800; transition: all 0.25s ease; }
+.pricing-page .pricing-cta { margin-top: 28px; background: linear-gradient(90deg, var(--deep-blue), #1F2A4F); border-radius: 0; padding: 22px 26px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 14px 40px rgba(15, 23, 42, 0.16); }
+.pricing-page .pricing-cta-btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 26px; border-radius: 0; background: var(--red); color: #fff; font-weight: 800; transition: all 0.25s ease; }
 .pricing-page .pricing-cta-btn:hover, .pricing-page .pricing-cta-btn:focus-visible { background: var(--red-hover); color: #fff; transform: translateY(-1px); }
 .pricing-page .pricing-cta-phone { color: rgba(255,255,255,0.92); display: inline-flex; align-items: center; gap: 8px; }
 .pricing-page .pricing-cta-phone a { color: rgba(255,255,255,0.95); font-weight: 700; }
