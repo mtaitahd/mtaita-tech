@@ -203,44 +203,50 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
 </section>
 <?php endif; ?>
 
-<!-- Live Systems / Recent Work - Horizontal Scroll -->
+<!-- Live Systems / Recent Work -->
 <?php if (!empty($live_systems)): ?>
 <section class="section-padding live-systems-section">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2><?= __('live_systems_heading') ?></h2>
-            <p class="text-muted"><?= __('live_systems_subtitle') ?></p>
+    <div class="container position-relative">
+        <div class="live-systems-head text-center">
+            <span class="live-eyebrow"><?= __('live_systems_heading') ?></span>
+            <h2><?= __('live_systems_headline') ?></h2>
         </div>
-        <div class="live-scroll-wrap">
-            <div class="live-scroll-track" id="liveScrollTrack">
-                <?php for ($rep = 0; $rep < 2; $rep++): ?>
-                <?php foreach ($live_systems as $ls): ?>
-                <div class="live-scroll-item">
-                    <div class="live-system-card">
-                        <div class="live-system-img-wrap">
-                            <img src="<?= htmlspecialchars(webp_url($ls['project_screenshot'])) ?>" alt="<?= htmlspecialchars($ls['project_title']) ?>" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300/0F172A/00E5FF?text=System'">
-                            <div class="live-system-badge"><?= __('live_badge') ?></div>
-                        </div>
-                        <div class="live-system-body">
-                            <h5><?= htmlspecialchars($ls['project_title']) ?></h5>
-                            <?php if (!empty($ls['tech_stack'])): ?>
-                            <div class="live-system-tags">
-                                <?php $tags = explode(',', $ls['tech_stack']); ?>
-                                <?php foreach (array_slice($tags, 0, 3) as $tag): ?>
-                                <span class="live-system-tag"><?= htmlspecialchars(trim($tag)) ?></span>
-                                <?php endforeach; ?>
-                            </div>
-                            <?php endif; ?>
-                            <p class="live-system-desc"><?= htmlspecialchars(substr($ls['project_desc'] ?? '', 0, 80)) ?></p>
-                            <a href="<?= htmlspecialchars($ls['project_link']) ?>" target="_blank" class="btn btn-sm btn-outline-primary"><?= __('view_system') ?> <i class="bi bi-box-arrow-up-right ms-1"></i></a>
-                        </div>
-                    </div>
+        <div class="live-systems-grid">
+            <?php foreach ($live_systems as $ls): ?>
+            <?php
+                $ls_cat = strtolower($ls['category'] ?? '');
+                $ls_icon = 'bi-window-stack';
+                if (strpos($ls_cat, 'school') !== false || strpos($ls_cat, 'educat') !== false) {
+                    $ls_icon = 'bi-mortarboard-fill';
+                } elseif (strpos($ls_cat, 'pos') !== false || strpos($ls_cat, 'retail') !== false || strpos($ls_cat, 'shop') !== false || strpos($ls_cat, 'invent') !== false) {
+                    $ls_icon = 'bi-shop';
+                } elseif (strpos($ls_cat, 'health') !== false || strpos($ls_cat, 'hospital') !== false || strpos($ls_cat, 'clinic') !== false) {
+                    $ls_icon = 'bi-heart-pulse-fill';
+                } elseif (strpos($ls_cat, 'mobile') !== false || strpos($ls_cat, 'app') !== false) {
+                    $ls_icon = 'bi-phone';
+                } elseif (strpos($ls_cat, 'tour') !== false || strpos($ls_cat, 'hotel') !== false || strpos($ls_cat, 'book') !== false) {
+                    $ls_icon = 'bi-airplane';
+                } elseif (strpos($ls_cat, 'food') !== false || strpos($ls_cat, 'restaurant') !== false) {
+                    $ls_icon = 'bi-cup-hot-fill';
+                } elseif (strpos($ls_cat, 'web') !== false) {
+                    $ls_icon = 'bi-globe2';
+                }
+            ?>
+            <article class="live-system-card">
+                <div class="live-system-icon"><i class="bi <?= $ls_icon ?>"></i></div>
+                <h3 class="live-system-name"><?= htmlspecialchars($ls['project_title']) ?></h3>
+                <?php if (!empty($ls['category'])): ?>
+                <span class="live-system-cat"><?= htmlspecialchars($ls['category']) ?></span>
+                <?php endif; ?>
+                <p class="live-system-desc"><?= htmlspecialchars(substr($ls['project_desc'] ?? '', 0, 110)) ?></p>
+                <div class="live-system-foot">
+                    <span class="live-badge"><span class="live-dot"></span><?= __('live_badge') ?></span>
+                    <a href="<?= htmlspecialchars($ls['project_link']) ?>" target="_blank" rel="noopener" class="live-visit"><?= __('view_system') ?> <i class="bi bi-arrow-right"></i></a>
                 </div>
-                <?php endforeach; ?>
-                <?php endfor; ?>
-            </div>
+            </article>
+            <?php endforeach; ?>
         </div>
-        <div class="text-center mt-4">
+        <div class="text-center mt-5">
             <a href="/all-projects" class="btn-red"><?= __('projects_view_all') ?> <i class="bi bi-arrow-right ms-1"></i></a>
         </div>
     </div>
