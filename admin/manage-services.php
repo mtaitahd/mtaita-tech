@@ -3,6 +3,8 @@ $page_title = 'Manage Services';
 $active_page = 'services';
 $success_msg = '';
 $error_msg = '';
+$reopen_modal = false;
+$form_values = [];
 
 session_start();
 if (!isset($_SESSION['admin_logged_in'])) {
@@ -125,6 +127,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
+
+            // Reopen the modal with the submitted values so nothing is lost.
+            if ($error_msg !== '') {
+                $reopen_modal = true;
+                $form_values = $_POST;
+            }
         }
     }
 }
@@ -151,6 +159,21 @@ if (!empty($_GET['msg'])) {
 
 $services = $serviceObj->getAll();
 $csrf = generateCsrfToken();
+
+$form_values = is_array($form_values) ? $form_values : [];
+function svc_fv($key, $default = '') {
+    global $form_values;
+    return htmlspecialchars((string)($form_values[$key] ?? $default), ENT_QUOTES, 'UTF-8');
+}
+function svc_checked($key, $default = false) {
+    global $form_values, $reopen_modal;
+    if (!$reopen_modal) {
+        return $default ? 'checked' : '';
+    }
+    return !empty($form_values[$key]) ? 'checked' : '';
+}
+$reopen_id = (int)($form_values['id'] ?? 0);
+$preview_image = $reopen_modal ? ($existing['image'] ?? null) : null;
 require_once 'admin_header.php';
 ?>
 <div class="page-header d-flex flex-wrap gap-2">
@@ -159,7 +182,7 @@ require_once 'admin_header.php';
 </div>
 
 <?php if ($success_msg): ?><div class="alert alert-success d-none swal-msg" data-type="success"><?= htmlspecialchars($success_msg) ?></div><?php endif; ?>
-<?php if ($error_msg): ?><div class="alert alert-danger d-none swal-msg" data-type="error"><?= htmlspecialchars($error_msg) ?></div><?php endif; ?>
+<?php if ($error_msg && !$reopen_modal): ?><div class="alert alert-danger d-none swal-msg" data-type="error"><?= htmlspecialchars($error_msg) ?></div><?php endif; ?>
 
 <div class="admin-card">
     <div class="table-responsive">
@@ -211,41 +234,48 @@ require_once 'admin_header.php';
     </div>
 </div>
 
-<div class="modal fade" id="serviceModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+<div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="svc-modal-title" aria-hidden="true"
+     data-reopen="<?= $reopen_modal ? '1' : '0' ?>">
+    <div class="modal-dialog modal-lg modal-dialog-centered service-modal-dialog">
         <div class="modal-content">
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data" class="service-modal-form" id="service-form" novalidate>
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf) ?>">
                 <input type="hidden" name="action" value="save">
-                <input type="hidden" name="id" id="svc-id" value="0">
+                <input type="hidden" name="id" id="svc-id" value="<?= (int)($form_values['id'] ?? 0) ?>">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-pencil text-cyan me-2"></i><span id="svc-modal-title">Add Service</span></h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title"><i class="bi bi-pencil text-cyan me-2"></i><span id="svc-modal-title"><?= $reopen_id > 0 ? 'Edit Service' : 'Add Service' ?></span></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <?php if ($error_msg): ?>
+                    <div class="alert alert-danger" role="alert"><i class="bi bi-exclamation-triangle-fill me-2"></i><?= htmlspecialchars($error_msg) ?></div>
+                    <?php endif; ?>
+
+                    <h6 class="svc-section-title">Basic Details</h6>
                     <div class="row g-3">
                         <div class="col-md-8">
                             <label class="form-label">Title <span class="text-danger">*</span></label>
-                            <input type="text" name="title" id="svc-title" class="form-control" required>
+                            <input type="text" name="title" id="svc-title" class="form-control" value="<?= svc_fv('title') ?>" required>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Sort Order</label>
-                            <input type="number" name="sort_order" id="svc-sort" class="form-control" value="0">
+                            <input type="number" name="sort_order" id="svc-sort" class="form-control" value="<?= svc_fv('sort_order', '0') ?>">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Slug (URL)</label>
-                            <input type="text" name="slug" id="svc-slug" class="form-control" placeholder="web-development">
+                            <input type="text" name="slug" id="svc-slug" class="form-control" placeholder="web-development" value="<?= svc_fv('slug') ?>">
                             <small class="text-muted">Leave blank to generate from the title.</small>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Card Title (homepage)</label>
-                            <input type="text" name="card_title" id="svc-card-title" class="form-control" placeholder="Optional — defaults to title">
+                            <input type="text" name="card_title" id="svc-card-title" class="form-control" placeholder="Optional — defaults to title" value="<?= svc_fv('card_title') ?>">
                         </div>
+                    </div>
 
-                        <div class="col-12"><hr class="border-secondary my-1"></div>
+                    <h6 class="svc-section-title">Card &amp; Listing Image</h6>
+                    <div class="row g-3">
                         <div class="col-12">
-                            <label class="form-label">Card / Listing Image</label>
-                            <div class="mb-2"><img id="svc-image-preview" src="" alt="" height="64" style="border-radius:4px;object-fit:cover;display:none;"></div>
+                            <div class="mb-2"><img id="svc-image-preview" src="<?= $preview_image ? '../' . htmlspecialchars(ltrim($preview_image, '/')) : '' ?>" alt="" height="64" style="border-radius:4px;object-fit:cover;<?= $preview_image ? '' : 'display:none;' ?>"></div>
                             <input type="file" name="image" id="svc-image" class="form-control" accept="image/png,image/jpeg,image/webp,image/gif">
                             <small class="text-muted">PNG, JPG, WEBP, GIF. Max 5MB. Recommended square.</small>
                             <div class="form-check mt-1">
@@ -255,24 +285,29 @@ require_once 'admin_header.php';
                         </div>
                         <div class="col-12">
                             <label class="form-label">Image Alt Text</label>
-                            <input type="text" name="image_alt" id="svc-image-alt" class="form-control">
+                            <input type="text" name="image_alt" id="svc-image-alt" class="form-control" value="<?= svc_fv('image_alt') ?>">
                         </div>
+                    </div>
 
+                    <h6 class="svc-section-title">Descriptions</h6>
+                    <div class="row g-3">
                         <div class="col-12">
-                            <label class="form-label">Card / Short Description</label>
-                            <textarea name="description" id="svc-desc" rows="3" class="form-control" required></textarea>
+                            <label class="form-label">Card / Short Description <span class="text-danger">*</span></label>
+                            <textarea name="description" id="svc-desc" rows="3" class="form-control" required><?= svc_fv('description') ?></textarea>
                             <small class="text-muted">Shown on the homepage card.</small>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Short Description (services listing)</label>
-                            <textarea name="short_description" id="svc-short-desc" rows="2" class="form-control"></textarea>
+                            <textarea name="short_description" id="svc-short-desc" rows="2" class="form-control"><?= svc_fv('short_description') ?></textarea>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Full Description (optional, HTML-safe text)</label>
-                            <textarea name="full_description" id="svc-full-desc" rows="3" class="form-control"></textarea>
+                            <textarea name="full_description" id="svc-full-desc" rows="3" class="form-control"><?= svc_fv('full_description') ?></textarea>
                         </div>
+                    </div>
 
-                        <div class="col-12"><hr class="border-secondary my-1"></div>
+                    <h6 class="svc-section-title">Hero &amp; Page Media</h6>
+                    <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label">Hero Image</label>
                             <input type="file" name="hero_image" class="form-control" accept="image/png,image/jpeg,image/webp,image/gif">
@@ -284,62 +319,70 @@ require_once 'admin_header.php';
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Hero Subtitle</label>
-                            <input type="text" name="hero_subtitle" id="svc-hero-subtitle" class="form-control">
+                            <input type="text" name="hero_subtitle" id="svc-hero-subtitle" class="form-control" value="<?= svc_fv('hero_subtitle') ?>">
                         </div>
+                    </div>
 
-                        <div class="col-12"><hr class="border-secondary my-1"></div>
+                    <h6 class="svc-section-title">Page Links &amp; Features</h6>
+                    <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label">Portfolio Category (projects carousel)</label>
-                            <input type="text" name="service_category" id="svc-category" class="form-control" placeholder="Web Development">
+                            <input type="text" name="service_category" id="svc-category" class="form-control" placeholder="Web Development" value="<?= svc_fv('service_category') ?>">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Card Link</label>
-                            <input type="text" name="card_link" id="svc-card-link" class="form-control" placeholder="/web-development">
+                            <input type="text" name="card_link" id="svc-card-link" class="form-control" placeholder="/web-development" value="<?= svc_fv('card_link') ?>">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Icon (Font Awesome class)</label>
-                            <input type="text" name="icon" id="svc-icon" class="form-control" placeholder="fa-solid fa-code">
+                            <input type="text" name="icon" id="svc-icon" class="form-control" placeholder="fa-solid fa-code" value="<?= svc_fv('icon') ?>">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Legacy Feature List (one per line)</label>
-                            <textarea name="list_items" id="svc-items" rows="2" class="form-control"></textarea>
+                            <textarea name="list_items" id="svc-items" rows="2" class="form-control"><?= svc_fv('list_items') ?></textarea>
                         </div>
+                    </div>
 
+                    <h6 class="svc-section-title">Search Engines (SEO)</h6>
+                    <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label">SEO Title</label>
-                            <input type="text" name="seo_title" id="svc-seo-title" class="form-control">
+                            <input type="text" name="seo_title" id="svc-seo-title" class="form-control" value="<?= svc_fv('seo_title') ?>">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">SEO Keywords</label>
-                            <input type="text" name="seo_keywords" id="svc-seo-keywords" class="form-control">
+                            <input type="text" name="seo_keywords" id="svc-seo-keywords" class="form-control" value="<?= svc_fv('seo_keywords') ?>">
                         </div>
                         <div class="col-12">
                             <label class="form-label">SEO Description</label>
-                            <textarea name="seo_description" id="svc-seo-desc" rows="2" class="form-control"></textarea>
+                            <textarea name="seo_description" id="svc-seo-desc" rows="2" class="form-control"><?= svc_fv('seo_description') ?></textarea>
                         </div>
+                    </div>
 
-                        <div class="col-md-4 d-flex align-items-end pb-2">
+                    <h6 class="svc-section-title">Visibility</h6>
+                    <div class="row g-3">
+                        <div class="col-md-4">
                             <div class="form-check">
-                                <input type="checkbox" name="is_active" id="svc-active" class="form-check-input" checked>
+                                <input type="checkbox" name="is_active" id="svc-active" class="form-check-input" value="1" <?= svc_checked('is_active', true) ?>>
                                 <label class="form-check-label" for="svc-active">Active</label>
                             </div>
                         </div>
-                        <div class="col-md-4 d-flex align-items-end pb-2">
+                        <div class="col-md-4">
                             <div class="form-check">
-                                <input type="checkbox" name="show_homepage" id="svc-home" class="form-check-input">
+                                <input type="checkbox" name="show_homepage" id="svc-home" class="form-check-input" value="1" <?= svc_checked('show_homepage') ?>>
                                 <label class="form-check-label" for="svc-home">Show on homepage</label>
                             </div>
                         </div>
-                        <div class="col-md-4 d-flex align-items-end pb-2">
+                        <div class="col-md-4">
                             <div class="form-check">
-                                <input type="checkbox" name="show_listing" id="svc-listing" class="form-check-input" checked>
+                                <input type="checkbox" name="show_listing" id="svc-listing" class="form-check-input" value="1" <?= svc_checked('show_listing', true) ?>>
                                 <label class="form-check-label" for="svc-listing">Show in listing</label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="#" id="svc-page-link" class="btn btn-outline-cyan me-auto" style="display:none;"><i class="bi bi-layout-text-window-reverse"></i> Manage Page Content</a>
+                    <a href="manage-service-page?id=<?= $reopen_id ?>" id="svc-page-link" class="btn btn-outline-cyan me-auto" style="<?= $reopen_id > 0 ? '' : 'display:none;' ?>"><i class="bi bi-layout-text-window-reverse"></i> Manage Page Content</a>
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-cyan"><i class="bi bi-save"></i> Save</button>
                 </div>
@@ -350,27 +393,37 @@ require_once 'admin_header.php';
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    var modal = document.getElementById('serviceModal');
+    var modalEl = document.getElementById('serviceModal');
+    if (!modalEl || !window.bootstrap) { return; }
+    var bsModal = bootstrap.Modal.getOrCreateInstance(modalEl);
+    var form = document.getElementById('service-form');
+
     function resetForm() {
-        document.getElementById('svc-id').value = '0';
-        ['svc-title','svc-sort','svc-slug','svc-card-title','svc-image-alt','svc-desc','svc-short-desc','svc-full-desc','svc-hero-subtitle','svc-category','svc-card-link','svc-icon','svc-items','svc-seo-title','svc-seo-keywords','svc-seo-desc'].forEach(function (id) {
+        if (form) { form.reset(); }
+        ['svc-title','svc-slug','svc-card-title','svc-image-alt','svc-desc','svc-short-desc','svc-full-desc','svc-hero-subtitle','svc-category','svc-card-link','svc-icon','svc-items','svc-seo-title','svc-seo-keywords','svc-seo-desc'].forEach(function (id) {
             var el = document.getElementById(id); if (el) el.value = '';
         });
+        document.getElementById('svc-id').value = '0';
         document.getElementById('svc-sort').value = '0';
         document.getElementById('svc-active').checked = true;
         document.getElementById('svc-home').checked = false;
         document.getElementById('svc-listing').checked = true;
-        var p = document.getElementById('svc-image-preview'); p.style.display = 'none'; p.src = '';
+        var p = document.getElementById('svc-image-preview'); if (p) { p.style.display = 'none'; p.src = ''; }
         var link = document.getElementById('svc-page-link');
-        link.style.display = 'none';
+        if (link) { link.style.display = 'none'; link.href = 'manage-service-page'; }
         document.getElementById('svc-modal-title').textContent = 'Add Service';
+        var err = modalEl.querySelector('.modal-body > .alert');
+        if (err) { err.remove(); }
     }
 
-    document.getElementById('btnAddService').addEventListener('click', resetForm);
+    var addBtn = document.getElementById('btnAddService');
+    if (addBtn) { addBtn.addEventListener('click', resetForm); }
 
     document.querySelectorAll('.btn-edit-service').forEach(function (btn) {
         btn.addEventListener('click', function () {
-            var s = JSON.parse(btn.dataset.service);
+            var s;
+            try { s = JSON.parse(btn.dataset.service); } catch (e) { return; }
+            resetForm();
             document.getElementById('svc-id').value = s.id;
             document.getElementById('svc-title').value = s.title || '';
             document.getElementById('svc-sort').value = s.sort_order || '0';
@@ -397,9 +450,14 @@ document.addEventListener('DOMContentLoaded', function () {
             link.href = 'manage-service-page?id=' + s.id;
             link.style.display = 'inline-block';
             document.getElementById('svc-modal-title').textContent = 'Edit Service';
-            new bootstrap.Modal(modal).show();
+            bsModal.show();
         });
     });
+
+    // A failed save reloads the page with the entered values: reopen and keep them.
+    if (modalEl.dataset.reopen === '1') {
+        bsModal.show();
+    }
 });
 </script>
 

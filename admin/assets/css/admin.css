@@ -790,6 +790,64 @@ a:hover { color: var(--accent-hover); }
     padding: 14px 24px;
 }
 
+/* Manage Services form modal: header/footer stay fixed, body scrolls */
+.service-modal-dialog {
+    max-height: 90vh;
+}
+.service-modal-dialog .modal-content {
+    max-height: 90vh;
+    overflow: hidden;
+}
+.service-modal-form {
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    min-height: 0;
+}
+.service-modal-form .modal-header,
+.service-modal-form .modal-footer {
+    flex: 0 0 auto;
+}
+.service-modal-form .modal-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: 32px;
+}
+.svc-section-title {
+    margin: 26px 0 12px;
+    padding-bottom: 6px;
+    color: var(--text);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--card-border);
+}
+.svc-section-title:first-child {
+    margin-top: 0;
+}
+
+@media (max-width: 575.98px) {
+    .service-modal-dialog,
+    .service-modal-dialog .modal-content,
+    .service-modal-form {
+        max-height: 92vh;
+    }
+    .service-modal-form .modal-footer {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .service-modal-form .modal-footer .btn {
+        flex: 1 1 auto;
+    }
+    .service-modal-form .modal-footer #svc-page-link {
+        flex: 1 1 100%;
+        margin-left: 0 !important;
+        text-align: center;
+    }
+}
+
 .btn-close { opacity: 0.5; }
 .btn-close:hover { opacity: 0.8; }
 
