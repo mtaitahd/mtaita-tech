@@ -39,6 +39,9 @@ RewriteRule ^seo-digital-marketing/?$ seo-digital-marketing.php [L,QSA]
 RewriteRule ^tourism-website-development/?$ tourism-website-development.php [L,QSA]
 RewriteRule ^pricing/?$ pricing.php [L,QSA]
 
+# Generic database-managed service page (new services created from the admin)
+RewriteRule ^service/([a-z0-9-]+)/?$ service.php?slug=$1 [L,QSA]
+
 # City landing page routes
 RewriteRule ^web-designer-dar-es-salaam/?$ web-designer-dar-es-salaam.php [L,QSA]
 RewriteRule ^web-designer-arusha/?$ web-designer-arusha.php [L,QSA]
@@ -91,6 +94,7 @@ RewriteRule ^admin/course-builder/?$ admin/manage-course-builder.php [L,QSA]
 RewriteRule ^admin/manage-lessons/?$ admin/manage-lessons.php [L,QSA]
 RewriteRule ^admin/manage-enrollments/?$ admin/manage-enrollments.php [L,QSA]
 RewriteRule ^admin/manage-services/?$ admin/manage-services.php [L,QSA]
+RewriteRule ^admin/manage-service-page/?$ admin/manage-service-page.php [L,QSA]
 RewriteRule ^admin/manage-pricing/?$ admin/manage-pricing.php [L,QSA]
 RewriteRule ^admin/pricing/?$ admin/manage-pricing.php [L,QSA]
 RewriteRule ^admin/projects/?$ admin/projects.php [L,QSA]

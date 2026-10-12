@@ -9,6 +9,7 @@ require_once 'lib/News.php';
 require_once 'lib/Partner.php';
 require_once 'lib/Testimonial.php';
 require_once 'lib/Solution.php';
+require_once 'lib/Service.php';
 
 // Fetch active posters for hero slider
 $posters = $pdo->query("SELECT poster_image_path, poster_title, redirect_link FROM posters WHERE is_active = 1 ORDER BY created_at DESC")->fetchAll();
@@ -25,6 +26,10 @@ $testimonials = $testimonialObj->getApproved();
 
 $solutionObj = new Solution();
 $solutions = $solutionObj->getActive();
+
+// Admin-managed homepage service cards
+$serviceObj = new Service();
+$home_services = $serviceObj->getHomepage();
 
 // Fetch all portfolio items for live systems scrolling section
 $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_link, project_screenshot, category, tech_stack FROM portfolio WHERE category != 'Graphic Design' ORDER BY created_at DESC LIMIT 12")->fetchAll();
@@ -115,6 +120,7 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
 </section>
 
 <!-- Our Services -->
+<?php if (!empty($home_services)): ?>
 <section class="home-services-section">
     <div class="container">
         <div class="home-services-header">
@@ -122,48 +128,35 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
             <h2 class="home-services-title"><?= __('home_services_heading') ?></h2>
         </div>
         <div class="row g-4 justify-content-center">
+            <?php foreach ($home_services as $svc): ?>
+            <?php
+                $card_title = $svc['card_title'] ?: $svc['title'];
+                $card_link  = $svc['card_link'] ?: ('/service/' . $svc['slug']);
+                $card_img   = !empty($svc['image']) ? webp_url('/' . ltrim($svc['image'], '/')) : '';
+                $card_alt   = $svc['image_alt'] ?: $card_title;
+            ?>
             <div class="col-12 col-md-6 col-lg-4">
                 <article class="home-service-card">
-                    <h3 class="home-service-title"><?= __('home_service_web_title') ?></h3>
-                    <p class="home-service-desc"><?= __('home_service_web_desc') ?></p>
+                    <h3 class="home-service-title"><?= htmlspecialchars($card_title) ?></h3>
+                    <p class="home-service-desc"><?= htmlspecialchars($svc['description']) ?></p>
                     <div class="home-service-media">
                         <div class="home-service-img-wrap">
-                            <img src="<?= htmlspecialchars(webp_url('/assets/img/web.png')) ?>" alt="<?= htmlspecialchars(__('home_service_web_title')) ?>" loading="lazy">
+                            <?php if ($card_img): ?>
+                            <img src="<?= htmlspecialchars($card_img) ?>" alt="<?= htmlspecialchars($card_alt) ?>" loading="lazy">
+                            <?php endif; ?>
                         </div>
-                        <a href="/web-development" class="home-service-link"><?= __('read_more') ?> <i class="bi bi-arrow-right"></i></a>
+                        <a href="<?= htmlspecialchars($card_link) ?>" class="home-service-link"><?= __('read_more') ?> <i class="bi bi-arrow-right"></i></a>
                     </div>
                 </article>
             </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <article class="home-service-card">
-                    <h3 class="home-service-title"><?= __('home_service_graphic_title') ?></h3>
-                    <p class="home-service-desc"><?= __('home_service_graphic_desc') ?></p>
-                    <div class="home-service-media">
-                        <div class="home-service-img-wrap">
-                            <img src="<?= htmlspecialchars(webp_url('/assets/img/design.png')) ?>" alt="<?= htmlspecialchars(__('home_service_graphic_title')) ?>" loading="lazy">
-                        </div>
-                        <a href="/graphic-design" class="home-service-link"><?= __('read_more') ?> <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                </article>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <article class="home-service-card">
-                    <h3 class="home-service-title"><?= __('home_service_social_title') ?></h3>
-                    <p class="home-service-desc"><?= __('home_service_social_desc') ?></p>
-                    <div class="home-service-media">
-                        <div class="home-service-img-wrap">
-                            <img src="<?= htmlspecialchars(webp_url('/assets/img/seo.png')) ?>" alt="<?= htmlspecialchars(__('home_service_social_title')) ?>" loading="lazy">
-                        </div>
-                        <a href="/seo-digital-marketing" class="home-service-link"><?= __('read_more') ?> <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                </article>
-            </div>
+            <?php endforeach; ?>
         </div>
         <div class="home-services-cta">
             <a href="/services" class="btn-red"><?= __('explore_all_services') ?> <i class="bi bi-arrow-right ms-1"></i></a>
         </div>
     </div>
 </section>
+<?php endif; ?>
 
 <!-- Our Solutions -->
 <?php if (!empty($solutions)): ?>

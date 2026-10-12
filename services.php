@@ -5,9 +5,11 @@ $page_keywords = 'software services Tanzania, web development services, mobile a
 require_once 'header.php';
 require_once 'db_connect.php';
 require_once 'lib/Settings.php';
+require_once 'lib/Service.php';
 
 $hero_bg = Settings::get('hero_bg_services', '');
-$services = $pdo->query("SELECT * FROM services WHERE is_active = 1 ORDER BY sort_order ASC")->fetchAll();
+$serviceObj = new Service();
+$services = $serviceObj->getListing();
 ?>
 
 <section class="page-header<?= $hero_bg ? ' page-header-with-bg' : '' ?>"<?php if ($hero_bg): ?> style="background-image:url('/<?= htmlspecialchars(webp_url($hero_bg)) ?>')"<?php endif; ?>>
@@ -26,23 +28,28 @@ $services = $pdo->query("SELECT * FROM services WHERE is_active = 1 ORDER BY sor
         <?php if (empty($services)): ?>
             <div class="text-center text-muted py-5"><p>No services available at the moment.</p></div>
         <?php else: ?>
-        <div class="row g-4">
+        <div class="row g-4 justify-content-center">
             <?php foreach ($services as $s): ?>
-            <div class="col-lg-6">
-                <div class="service-detail-card">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="icon-wrap me-3"><i class="<?= htmlspecialchars($s['icon']) ?>"></i></div>
-                        <h3 class="mb-0"><?= htmlspecialchars($s['title']) ?></h3>
+            <?php
+                $svc_title = $s['card_title'] ?: $s['title'];
+                $svc_link  = $s['card_link'] ?: (!empty($s['slug']) ? '/service/' . $s['slug'] : '/contact');
+                $svc_img   = !empty($s['image']) ? webp_url('/' . ltrim($s['image'], '/')) : '';
+                $svc_alt   = !empty($s['image_alt']) ? $s['image_alt'] : $svc_title;
+                $svc_desc  = $s['short_description'] ?: $s['description'];
+            ?>
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="home-service-card">
+                    <h3 class="home-service-title"><?= htmlspecialchars($svc_title) ?></h3>
+                    <p class="home-service-desc"><?= htmlspecialchars($svc_desc) ?></p>
+                    <div class="home-service-media">
+                        <div class="home-service-img-wrap">
+                            <?php if ($svc_img): ?>
+                            <img src="<?= htmlspecialchars($svc_img) ?>" alt="<?= htmlspecialchars($svc_alt) ?>" loading="lazy">
+                            <?php endif; ?>
+                        </div>
+                        <a href="<?= htmlspecialchars($svc_link) ?>" class="home-service-link"><?= __('read_more') ?> <i class="bi bi-arrow-right"></i></a>
                     </div>
-                    <p><?= htmlspecialchars($s['description']) ?></p>
-                    <?php if (!empty($s['list_items'])): ?>
-                    <ul>
-                        <?php foreach (explode("\n", $s['list_items']) as $item): ?>
-                        <li><?= htmlspecialchars(trim($item)) ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                    <?php endif; ?>
-                </div>
+                </article>
             </div>
             <?php endforeach; ?>
         </div>

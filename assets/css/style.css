@@ -4912,6 +4912,17 @@ img, video, iframe, embed, object, table, pre, code {
     font-size: 0.86rem;
 }
 
+/* Numbered process steps */
+.wd-page .wd-steps { list-style: none; counter-reset: wdstep; margin: 22px 0 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+.wd-page .wd-steps li { position: relative; counter-increment: wdstep; padding: 18px 20px 18px 66px; background: var(--light-gray); border: 1px solid var(--border-light); border-left: 4px solid var(--red); border-radius: 0; }
+.wd-page .wd-steps li::before { content: counter(wdstep); position: absolute; left: 18px; top: 18px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; background: var(--deep-blue); color: #fff; font-weight: 800; font-size: 0.95rem; border-radius: 0; }
+.wd-page .wd-steps li .wd-step-title { display: block; font-weight: 800; color: var(--deep-blue); font-size: 1.05rem; }
+.wd-page .wd-steps li .wd-subtext { margin: 6px 0 0; }
+
+/* Technology pills */
+.wd-page .wd-tech-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.wd-page .wd-tech-pill { display: inline-block; padding: 8px 16px; background: var(--deep-blue); color: #fff; font-weight: 700; font-size: 0.88rem; border-radius: 0; }
+
 
 /* --- Pricing Page --- */
 .pricing-page .pricing-main { background: var(--white); }
