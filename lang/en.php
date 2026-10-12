@@ -45,6 +45,18 @@ return [
     'choose_support' => 'Customer Support',
     'choose_learn_more' => 'Learn More',
 
+    // Home Services section
+    'home_services_eyebrow' => 'OUR SERVICES',
+    'home_services_heading' => 'Explore Our Wide Range Of ICT Services Tailored To Your Business Needs',
+    'home_service_web_title' => 'Web Development',
+    'home_service_web_desc' => 'Complete web solutions, from design and development to hosting, SEO, and ongoing website management.',
+    'home_service_graphic_title' => 'Graphics Design',
+    'home_service_graphic_desc' => 'Memorable, consistent, and impactful visual design, from branding and marketing materials to digital campaigns that strengthen your brand.',
+    'home_service_social_title' => 'Social Media Management',
+    'home_service_social_desc' => 'Professional social media setup, branding, and management, making your business visible, interactive, and trusted across digital platforms.',
+    'read_more' => 'Read More',
+    'explore_all_services' => 'Explore All Services',
+
     // Posters
     'posters_heading' => 'Special Offers & Announcements',
     'posters_subtitle' => 'Check out our latest deals and updates',

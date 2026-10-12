@@ -45,6 +45,18 @@ return [
     'choose_support' => 'Msaada kwa Wateja',
     'choose_learn_more' => 'Jifunze Zaidi',
 
+    // Home Services section
+    'home_services_eyebrow' => 'HUDUMA ZETU',
+    'home_services_heading' => 'Chunguza Aina Mbalimbali za Huduma za TEHAMA Zinazolenga Mahitaji ya Biashara Yako',
+    'home_service_web_title' => 'Ukuzaji wa Tovuti',
+    'home_service_web_desc' => 'Suluhisho kamili za tovuti, kutoka ubunifu na ukuzaji hadi uendeshaji (hosting), SEO, na usimamizi wa tovuti unaoendelea.',
+    'home_service_graphic_title' => 'Ubunifu wa Picha',
+    'home_service_graphic_desc' => 'Ubunifu wa picha wa kukumbukwa, thabiti, na wenye athari, kutoka uundaji wa chapa na nyenzo za uuzaji hadi kampeni za kidijitali zinazoimarisha chapa yako.',
+    'home_service_social_title' => 'Usimamizi wa Mitandao ya Kijamii',
+    'home_service_social_desc' => 'Usanidi wa kitaalamu wa mitandao ya kijamii, uundaji wa chapa, na usimamizi, unaofanya biashara yako ionekane, iwe ya mwingiliano, na kuaminika katika mifumo ya kidijitali.',
+    'read_more' => 'Jifunze Zaidi',
+    'explore_all_services' => 'Chunguza Huduma Zote',
+
     // Posters
     'posters_heading' => 'Matoleo Maalum na Matangazo',
     'posters_subtitle' => 'Angalia matoleo yetu ya hivi karibuni na sasisho',

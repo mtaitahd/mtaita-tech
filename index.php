@@ -114,6 +114,57 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
     </div>
 </section>
 
+<!-- Our Services -->
+<section class="home-services-section">
+    <div class="container">
+        <div class="home-services-header">
+            <span class="home-services-eyebrow"><?= __('home_services_eyebrow') ?></span>
+            <h2 class="home-services-title"><?= __('home_services_heading') ?></h2>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="home-service-card">
+                    <h3 class="home-service-title"><?= __('home_service_web_title') ?></h3>
+                    <p class="home-service-desc"><?= __('home_service_web_desc') ?></p>
+                    <div class="home-service-media">
+                        <div class="home-service-img-wrap">
+                            <img src="<?= htmlspecialchars(webp_url('/assets/img/web.png')) ?>" alt="<?= htmlspecialchars(__('home_service_web_title')) ?>" loading="lazy">
+                        </div>
+                        <a href="/web-development" class="home-service-link"><?= __('read_more') ?> <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="home-service-card">
+                    <h3 class="home-service-title"><?= __('home_service_graphic_title') ?></h3>
+                    <p class="home-service-desc"><?= __('home_service_graphic_desc') ?></p>
+                    <div class="home-service-media">
+                        <div class="home-service-img-wrap">
+                            <img src="<?= htmlspecialchars(webp_url('/assets/img/design.png')) ?>" alt="<?= htmlspecialchars(__('home_service_graphic_title')) ?>" loading="lazy">
+                        </div>
+                        <a href="/graphic-design" class="home-service-link"><?= __('read_more') ?> <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <article class="home-service-card">
+                    <h3 class="home-service-title"><?= __('home_service_social_title') ?></h3>
+                    <p class="home-service-desc"><?= __('home_service_social_desc') ?></p>
+                    <div class="home-service-media">
+                        <div class="home-service-img-wrap">
+                            <img src="<?= htmlspecialchars(webp_url('/assets/img/seo.png')) ?>" alt="<?= htmlspecialchars(__('home_service_social_title')) ?>" loading="lazy">
+                        </div>
+                        <a href="/seo-digital-marketing" class="home-service-link"><?= __('read_more') ?> <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="home-services-cta">
+            <a href="/services" class="btn-red"><?= __('explore_all_services') ?> <i class="bi bi-arrow-right ms-1"></i></a>
+        </div>
+    </div>
+</section>
+
 <!-- Our Solutions -->
 <?php if (!empty($solutions)): ?>
 <section class="section-padding solutions-section">
