@@ -10,6 +10,7 @@ require_once 'lib/Partner.php';
 require_once 'lib/Testimonial.php';
 require_once 'lib/Solution.php';
 require_once 'lib/Service.php';
+require_once 'lib/Settings.php';
 
 // Fetch active posters for hero slider
 $posters = $pdo->query("SELECT poster_image_path, poster_title, redirect_link FROM posters WHERE is_active = 1 ORDER BY created_at DESC")->fetchAll();
@@ -30,6 +31,9 @@ $solutions = $solutionObj->getActive();
 // Admin-managed homepage service cards
 $serviceObj = new Service();
 $home_services = $serviceObj->getHomepage();
+
+// Image used on the About page (managed in Admin > Settings)
+$about_img = Settings::get('about_image', 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80');
 
 // Fetch all portfolio items for live systems scrolling section
 $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_link, project_screenshot, category, tech_stack FROM portfolio WHERE category != 'Graphic Design' ORDER BY created_at DESC LIMIT 12")->fetchAll();
