@@ -101,6 +101,11 @@ return [
     'footer_quick_links' => 'Viungo vya Haraka',
     'footer_contact_info' => 'Maelezo ya Mawasiliano',
     'footer_rights' => 'Haki Zote Zimehifadhiwa.',
+    'footer_call_us' => 'Tupigie',
+    'footer_email_us' => 'Barua Pepe',
+    'footer_our_office' => 'Ofisi Yetu',
+    'footer_follow_us' => 'Tufuate',
+    'footer_hours_value' => 'Jumatatu - Jumamosi: 8:00 asubuhi - 6:00 jioni',
 
     // About page
     'about_title' => 'Kuhusu Sisi',

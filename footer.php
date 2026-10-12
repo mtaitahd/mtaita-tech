@@ -1,46 +1,84 @@
 </main>
 
 <?php if (empty($hide_navbar)): ?>
+<?php
+require_once __DIR__ . '/lib/Settings.php';
+$ft_email = Settings::get('admin_email', ADMIN_EMAIL);
+$ft_phone = Settings::get('admin_phone', '+255 616 591 639');
+$ft_location = Settings::get('admin_location', 'Moshi, Kilimanjaro');
+$ft_phone_link = preg_replace('/\s+/', '', $ft_phone);
+?>
 <footer class="footer">
     <div class="container">
-        <div class="row g-4">
-            <div class="col-md-4">
-                <h5 class="footer-brand"><img src="/assets/img/jj.png" alt="Mtaita Tech" height="28" style="vertical-align:middle;margin-right:8px;"> <?= SITE_NAME ?></h5>
+        <!-- Row 1: Contact information -->
+        <div class="footer-contact-row">
+            <div class="footer-contact-item">
+                <span class="footer-contact-icon" aria-hidden="true"><i class="bi bi-telephone-fill"></i></span>
+                <span class="footer-contact-text">
+                    <span class="footer-contact-label"><?= __('footer_call_us') ?></span>
+                    <a href="tel:<?= htmlspecialchars($ft_phone_link) ?>"><?= htmlspecialchars($ft_phone) ?></a>
+                </span>
+            </div>
+            <div class="footer-contact-item">
+                <span class="footer-contact-icon" aria-hidden="true"><i class="bi bi-envelope-fill"></i></span>
+                <span class="footer-contact-text">
+                    <span class="footer-contact-label"><?= __('footer_email_us') ?></span>
+                    <a href="mailto:<?= htmlspecialchars($ft_email) ?>"><?= htmlspecialchars($ft_email) ?></a>
+                </span>
+            </div>
+            <div class="footer-contact-item">
+                <span class="footer-contact-icon" aria-hidden="true"><i class="bi bi-geo-alt-fill"></i></span>
+                <span class="footer-contact-text">
+                    <span class="footer-contact-label"><?= __('footer_our_office') ?></span>
+                    <span><?= htmlspecialchars($ft_location) ?></span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Row 2: Main footer columns -->
+        <div class="row g-4 footer-main">
+            <div class="col-lg-4 col-md-6">
+                <h5 class="footer-brand"><img src="/assets/img/jj.png" alt="Mtaita Tech" height="30" style="vertical-align:middle;margin-right:8px;"> <?= SITE_NAME ?></h5>
                 <p><?= __('footer_desc') ?></p>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-2 col-md-6">
                 <h5><?= __('footer_quick_links') ?></h5>
                 <ul class="list-unstyled">
                     <li><a href="/"><?= __('home') ?></a></li>
                     <li><a href="/about"><?= __('about_us') ?></a></li>
                     <li><a href="/services"><?= __('services') ?></a></li>
-                    <li><a href="https://mtaitatech.online/web-development" target="_blank"><?= __('portfolio') ?></a></li>
+                    <li><a href="/portfolio"><?= __('portfolio') ?></a></li>
                     <li><a href="/contact"><?= __('contact_us') ?></a></li>
                 </ul>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-3 col-md-6">
                 <h5><?= __('footer_contact_info') ?></h5>
-                <?php
-                require_once __DIR__ . '/lib/Settings.php';
-                $ft_email = Settings::get('admin_email', ADMIN_EMAIL);
-                $ft_phone = Settings::get('admin_phone', '+255 616 591 639');
-                ?>
                 <ul class="list-unstyled contact-info-list">
+                    <li><i class="bi bi-geo-alt"></i> <?= htmlspecialchars($ft_location) ?></li>
                     <li><i class="bi bi-envelope"></i> <a href="mailto:<?= htmlspecialchars($ft_email) ?>"><?= htmlspecialchars($ft_email) ?></a></li>
-                    <li><i class="bi bi-geo-alt"></i> <?= __('footer_location') ?></li>
-                    <li><i class="bi bi-phone"></i> <?= htmlspecialchars($ft_phone) ?></li>
+                    <li><i class="bi bi-phone"></i> <a href="tel:<?= htmlspecialchars($ft_phone_link) ?>"><?= htmlspecialchars($ft_phone) ?></a></li>
+                    <li><i class="bi bi-clock"></i> <?= __('footer_hours_value') ?></li>
                 </ul>
-                <div class="social-links mt-3">
-                    <a href="https://www.facebook.com/profile.php?id=61591507924322" target="_blank" rel="noopener"><i class="bi bi-facebook"></i></a>
-                    <a href="#"><i class="bi bi-twitter-x"></i></a>
-                    <a href="https://www.instagram.com/mtaitatech1/" target="_blank" rel="noopener"><i class="bi bi-instagram"></i></a>
-                    <a href="#"><i class="bi bi-linkedin"></i></a>
-                    <a href="https://www.youtube.com/@mtaitatech" target="_blank" rel="noopener"><i class="bi bi-youtube"></i></a>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h5><?= __('footer_follow_us') ?></h5>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=61591507924322" target="_blank" rel="noopener" aria-label="Mtaita Tech on Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://www.instagram.com/mtaitatech1/" target="_blank" rel="noopener" aria-label="Mtaita Tech on Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.youtube.com/@mtaitatech" target="_blank" rel="noopener" aria-label="Mtaita Tech on YouTube"><i class="bi bi-youtube"></i></a>
                 </div>
             </div>
         </div>
+
+        <!-- Row 3: Copyright and bottom navigation -->
         <div class="footer-bottom">
             <p>&copy; <?= date('Y') ?> <?= SITE_NAME ?>. <?= __('footer_rights') ?></p>
+            <ul class="footer-bottom-nav">
+                <li><a href="/about"><?= __('about_us') ?></a></li>
+                <li><a href="/services"><?= __('services') ?></a></li>
+                <li><a href="/portfolio"><?= __('portfolio') ?></a></li>
+                <li><a href="/contact"><?= __('contact_us') ?></a></li>
+            </ul>
         </div>
     </div>
 
@@ -56,6 +94,8 @@
     </div>
     <?php endif; ?>
 </footer>
+
+<a href="#" class="back-to-top" id="backToTop" aria-label="Back to top"><i class="bi bi-arrow-up"></i></a>
 <?php endif; ?>
 
 <?php if ($page === ''): ?>
@@ -99,6 +139,22 @@ $(function () {
         }
         window.open('https://wa.me/255616591639', '_blank');
     });
+
+    // Back to top
+    var $backTop = $('#backToTop');
+    if ($backTop.length) {
+        $(window).on('scroll', function () {
+            if ($(this).scrollTop() > 300) {
+                $backTop.addClass('is-visible');
+            } else {
+                $backTop.removeClass('is-visible');
+            }
+        });
+        $backTop.on('click', function (e) {
+            e.preventDefault();
+            $('html, body').animate({ scrollTop: 0 }, 400);
+        });
+    }
 
     if (getCookie('cookie_consent') !== 'accepted') {
         $('#cookieConsent').show();

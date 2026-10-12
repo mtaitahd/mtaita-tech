@@ -101,6 +101,11 @@ return [
     'footer_quick_links' => 'Quick Links',
     'footer_contact_info' => 'Contact Info',
     'footer_rights' => 'All Rights Reserved.',
+    'footer_call_us' => 'Call Us',
+    'footer_email_us' => 'Email Us',
+    'footer_our_office' => 'Our Office',
+    'footer_follow_us' => 'Follow Us',
+    'footer_hours_value' => 'Mon - Sat: 8:00 AM - 6:00 PM',
 
     // About page
     'about_title' => 'About Us',
