@@ -35,17 +35,12 @@ return [
     'hero_explore_systems' => 'Explore Systems',
 
     // Choose section
-    'choose_title' => 'Choose the best IT Service',
-    'choose_subtitle' => 'We combine technical expertise with creative design to deliver solutions that make a real impact on your business.',
-    'choose_feature1' => '50+ Successful Projects Delivered',
-    'choose_feature2' => 'Expert Team of Developers & Designers',
-    'choose_feature3' => '24/7 Customer Support & Maintenance',
-    'choose_feature4' => 'Affordable & Transparent Pricing',
-    'choose_feature5' => 'Modern Tech Stack & Agile Methodology',
-    'choose_projects' => 'Projects Delivered',
-    'choose_clients' => 'Happy Clients',
-    'choose_experience' => 'Years Experience',
-    'choose_support' => 'Customer Support',
+    'choose_subtitle' => 'Mtaita Tech is a dynamic IT and Graphic Design agency based in Moshi, Kilimanjaro, Tanzania. We build modern, scalable digital solutions, including responsive websites, mobile applications, and compelling brand identities that help businesses grow.',
+    'choose_feature1' => 'Custom Website and Application Development',
+    'choose_feature2' => 'Creative Graphic Design and Brand Identity',
+    'choose_feature3' => 'Modern, Scalable Digital Solutions',
+    'choose_feature4' => 'Reliable Customer Support and Maintenance',
+    'choose_feature5' => 'Affordable Solutions Focused on Business Growth',
     'choose_learn_more' => 'Learn More',
 
     // Home Services section

@@ -72,7 +72,7 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-6">
-                <h2><?= __('choose_title') ?></h2>
+                <h2><?= __('about_who_heading') ?></h2>
                 <p><?= __('choose_subtitle') ?></p>
                 <ul class="feature-list mt-4">
                     <li><i class="bi bi-check-circle-fill"></i> <?= __('choose_feature1') ?></li>
@@ -86,26 +86,26 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
                 <div class="row g-4">
                     <div class="col-6">
                         <div class="stat-box text-center">
-                            <h3><span class="count-up" data-target="5">0</span>+</h3>
-                            <p><?= __('choose_projects') ?></p>
+                            <h3><span class="count-up" data-target="50">0</span>+</h3>
+                            <p><?= __('about_stat_projects') ?></p>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="stat-box text-center">
-                            <h3><span class="count-up" data-target="200">0</span>+</h3>
-                            <p><?= __('choose_clients') ?></p>
+                            <h3><span class="count-up" data-target="30">0</span>+</h3>
+                            <p><?= __('about_stat_clients') ?></p>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="stat-box text-center">
                             <h3><span class="count-up" data-target="4">0</span>+</h3>
-                            <p><?= __('choose_experience') ?></p>
+                            <p><?= __('about_stat_experience') ?></p>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="stat-box text-center">
                             <h3>24/7</h3>
-                            <p><?= __('choose_support') ?></p>
+                            <p><?= __('about_stat_support') ?></p>
                         </div>
                     </div>
                 </div>

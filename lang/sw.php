@@ -35,17 +35,12 @@ return [
     'hero_explore_systems' => 'Angalia Mifumo',
 
     // Choose section
-    'choose_title' => 'CHAGUA Kampuni Bora ya Huduma za IT',
-    'choose_subtitle' => 'Tunaunganisha utaalam wa kiufundi na ubunifu wa picha kutoa suluhisho zinazotoa athari halisi kwa biashara yako.',
-    'choose_feature1' => 'Miradi 50+ Imekamilika Kwa Mafanikio',
-    'choose_feature2' => 'Timu ya Wataalamu wa Ukuzaji na Ubunifu',
-    'choose_feature3' => 'Msaada wa Wateja 24/7 na Matengenezo',
-    'choose_feature4' => 'Bei Nafuu na uwazi wa Gharama',
-    'choose_feature5' => 'Teknolojia za Kisasa na Mbinu za Agile',
-    'choose_projects' => 'Miradi Imekamilika',
-    'choose_clients' => 'Wateja Wenye Furaha',
-    'choose_experience' => 'Miaka ya Uzoefu',
-    'choose_support' => 'Msaada kwa Wateja',
+    'choose_subtitle' => 'Mtaita Tech ni wakala mahiri wa IT na Ubunifu wa Picha wenye makao yake Moshi, Kilimanjaro, Tanzania. Tunajenga suluhisho za kisasa za kidijitali zinazoweza kupanuka, zikiwemo tovuti zinazoitikia, programu za simu, na vitambulisho vya chapa vya kuvutia vinavyosaidia biashara kukua.',
+    'choose_feature1' => 'Uundaji wa Tovuti na Programu Maalum',
+    'choose_feature2' => 'Ubunifu wa Picha na Utambulisho wa Chapa',
+    'choose_feature3' => 'Suluhisho za Kidijitali za Kisasa Zinazoweza Kupanuka',
+    'choose_feature4' => 'Msaada wa Wateja wa Kuaminika na Matengenezo',
+    'choose_feature5' => 'Suluhisho Nafuu Zinazolenga Ukuaji wa Biashara',
     'choose_learn_more' => 'Jifunze Zaidi',
 
     // Home Services section
