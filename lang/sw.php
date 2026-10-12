@@ -13,6 +13,7 @@ return [
     'seo_digital_marketing' => 'SEO na Uuzaji wa Dijitali',
     'tourism_websites' => 'Tovuti za Utalii',
     'tourism_website_development' => 'Ukuzaji wa Tovuti za Utalii',
+    'pricing' => 'Bei',
     'portfolio' => 'Kazi Zetu',
     'blog' => 'Blogi',
     'courses_nav' => 'Kozi',

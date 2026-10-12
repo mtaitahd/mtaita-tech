@@ -4872,3 +4872,73 @@ img, video, iframe, embed, object, table, pre, code {
     font-size: 0.86rem;
 }
 
+
+/* --- Pricing Page --- */
+.pricing-page .pricing-main { background: var(--white); }
+.pricing-page .pricing-col-left { display: flex; flex-direction: column; gap: 24px; }
+.pricing-page .pricing-nav-block { background: var(--white); border: 1px solid var(--border-light); border-radius: 16px; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06); overflow: hidden; }
+.pricing-page .pricing-nav-title { background: var(--deep-blue); color: #fff; font-size: 1.15rem; font-weight: 800; padding: 18px 22px; margin: 0; }
+.pricing-page .pricing-service-nav { list-style: none; margin: 0; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.pricing-page .pricing-service-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 54px; padding: 14px 18px; border: 1px solid var(--border-light); border-left: 4px solid var(--red); border-radius: 10px; color: var(--deep-blue); font-weight: 700; transition: all 0.25s ease; }
+.pricing-page .pricing-service-item:hover, .pricing-page .pricing-service-item:focus-visible { background: var(--light-gray); box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08); color: var(--deep-blue); transform: translateX(2px); }
+.pricing-page .pricing-service-item.active { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); border-left-color: var(--red); box-shadow: 0 10px 26px rgba(15, 23, 42, 0.18); }
+.pricing-page .pricing-service-item.active .pr-arrow { background: var(--red); color: #fff; }
+.pricing-page .pricing-service-item .pr-arrow { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; background: rgba(15, 23, 42, 0.08); color: var(--deep-blue); display: inline-flex; align-items: center; justify-content: center; transition: all 0.25s ease; }
+.pricing-page .pricing-service-item:hover .pr-arrow, .pricing-page .pricing-service-item:focus-visible .pr-arrow { background: var(--red); color: #fff; }
+
+
+.pricing-page .pricing-contact-card { background: var(--deep-blue); color: #fff; border-radius: 16px; padding: 30px 26px; position: relative; overflow: hidden; box-shadow: 0 14px 40px rgba(15, 23, 42, 0.18); }
+.pricing-page .pricing-contact-card::before { content: ''; position: absolute; top: -60px; right: -40px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(255,215,0,0.16), transparent 70%); pointer-events: none; }
+.pricing-page .pricing-contact-card h3 { color: #fff; font-weight: 800; margin-bottom: 10px; position: relative; }
+.pricing-page .pricing-contact-card p { color: rgba(255,255,255,0.82); margin-bottom: 18px; position: relative; }
+.pricing-page .pricing-contact-meta { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-direction: column; gap: 8px; position: relative; }
+.pricing-page .pricing-contact-meta li { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.9); font-size: 0.95rem; }
+.pricing-page .pricing-contact-meta li i { color: #FFD700; }
+.pricing-page .pricing-contact-meta a { color: rgba(255,255,255,0.92); }
+.pricing-page .pricing-contact-meta a:hover { color: #FFD700; }
+.pricing-page .pricing-contact-actions { margin-bottom: 12px; position: relative; }
+.pricing-page .pricing-pdf-btn { position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 10px; background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.3); transition: all 0.25s ease; }
+.pricing-page .pricing-pdf-btn:hover, .pricing-page .pricing-pdf-btn:focus-visible { background: #FFD700; color: var(--deep-blue); border-color: #FFD700; }
+.pricing-page .pricing-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 10px; }
+.pricing-page .pricing-head-meta { display: flex; flex-direction: column; gap: 4px; }
+.pricing-page .pricing-valid { display: inline-flex; align-items: center; gap: 6px; color: var(--medium-gray); font-weight: 600; }
+.pricing-page .pricing-starting { color: var(--deep-blue); font-weight: 800; font-size: 1.2rem; }
+.pricing-page .currency-switch { display: inline-flex; background: var(--light-gray); border: 1px solid var(--border-light); border-radius: 999px; overflow: hidden; }
+.pricing-page .currency-btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 18px; color: var(--deep-blue); font-weight: 700; transition: all 0.2s ease; }
+.pricing-page .currency-btn.active, .pricing-page .currency-btn[aria-current='true'] { background: var(--deep-blue); color: #fff; }
+.pricing-page .pricing-currency-msg { color: var(--medium-gray); margin-bottom: 18px; font-size: 0.95rem; }
+.pricing-page .pricing-panel { border: 1px solid var(--border-light); border-radius: 16px; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06); overflow: hidden; }
+.pricing-page .pricing-panel-title { background: linear-gradient(90deg, var(--deep-blue), #1F2A4F); color: #fff; font-weight: 800; font-size: 1.25rem; margin: 0; padding: 16px 22px; }
+.pricing-page .pricing-panel-desc { padding: 14px 22px 0; color: var(--medium-gray); margin: 0; }
+.pricing-page .pricing-rows { display: flex; flex-direction: column; gap: 10px; padding: 18px 22px 24px; }
+.pricing-page .pricing-row { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; border: 1px solid var(--border-light); border-radius: 12px; padding: 14px 18px; transition: all 0.25s ease; }
+.pricing-page .pricing-row:hover { box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08); border-color: #FFD700; }
+.pricing-page .pkg-num { width: 36px; height: 36px; border-radius: 50%; background: var(--light-gray); color: var(--deep-blue); font-weight: 800; display: inline-flex; align-items: center; justify-content: center; }
+.pricing-page .pkg-body { min-width: 0; }
+.pricing-page .pkg-name { color: var(--deep-blue); font-weight: 800; font-size: 1.02rem; margin-bottom: 4px; }
+.pricing-page .pkg-desc { color: var(--medium-gray); font-size: 0.9rem; line-height: 1.6; }
+.pricing-page .pkg-price-col { text-align: right; min-width: 160px; }
+.pricing-page .pkg-starting-label { color: var(--medium-gray); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.pricing-page .pkg-price { color: var(--red); font-weight: 800; font-size: 1.15rem; white-space: nowrap; }
+.pricing-page .pkg-per { color: var(--medium-gray); font-weight: 600; font-size: 0.95rem; margin-left: 4px; }
+.pricing-page .pricing-empty { margin: 18px 22px 24px; padding: 16px 18px; border: 1px dashed var(--border-light); border-left: 4px solid #FFD700; border-radius: 10px; background: rgba(255,215,0,0.12); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.pricing-page .pricing-info-panel { margin-top: 24px; border: 1px solid var(--border-light); border-radius: 16px; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06); overflow: hidden; }
+.pricing-page .pricing-info-panel h3 { background: var(--light-gray); margin: 0; font-size: 1.08rem; font-weight: 800; padding: 14px 22px; border-bottom: 1px solid var(--border-light); }
+.pricing-page .pricing-info-panel ul { margin: 0; padding: 16px 22px 18px 38px; display: flex; flex-direction: column; gap: 8px; color: var(--medium-gray); }
+.pricing-page .pricing-steps { margin-top: 24px; border: 1px solid var(--border-light); border-radius: 16px; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06); overflow: hidden; }
+.pricing-page .pricing-steps h3 { margin: 0; padding: 14px 22px; background: var(--light-gray); border-bottom: 1px solid var(--border-light); font-weight: 800; font-size: 1.08rem; }
+.pricing-page .pricing-steps ol { margin: 0; padding: 18px 22px 22px; list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.pricing-page .pricing-steps li { display: flex; align-items: flex-start; gap: 12px; }
+.pricing-page .step-num { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; background: var(--deep-blue); color: #fff; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
+.pricing-page .pricing-steps li strong { color: var(--deep-blue); font-weight: 800; }
+.pricing-page .pricing-steps li p { color: var(--medium-gray); margin: 2px 0 0; font-size: 0.95rem; }
+.pricing-page .pricing-cta { margin-top: 28px; background: linear-gradient(90deg, var(--deep-blue), #1F2A4F); border-radius: 16px; padding: 22px 26px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 14px 40px rgba(15, 23, 42, 0.16); }
+.pricing-page .pricing-cta-btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 26px; border-radius: 10px; background: var(--red); color: #fff; font-weight: 800; transition: all 0.25s ease; }
+.pricing-page .pricing-cta-btn:hover, .pricing-page .pricing-cta-btn:focus-visible { background: var(--red-hover); color: #fff; transform: translateY(-1px); }
+.pricing-page .pricing-cta-phone { color: rgba(255,255,255,0.92); display: inline-flex; align-items: center; gap: 8px; }
+.pricing-page .pricing-cta-phone a { color: rgba(255,255,255,0.95); font-weight: 700; }
+.pricing-page .pricing-cta-phone a:hover { color: #FFD700; }
+@media (max-width: 991.98px) { .pricing-page .pricing-panel-title { font-size: 1.15rem; } .pricing-page .pricing-row { grid-template-columns: 1fr; gap: 12px; } .pricing-page .pkg-price-col { text-align: left; } }
+@media (max-width: 767.98px) { .pricing-page .pricing-head { flex-direction: column; align-items: flex-start; } .pricing-page .pricing-cta { flex-direction: column; align-items: flex-start; } }
+@media print { body.pricing-page { background: #fff; } body.pricing-page .navbar, body.pricing-page .footer, body.pricing-page #pageLoader, body.pricing-page .back-to-top, body.pricing-page .pricing-pdf-btn { display: none !important; } body.pricing-page .page-header { padding-top: 20px; padding-bottom: 20px; background: #fff !important; color: #000; } body.pricing-page .page-header::before, body.pricing-page .page-header::after { display: none !important; } body.pricing-page .page-header h1 { color: #000; } body.pricing-page .page-header p { color: #333; } body.pricing-page .section-padding { padding-top: 20px; padding-bottom: 20px; } body.pricing-page .pricing-nav-block, body.pricing-page .pricing-contact-card, body.pricing-page .currency-switch { box-shadow: none; border: 1px solid #ddd; } body.pricing-page .pricing-panel, body.pricing-page .pricing-info-panel, body.pricing-page .pricing-steps, body.pricing-page .pricing-cta { box-shadow: none; border: 1px solid #ddd; } body.pricing-page .pricing-panel-title { background: #fff; color: #000; border-bottom: 1px solid #ddd; } body.pricing-page .pricing-cta { background: #fff; color: #000; border: 1px solid #ddd; } body.pricing-page .pricing-cta-btn { background: #fff; color: #000; border: 1px solid #000; } body.pricing-page .pricing-cta-phone, body.pricing-page .pricing-cta-phone a { color: #000; } }
+

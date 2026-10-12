@@ -85,6 +85,7 @@ $get_error = $_GET['error'] ?? '';
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Services</h6>
                     <a class="collapse-item" href="manage-services">Manage Services</a>
+                    <a class="collapse-item" href="manage-pricing">Pricing</a>
                 </div>
             </div>
         </li>

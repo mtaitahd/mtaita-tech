@@ -203,6 +203,7 @@ document.addEventListener('submit', function() {
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link <?= $page === 'digital_products' ? 'active' : '' ?>" href="/digital_products"><i class="bi bi-box-seam me-1"></i><?= __('digital_products_nav') ?></a></li>
+                <li class="nav-item"><a class="nav-link <?= $page === 'pricing' ? 'active' : '' ?>" href="/pricing"><i class="bi bi-tags me-1"></i><?= __('pricing') ?></a></li>
                 <li class="nav-item"><a class="nav-link <?= $page === 'blog' ? 'active' : '' ?>" href="/blog"><i class="bi bi-pencil-square me-1"></i>Blog</a></li>
                 <li class="nav-item"><a class="nav-link <?= $page === 'contact' ? 'active' : '' ?>" href="/contact"><i class="bi bi-envelope me-1"></i><?= __('contact_us') ?></a></li>
 

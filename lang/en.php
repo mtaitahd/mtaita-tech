@@ -13,6 +13,7 @@ return [
     'seo_digital_marketing' => 'SEO & Digital Marketing',
     'tourism_websites' => 'Tourism Websites',
     'tourism_website_development' => 'Tourism Website Development',
+    'pricing' => 'Pricing',
     'portfolio' => 'Portfolio',
     'blog' => 'Blog',
     'courses_nav' => 'Courses',
