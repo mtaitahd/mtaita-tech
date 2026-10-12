@@ -91,33 +91,8 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
                     <li><i class="bi bi-check-circle-fill"></i> <?= __('choose_feature5') ?></li>
                 </ul>
             </div>
-            <div class="col-lg-6">
-                <div class="row g-4">
-                    <div class="col-6">
-                        <div class="stat-box text-center">
-                            <h3><span class="count-up" data-target="50">0</span>+</h3>
-                            <p><?= __('about_stat_projects') ?></p>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="stat-box text-center">
-                            <h3><span class="count-up" data-target="30">0</span>+</h3>
-                            <p><?= __('about_stat_clients') ?></p>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="stat-box text-center">
-                            <h3><span class="count-up" data-target="4">0</span>+</h3>
-                            <p><?= __('about_stat_experience') ?></p>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="stat-box text-center">
-                            <h3>24/7</h3>
-                            <p><?= __('about_stat_support') ?></p>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-lg-6 text-center">
+                <img src="<?= htmlspecialchars(webp_url($about_img)) ?>" alt="About Mtaita Tech" class="img-fluid rounded-4 shadow">
             </div>
         </div>
     </div>
