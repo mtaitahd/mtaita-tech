@@ -136,30 +136,12 @@ $nav_courses = $pdo->query("SELECT id, title, slug FROM courses WHERE status = '
     <link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/style.css?v=<?= filemtime(__DIR__ . '/assets/css/style.css') ?>">
     <style>
         .page-loader.hidden { display: none; }
-        .page-loader { display: none !important; }
-        .page-loader.hidden { display: none !important; }
+        .page-loader { display: none !important; visibility: hidden !important; opacity: 0 !important; z-index: -1 !important; pointer-events: none !important; }
+        .page-loader.hidden { display: none !important; visibility: hidden !important; opacity: 0 !important; z-index: -1 !important; pointer-events: none !important; }
 <body class="<?= htmlspecialchars($body_class ?? '') ?>">
 
-<!-- Page Loader -->
-<div id="pageLoader" class="page-loader">
-    <div class="loader-spinner">
-        <img src="/assets/img/jj.png" alt="Loading">
-    </div>
-</div>
-<script>
-window.addEventListener('load', function() {
-    var loader = document.getElementById('pageLoader');
-    if (loader) {
-        setTimeout(function() {
-            loader.classList.add('hidden');
-        }, 300);
-    }
-});
-document.addEventListener('submit', function() {
-    var loader = document.getElementById('pageLoader');
-    if (loader) loader.classList.remove('hidden');
-});
-</script>
+<!-- Page Loader removed -->
+<div id="pageLoader" style="display:none !important; visibility:hidden !important; opacity:0 !important; z-index:-999 !important; position:absolute !important; width:0 !important; height:0 !important; overflow:hidden !important;"></div>
 
 <?php if (empty($hide_navbar)): ?>
 <nav class="navbar navbar-expand-lg fixed-top">
