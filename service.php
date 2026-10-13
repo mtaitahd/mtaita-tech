@@ -362,7 +362,7 @@ require_once __DIR__ . '/header.php';
 <script type="application/ld+json"><?= json_encode($faq_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?></script>
 <?php endif; ?>
 
-<section class="page-header<?= $hero_url ? ' page-header-with-bg' : '' ?>"<?php if ($hero_url): ?> style="background-image:url('/<?= $hero_url ?>')"<?php endif; ?>>
+<section class="page-header<?= $hero_url ? ' page-header-with-bg' : '' ?>"<?php if ($hero_url): ?> style="background-image:url('<?= $hero_url ?>')"<?php endif; ?>>
     <div class="container">
         <h1><?= svc_e($service['title']) ?></h1>
         <p><?= svc_e($service['hero_subtitle'] ?: $service['short_description']) ?></p>

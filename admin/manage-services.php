@@ -174,6 +174,7 @@ function svc_checked($key, $default = false) {
 }
 $reopen_id = (int)($form_values['id'] ?? 0);
 $preview_image = $reopen_modal ? ($existing['image'] ?? null) : null;
+$preview_hero = $reopen_modal ? ($existing['hero_image'] ?? null) : null;
 require_once 'admin_header.php';
 ?>
 <div class="page-header d-flex flex-wrap gap-2">
@@ -310,7 +311,8 @@ require_once 'admin_header.php';
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label">Hero Image</label>
-                            <input type="file" name="hero_image" class="form-control" accept="image/png,image/jpeg,image/webp,image/gif">
+                            <div class="mb-2"><img id="svc-hero-preview" src="<?= $preview_hero ? '../' . htmlspecialchars(ltrim($preview_hero, '/')) : '' ?>" alt="" height="64" style="border-radius:4px;object-fit:cover;<?= $preview_hero ? '' : 'display:none;' ?>"></div>
+                            <input type="file" name="hero_image" id="svc-hero-image" class="form-control" accept="image/png,image/jpeg,image/webp,image/gif">
                             <small class="text-muted">Page header background. Falls back to global hero.</small>
                             <div class="form-check mt-1">
                                 <input type="checkbox" name="remove_hero" class="form-check-input" value="1">
@@ -409,6 +411,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('svc-home').checked = false;
         document.getElementById('svc-listing').checked = true;
         var p = document.getElementById('svc-image-preview'); if (p) { p.style.display = 'none'; p.src = ''; }
+        var hp = document.getElementById('svc-hero-preview'); if (hp) { hp.style.display = 'none'; hp.src = ''; }
         var link = document.getElementById('svc-page-link');
         if (link) { link.style.display = 'none'; link.href = 'manage-service-page'; }
         document.getElementById('svc-modal-title').textContent = 'Add Service';
@@ -446,6 +449,8 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('svc-listing').checked = String(s.show_listing) === '1';
             var p = document.getElementById('svc-image-preview');
             if (s.image) { p.src = '../' + s.image.replace(/^\//, ''); p.style.display = 'block'; } else { p.style.display = 'none'; }
+            var hp = document.getElementById('svc-hero-preview');
+            if (hp) { if (s.hero_image) { hp.src = '../' + s.hero_image.replace(/^\//, ''); hp.style.display = 'block'; } else { hp.style.display = 'none'; } }
             var link = document.getElementById('svc-page-link');
             link.href = 'manage-service-page?id=' + s.id;
             link.style.display = 'inline-block';

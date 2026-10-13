@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $page_title = 'Mtaita Tech | Software Company Kilimanjaro & Arusha';
 $page_desc = 'Software development company in Kilimanjaro and Arusha. We build websites, mobile apps, POS systems, inventory software & custom business solutions.';
 $page_keywords = 'software company Kilimanjaro, software company Arusha, website development Tanzania, IT company Tanzania, web design Tanzania, custom software development, POS system Tanzania';
