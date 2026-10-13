@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $page_title = 'Mtaita Tech | Software Company Kilimanjaro & Arusha';
 $page_desc = 'Software development company in Kilimanjaro and Arusha. We build websites, mobile apps, POS systems, inventory software & custom business solutions.';
 $page_keywords = 'software company Kilimanjaro, software company Arusha, website development Tanzania, IT company Tanzania, web design Tanzania, custom software development, POS system Tanzania';
@@ -268,15 +268,15 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
             <h2 class="testimonial-heading">Our Latest Customer Reviews</h2>
             <a href="https://g.page/r/CV7D8gf6yuhmEAE/review" target="_blank" rel="nofollow noopener" class="btn btn-review-cta">Leave a Review <i class="bi bi-arrow-right ms-2"></i></a>
         </div>
-        <?php $testimonialGroups = array_chunk($testimonials, 2); ?>
+        <?php $testimonialGroups = array_chunk($testimonials, 3); ?>
         <div class="testimonial-carousel-wrapper">
             <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="hover">
                 <div class="carousel-inner">
                     <?php foreach ($testimonialGroups as $gi => $group): ?>
                     <div class="carousel-item <?= $gi === 0 ? 'active' : '' ?>">
-                        <div class="testimonial-slide-row">
+                        <div class="testimonial-slide-row row g-4 justify-content-center">
                             <?php foreach ($group as $t): ?>
-                            <div class="testimonial-card">
+                            <div class="testimonial-card col-12 col-md-6 col-lg-4">
                                 <?php if ($t['avatar']): ?>
                                 <img src="<?= htmlspecialchars(webp_url($t['avatar'])) ?>" alt="<?= htmlspecialchars($t['name']) ?>" class="testimonial-avatar" onerror="this.style.display='none'">
                                 <?php else: ?>
