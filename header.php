@@ -134,14 +134,8 @@ $nav_courses = $pdo->query("SELECT id, title, slug FROM courses WHERE status = '
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/style.css?v=<?= filemtime(__DIR__ . '/assets/css/style.css') ?>">
-    <style>
-        .page-loader.hidden { display: none; }
-        .page-loader { display: none !important; visibility: hidden !important; opacity: 0 !important; z-index: -1 !important; pointer-events: none !important; }
-        .page-loader.hidden { display: none !important; visibility: hidden !important; opacity: 0 !important; z-index: -1 !important; pointer-events: none !important; }
+</head>
 <body class="<?= htmlspecialchars($body_class ?? '') ?>">
-
-<!-- Page Loader removed -->
-<div id="pageLoader" style="display:none !important; visibility:hidden !important; opacity:0 !important; z-index:-999 !important; position:absolute !important; width:0 !important; height:0 !important; overflow:hidden !important;"></div>
 
 <?php if (empty($hide_navbar)): ?>
 <nav class="navbar navbar-expand-lg fixed-top">
