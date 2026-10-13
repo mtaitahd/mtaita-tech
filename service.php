@@ -339,6 +339,9 @@ $faq_schema = !empty($faq_entities)
     : null;
 
 $hero_path = $service['hero_image'] ?: Settings::get('hero_bg_services', '');
+if (empty($hero_path) && !empty($service['image'])) {
+    $hero_path = $service['image'];
+}
 $hero_url = $hero_path ? svc_e(webp_url('/' . ltrim($hero_path, '/'))) : '';
 
 $ctx = [
