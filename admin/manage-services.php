@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'service_category' => trim($_POST['service_category'] ?? '') ?: null,
                 'card_link' => trim($_POST['card_link'] ?? '') ?: null,
                 'icon' => trim($_POST['icon'] ?? '') ?: null,
-                'list_items' => trim($_POST['list_items'] ?? '') ?: null,
+                'list_items' => trim($_POST['list_items'] ?? ''),
                 'sort_order' => (int)($_POST['sort_order'] ?? 0),
                 'is_active' => isset($_POST['is_active']) ? 1 : 0,
                 'show_homepage' => isset($_POST['show_homepage']) ? 1 : 0,

@@ -92,7 +92,7 @@ class Service {
             $data['service_category'] ?? null,
             $data['card_link'] ?? null,
             $data['icon'] ?? null,
-            $data['list_items'] ?? null,
+            $data['list_items'] ?? '',
             $data['sort_order'] ?? 0,
             $data['is_active'] ?? 1,
             $data['show_homepage'] ?? 1,

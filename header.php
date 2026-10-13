@@ -172,11 +172,11 @@ document.addEventListener('submit', function() {
         </button>
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto">
-                <?php if ($page !== ''): ?><li class="nav-item"><a class="nav-link <?= $page === '' ? 'active' : '' ?>" href="/"><i class="bi bi-house me-1"></i><?= __('home') ?></a></li><?php endif; ?>
+                <?php if ($page !== ''): ?><li class="nav-item"><a class="nav-link <?= $page === '' ? 'active' : '' ?>" href="/"><?= __('home') ?></a></li><?php endif; ?>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle <?= $page === 'services' ? 'active' : '' ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-grid me-1"></i><?= __('services') ?></a>
+                        <?= __('services') ?>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/web-development"><?= __('web_development') ?></a></li>
@@ -187,10 +187,10 @@ document.addEventListener('submit', function() {
                     </ul>
                 </li>
 
-                <li class="nav-item"><a class="nav-link" href="https://mtaitatech.online/web-development" target="_blank"><i class="bi bi-briefcase me-1"></i><?= __('portfolio') ?></a></li>
+                <li class="nav-item"><a class="nav-link" href="https://mtaitatech.online/web-development" target="_blank"><?= __('portfolio') ?></a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle <?= $page === 'courses' ? 'active' : '' ?>" href="/courses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-book me-1"></i><?= __('courses_nav') ?>
+                        <?= __('courses_nav') ?>
                     </a>
                     <ul class="dropdown-menu">
                         <?php foreach ($nav_courses as $nc): ?>
@@ -199,38 +199,37 @@ document.addEventListener('submit', function() {
                         <?php if (count($nav_courses) >= 10): ?>
                         <li><hr class="dropdown-divider"></li>
                         <?php endif; ?>
-                        <li><a class="dropdown-item fw-bold text-primary" href="/courses"><i class="bi bi-grid me-1"></i><?= __('all_courses') ?></a></li>
+                        <li><a class="dropdown-item fw-bold text-primary" href="/courses"><?= __('all_courses') ?></a></li>
                     </ul>
                 </li>
-                <li class="nav-item"><a class="nav-link <?= $page === 'digital_products' ? 'active' : '' ?>" href="/digital_products"><i class="bi bi-box-seam me-1"></i><?= __('digital_products_nav') ?></a></li>
-                <li class="nav-item"><a class="nav-link <?= $page === 'pricing' ? 'active' : '' ?>" href="/pricing"><i class="bi bi-tags me-1"></i><?= __('pricing') ?></a></li>
-                <li class="nav-item"><a class="nav-link <?= $page === 'blog' ? 'active' : '' ?>" href="/blog"><i class="bi bi-pencil-square me-1"></i>Blog</a></li>
-                <li class="nav-item"><a class="nav-link <?= $page === 'contact' ? 'active' : '' ?>" href="/contact"><i class="bi bi-envelope me-1"></i><?= __('contact_us') ?></a></li>
+<li class="nav-item"><a class="nav-link <?= $page === 'digital_products' ? 'active' : '' ?>" href="/digital_products"><?= __('digital_products_nav') ?></a></li>
+<li class="nav-item"><a class="nav-link <?= $page === 'pricing' ? 'active' : '' ?>" href="/pricing"><?= __('pricing') ?></a></li>
+<li class="nav-item"><a class="nav-link <?= $page === 'blog' ? 'active' : '' ?>" href="/blog">Blog</a></li>
+<li class="nav-item"><a class="nav-link <?= $page === 'contact' ? 'active' : '' ?>" href="/contact"><?= __('contact_us') ?></a></li>
 
                 <?php if (isPublicLoggedIn()): ?>
                 <li class="nav-item dropdown ms-lg-2">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle"></i> <span class="d-lg-none"><?= __('account') ?></span>
+                        <span class="d-lg-none"><?= __('account') ?></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="dashboard"><i class="bi bi-speedometer2 me-2"></i><?= __('dashboard') ?></a></li>
-                        <li><a class="dropdown-item" href="courses"><i class="bi bi-book me-2"></i><?= __('courses_nav') ?></a></li>
-                        <li><a class="dropdown-item" href="digital_products"><i class="bi bi-box me-2"></i><?= __('digital_products_nav') ?></a></li>
+                        <li><a class="dropdown-item" href="dashboard"><?= __('dashboard') ?></a></li>
+                        <li><a class="dropdown-item" href="courses"><?= __('courses_nav') ?></a></li>
+                        <li><a class="dropdown-item" href="digital_products"><?= __('digital_products_nav') ?></a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="logout" style="color: var(--red);"><i class="bi bi-box-arrow-right me-2"></i><?= __('logout') ?></a></li>
+                        <li><a class="dropdown-item" href="logout" style="color: var(--red);"><?= __('logout') ?></a></li>
                     </ul>
                 </li>
                 <?php else: ?>
                 <li class="nav-item ms-lg-2">
-                    <a class="nav-link" href="login"><i class="bi bi-person"></i> <span class="d-lg-none"><?= __('login') ?></span></a>
+                    <a class="nav-link" href="login"><span class="d-lg-none"><?= __('login') ?></span></a>
                 </li>
                 <?php endif; ?>
 
                 <li class="nav-item ms-lg-2 lang-switcher">
-                    <a class="nav-link lang-toggle" href="/lang_switch?lang=<?= $lang_code === 'en' ? 'sw' : 'en' ?>" title="<?= __('language') ?>">
-                        <span class="lang-flag-current"><?= $lang_code === 'en' ? '🇺🇸' : '🇹🇿' ?></span>
-                        <span class="lang-label"><?= $lang_code === 'en' ? 'EN' : 'SW' ?></span>
-                    </a>
+                            <a class="nav-link lang-toggle" href="/lang_switch?lang=<?= $lang_code === 'en' ? 'sw' : 'en' ?>" title="<?= __('language') ?>">
+                                <span class="lang-label"><?= $lang_code === 'en' ? 'EN' : 'SW' ?></span>
+                            </a>
                 </li>
             </ul>
         </div>

@@ -175,12 +175,11 @@ $live_systems = $pdo->query("SELECT id, project_title, project_desc, project_lin
 </section>
 <?php endif; ?>
 
-<!-- Live Systems / Recent Work -->
+<!-- Recent Work -->
 <?php if (!empty($live_systems)): ?>
 <section class="section-padding live-systems-section">
     <div class="container position-relative">
         <div class="live-systems-head text-center">
-            <span class="live-eyebrow"><?= __('live_systems_heading') ?></span>
             <h2><?= __('live_systems_headline') ?></h2>
         </div>
         <div class="live-systems-grid">
