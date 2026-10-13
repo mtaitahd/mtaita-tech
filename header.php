@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/config.php';
 require_once 'db_connect.php';
 require_once __DIR__ . '/auth_helper.php';
@@ -23,7 +23,7 @@ $nav_courses = $pdo->query("SELECT id, title, slug FROM courses WHERE status = '
     <meta name="theme-color" content="#0F172A">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="description" content="<?= htmlspecialchars($page_desc ?? 'Mtaita Tech — IT & Graphic Design Agency') ?>">
+    <meta name="description" content="<?= htmlspecialchars($page_desc ?? 'Mtaita Tech â€” IT & Graphic Design Agency') ?>">
     <meta name="keywords" content="<?= htmlspecialchars($page_keywords ?? 'IT services, graphic design, web development') ?>">
     <meta name="author" content="Mtaita Tech">
     <meta name="robots" content="<?= htmlspecialchars($meta_robots ?? 'index, follow') ?>">
@@ -40,7 +40,7 @@ $nav_courses = $pdo->query("SELECT id, title, slug FROM courses WHERE status = '
     <meta name="twitter:card" content="summary_large_image">
     <link rel="canonical" href="<?= SITE_URL . $_SERVER['REQUEST_URI'] ?>">
     <link rel="icon" type="image/png" href="<?= SITE_URL ?>/assets/img/jj.png">
-    <title><?= htmlspecialchars($page_title ?? SITE_NAME . ' — ' . SITE_TAGLINE) ?></title>
+    <title><?= htmlspecialchars($page_title ?? SITE_NAME . ' â€” ' . SITE_TAGLINE) ?></title>
     <?php if (!empty($article_published)): ?>
     <script type="application/ld+json">
     {
@@ -136,8 +136,8 @@ $nav_courses = $pdo->query("SELECT id, title, slug FROM courses WHERE status = '
     <link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/style.css?v=<?= filemtime(__DIR__ . '/assets/css/style.css') ?>">
     <style>
         .page-loader.hidden { display: none; }
-    </style>
-</head>
+        .page-loader { display: none !important; }
+        .page-loader.hidden { display: none !important; }
 <body class="<?= htmlspecialchars($body_class ?? '') ?>">
 
 <!-- Page Loader -->
