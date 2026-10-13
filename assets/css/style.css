@@ -4668,7 +4668,10 @@ img, video, iframe, embed, object, table, pre, code {
 
 /* Contact card */
 .wd-page .wd-contact-card {
-    background: var(--deep-blue);
+    background:
+        linear-gradient(135deg, rgba(15, 26, 58, 0.88) 0%, rgba(15, 26, 58, 0.72) 55%, rgba(15, 26, 58, 0.6) 100%),
+        url('/assets/img/uploads/call1.png') center/cover no-repeat,
+        var(--deep-blue);
     border-radius: 0;
     padding: 32px 28px;
     color: var(--white);
