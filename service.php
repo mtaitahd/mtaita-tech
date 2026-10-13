@@ -346,11 +346,20 @@ $faq_schema = !empty($faq_entities)
     ? ['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => $faq_entities]
     : null;
 
-$hero_path = $service['hero_image'] ?: Settings::get('hero_bg_services', '');
-if (empty($hero_path) && !empty($service['image'])) {
-    $hero_path = $service['image'];
+// Service detail hero uses the same image as the homepage hero section
+// (the first active poster). Falls back to the service's own hero image,
+// the global page-hero setting, then the service image.
+$hero_url = '';
+$hero_poster = $pdo->query("SELECT poster_image_path FROM posters WHERE is_active = 1 ORDER BY created_at DESC LIMIT 1")->fetchColumn();
+if (!empty($hero_poster)) {
+    $hero_url = svc_e(webp_url('/' . ltrim($hero_poster, '/')));
+} else {
+    $hero_path = $service['hero_image'] ?: Settings::get('hero_bg_services', '');
+    if (empty($hero_path) && !empty($service['image'])) {
+        $hero_path = $service['image'];
+    }
+    $hero_url = $hero_path ? svc_e(webp_url('/' . ltrim($hero_path, '/'))) : '';
 }
-$hero_url = $hero_path ? svc_e(webp_url('/' . ltrim($hero_path, '/'))) : '';
 
 $ctx = [
     'email' => Settings::get('admin_email', ADMIN_EMAIL),
