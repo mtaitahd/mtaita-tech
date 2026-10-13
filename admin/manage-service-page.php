@@ -340,10 +340,11 @@ require_once 'admin_header.php';
                         <div class="col-12"><label class="form-label small">Subheading / text</label><textarea name="subheading" rows="2" class="form-control form-control-sm"><?= htmlspecialchars($sec['subheading'] ?? '') ?></textarea></div>
                         <div class="col-12"><label class="form-label small">Body (optional long text)</label><textarea name="body" rows="2" class="form-control form-control-sm"><?= htmlspecialchars($sec['body'] ?? '') ?></textarea></div>
                         <div class="col-md-6">
-                            <label class="form-label small">Image</label>
+                            <label class="form-label small">Image <span class="text-muted">(fallback)</span></label>
                             <?php if (!empty($sec['image'])): ?><div class="mb-1"><img src="../<?= htmlspecialchars(ltrim($sec['image'], '/')) ?>" alt="" height="48" style="border-radius:4px;object-fit:cover;"></div><?php endif; ?>
                             <input type="file" name="image" class="form-control form-control-sm" accept="image/png,image/jpeg,image/webp,image/gif">
                             <div class="form-check mt-1"><input class="form-check-input" type="checkbox" name="remove_image" value="1"><label class="form-check-label small">Remove current image</label></div>
+                            <small class="text-muted d-block">The service image from “Manage Services” is shown by default; this is only used if that service has no image.</small>
                         </div>
                         <div class="col-md-6"><label class="form-label small">Image alt</label><input name="image_alt" class="form-control form-control-sm" value="<?= htmlspecialchars($sec['image_alt'] ?? '') ?>"></div>
                         <div class="col-md-3"><label class="form-label small">Button text</label><input name="button_text" class="form-control form-control-sm" value="<?= htmlspecialchars($sec['button_text'] ?? '') ?>"></div>

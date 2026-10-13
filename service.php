@@ -168,9 +168,13 @@ function svc_render_section($sec, array $items, array $service, array $ctx) {
             break;
 
         case 'content':
-            $imgPath = $sec['image'] ?? '';
-            if (empty($imgPath) && !empty($service['image'])) {
-                $imgPath = $service['image'];
+            // The large right-side overview image always follows the service's
+            // admin-managed image (same one used on the homepage card). The
+            // section-level image is only used as a fallback when the service
+            // has no image of its own.
+            $imgPath = $service['image'] ?? '';
+            if (empty($imgPath)) {
+                $imgPath = $sec['image'] ?? '';
             }
             $img = svc_img($imgPath);
             if ($img) {
