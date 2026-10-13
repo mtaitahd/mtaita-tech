@@ -168,9 +168,13 @@ function svc_render_section($sec, array $items, array $service, array $ctx) {
             break;
 
         case 'content':
-            $img = svc_img($sec['image'] ?? '');
+            $imgPath = $sec['image'] ?? '';
+            if (empty($imgPath) && !empty($service['image'])) {
+                $imgPath = $service['image'];
+            }
+            $img = svc_img($imgPath);
             if ($img) {
-                $out .= '<div class="wd-overview-img"><img src="' . svc_e($img) . '" alt="' . svc_e($sec['image_alt'] ?? $service['title']) . '" loading="lazy"></div>';
+                $out .= '<div class="wd-overview-img"><img src="' . svc_e($img) . '" alt="' . svc_e($sec['image_alt'] ?? $service['image_alt'] ?? $service['title']) . '" loading="lazy"></div>';
             }
             $out .= '<div class="wd-block"' . $anchor . '>';
             if ($heading) $out .= '<h2 class="wd-heading">' . svc_e($heading) . '</h2>';
