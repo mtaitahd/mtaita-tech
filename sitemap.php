@@ -1,9 +1,31 @@
 <?php
 require_once __DIR__ . '/db_connect.php';
+require_once __DIR__ . '/lib/ServiceDefaults.php';
 
 $blogs = $pdo->query("SELECT slug, created_at FROM blogs ORDER BY created_at DESC")->fetchAll();
 $courses = $pdo->query("SELECT slug, created_at FROM courses WHERE status = 'published' ORDER BY created_at DESC")->fetchAll();
 $products = $pdo->query("SELECT id, created_at FROM products ORDER BY created_at DESC")->fetchAll();
+
+// Service pages: always include the built-in services (clean URLs), plus every
+// admin-managed service. New services created from the dashboard live at
+// /service/{slug} and would otherwise never appear here.
+$service_urls = [];
+foreach (array_keys(ServiceDefaults::all()) as $slug) {
+    $service_urls['/' . $slug] = '0.8';
+}
+try {
+    $dbServices = $pdo->query("SELECT slug FROM services WHERE is_active = 1 AND slug IS NOT NULL AND slug <> '' ORDER BY sort_order ASC, title ASC")->fetchAll();
+    $builtin = array_keys(ServiceDefaults::all());
+    foreach ($dbServices as $s) {
+        $slug = (string)$s['slug'];
+        $path = in_array($slug, $builtin, true) ? '/' . $slug : '/service/' . $slug;
+        if (!isset($service_urls[$path])) {
+            $service_urls[$path] = '0.7';
+        }
+    }
+} catch (Throwable $e) {
+    // services table not available yet – keep the built-in URLs
+}
 
 header('Content-Type: application/xml; charset=utf-8');
 echo '<?xml version="1.0" encoding="UTF-8"?>';
@@ -29,31 +51,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <priority>0.9</priority>
         <changefreq>monthly</changefreq>
     </url>
+    <?php foreach ($service_urls as $path => $priority): ?>
     <url>
-        <loc><?= SITE_URL ?>/web-development</loc>
-        <priority>0.8</priority>
+        <loc><?= SITE_URL . htmlspecialchars($path) ?></loc>
+        <priority><?= $priority ?></priority>
         <changefreq>monthly</changefreq>
     </url>
-    <url>
-        <loc><?= SITE_URL ?>/mobile-apps</loc>
-        <priority>0.8</priority>
-        <changefreq>monthly</changefreq>
-    </url>
-    <url>
-        <loc><?= SITE_URL ?>/graphic-design</loc>
-        <priority>0.8</priority>
-        <changefreq>monthly</changefreq>
-    </url>
-    <url>
-        <loc><?= SITE_URL ?>/seo-digital-marketing</loc>
-        <priority>0.8</priority>
-        <changefreq>monthly</changefreq>
-    </url>
-    <url>
-        <loc><?= SITE_URL ?>/tourism-website-development</loc>
-        <priority>0.8</priority>
-        <changefreq>monthly</changefreq>
-    </url>
+    <?php endforeach; ?>
     <url>
         <loc><?= SITE_URL ?>/pricing</loc>
         <priority>0.9</priority>

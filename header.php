@@ -31,14 +31,14 @@ $nav_courses = $pdo->query("SELECT id, title, slug FROM courses WHERE status = '
     <meta property="og:title" content="<?= htmlspecialchars($page_title ?? SITE_NAME) ?>">
     <meta property="og:description" content="<?= htmlspecialchars($page_desc ?? '') ?>">
     <meta property="og:image" content="<?= htmlspecialchars($og_image ?? SITE_URL . '/assets/img/jj.png') ?>">
-    <meta property="og:url" content="<?= SITE_URL . $_SERVER['REQUEST_URI'] ?>">
+    <meta property="og:url" content="<?= htmlspecialchars($canonical_url ?? (SITE_URL . $_SERVER['REQUEST_URI'])) ?>">
     <meta property="og:type" content="<?= htmlspecialchars($og_type ?? 'website') ?>">
     <?php if (!empty($article_published)): ?>
     <meta property="article:published_time" content="<?= $article_published ?>">
     <meta property="article:author" content="Mtaita Tech">
     <?php endif; ?>
     <meta name="twitter:card" content="summary_large_image">
-    <link rel="canonical" href="<?= SITE_URL . $_SERVER['REQUEST_URI'] ?>">
+    <link rel="canonical" href="<?= htmlspecialchars($canonical_url ?? (SITE_URL . $_SERVER['REQUEST_URI'])) ?>">
     <link rel="icon" type="image/png" href="<?= SITE_URL ?>/assets/img/jj.png">
     <title><?= htmlspecialchars($page_title ?? SITE_NAME . ' â€” ' . SITE_TAGLINE) ?></title>
     <?php if (!empty($article_published)): ?>

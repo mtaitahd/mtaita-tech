@@ -368,6 +368,11 @@ $ctx = [
 ];
 $ctx['phone_raw'] = preg_replace('/\s+/', '', $ctx['phone']);
 
+// Canonical URL: built-in services have a clean URL (e.g. /web-development);
+// admin-managed services live at /service/{slug}. This prevents the same page
+// being indexed under two URLs.
+$canonical_url = SITE_URL . ($defaults ? '/' . $service_slug : '/service/' . $service_slug);
+
 require_once __DIR__ . '/header.php';
 ?>
 

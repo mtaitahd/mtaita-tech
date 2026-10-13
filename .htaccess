@@ -39,7 +39,9 @@ RewriteRule ^seo-digital-marketing/?$ seo-digital-marketing.php [L,QSA]
 RewriteRule ^tourism-website-development/?$ tourism-website-development.php [L,QSA]
 RewriteRule ^pricing/?$ pricing.php [L,QSA]
 
-# Generic database-managed service page (new services created from the admin)
+# Generic database-managed service page (new services created from the admin);
+# built-in services use their clean URL instead of /service/{slug}.
+RewriteRule ^service/(web-development|graphic-design|mobile-apps|seo-digital-marketing|tourism-website-development)/?$ /$1 [R=301,L]
 RewriteRule ^service/([a-z0-9-]+)/?$ service.php?slug=$1 [L,QSA]
 
 # City landing page routes
