@@ -4941,7 +4941,7 @@ img, video, iframe, embed, object, table, pre, code {
 .pricing-page .pricing-service-item:hover .pr-arrow, .pricing-page .pricing-service-item:focus-visible .pr-arrow { background: var(--red); color: #fff; }
 
 
-.pricing-page .pricing-contact-card { background: var(--deep-blue); color: #fff; border-radius: 0; padding: 30px 26px; position: relative; overflow: hidden; box-shadow: 0 14px 40px rgba(15, 23, 42, 0.18); }
+.pricing-page .pricing-contact-card { background: linear-gradient(135deg, rgba(15,26,58,0.88) 0%, rgba(15,26,58,0.72) 55%, rgba(15,26,58,0.6) 100%), url('/assets/img/uploads/call1.png') center/cover no-repeat, var(--deep-blue); color: #fff; border-radius: 0; padding: 30px 26px; position: relative; overflow: hidden; box-shadow: 0 14px 40px rgba(15, 23, 42, 0.18); }
 .pricing-page .pricing-contact-card::before { content: ''; position: absolute; top: -60px; right: -40px; width: 200px; height: 200px; border-radius: 0; background: radial-gradient(circle, rgba(255,215,0,0.16), transparent 70%); pointer-events: none; }
 .pricing-page .pricing-contact-card h3 { color: #fff; font-weight: 800; margin-bottom: 10px; position: relative; }
 .pricing-page .pricing-contact-card p { color: rgba(255,255,255,0.82); margin-bottom: 18px; position: relative; }
